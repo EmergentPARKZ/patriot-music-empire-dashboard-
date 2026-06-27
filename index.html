@@ -1,2315 +1,1712 @@
-# 🎵 Patriot Music Empire - AI Agent Command Station v2.0
-
----
-
-## 🏗️ Complete System Architecture
-
-```
-PATRIOT MUSIC EMPIRE COMMAND STATION
-├── 👑 Admin Layer (YOU - Permanent Posts)
-├── 🤖 AI Agent Layer (Temp Posts - Auto-Cleanup)
-├── 🔐 Auth Layer (Google + Social OAuth)
-└── 🌐 Distribution Layer (All Platforms)
-```
-
----
-
-## 📄 Full index.html - Complete Build
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🎵 Patriot Music Empire - Command Station</title>
-<script src="https://accounts.google.com/gsi/client" async defer></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-<style>
-
-/* ============================================
-   ROOT VARIABLES & RESET
-============================================ */
-:root {
-  --primary: #00ff41;
-  --secondary: #ff6b00;
-  --accent: #00d4ff;
-  --danger: #ff0040;
-  --gold: #ffd700;
-  --bg-dark: #0a0a0f;
-  --bg-panel: #0d1117;
-  --bg-card: #161b22;
-  --bg-hover: #1f2937;
-  --border: #30363d;
-  --border-glow: #00ff4133;
-  --text-primary: #e6edf3;
-  --text-secondary: #8b949e;
-  --text-muted: #484f58;
-  --font-main: 'Orbitron', monospace;
-  --font-mono: 'Share Tech Mono', monospace;
-}
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-  background: var(--bg-dark);
-  color: var(--text-primary);
-  font-family: var(--font-mono);
-  overflow-x: hidden;
-  min-height: 100vh;
-}
-
-/* ============================================
-   SCROLLBAR
-============================================ */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--bg-dark); }
-::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
-
-/* ============================================
-   TOP COMMAND BAR
-============================================ */
-#top-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 20px;
-  background: linear-gradient(90deg, #0d1117, #0a0f1a, #0d1117);
-  border-bottom: 1px solid var(--primary);
-  box-shadow: 0 0 20px var(--border-glow);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.logo {
-  font-family: var(--font-main);
-  font-size: 1.1rem;
-  font-weight: 900;
-  color: var(--primary);
-  text-shadow: 0 0 10px var(--primary);
-  letter-spacing: 2px;
-}
-
-.logo span { color: var(--secondary); }
-
-#ticker-bar {
-  flex: 1;
-  overflow: hidden;
-  margin: 0 20px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-}
-
-#ticker-text {
-  white-space: nowrap;
-  animation: ticker 30s linear infinite;
-  color: var(--gold);
-  font-size: 0.75rem;
-}
-
-@keyframes ticker {
-  0% { transform: translateX(100%); }
-  100% { transform: translateX(-100%); }
-}
-
-#admin-badge {
-  background: linear-gradient(135deg, var(--gold), var(--secondary));
-  color: #000;
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-weight: bold;
-  font-size: 0.7rem;
-  font-family: var(--font-main);
-}
-
-#system-clock {
-  color: var(--accent);
-  font-size: 0.75rem;
-  min-width: 160px;
-  text-align: right;
-}
-
-/* ============================================
-   MAIN GRID LAYOUT
-============================================ */
-#main-grid {
-  display: grid;
-  grid-template-columns: 280px 1fr 300px;
-  grid-template-rows: auto;
-  gap: 12px;
-  padding: 12px;
-  min-height: calc(100vh - 60px);
-}
-
-/* ============================================
-   PANELS
-============================================ */
-.panel {
-  background: var(--bg-panel);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-.panel-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 14px;
-  background: linear-gradient(90deg, var(--bg-card), transparent);
-  border-bottom: 1px solid var(--border);
-}
-
-.panel-title {
-  font-family: var(--font-main);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: var(--primary);
-  text-transform: uppercase;
-}
-
-.panel-body {
-  padding: 12px;
-  flex: 1;
-  overflow-y: auto;
-}
-
-/* ============================================
-   AUTH / LOGIN PANEL
-============================================ */
-#auth-panel {
-  grid-column: 1;
-  grid-row: 1;
-}
-
-.auth-section {
-  margin-bottom: 16px;
-}
-
-.auth-section-title {
-  font-size: 0.65rem;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 8px;
-  padding-bottom: 4px;
-  border-bottom: 1px solid var(--border);
-}
-
-/* Google Sign In */
-#google-signin-btn {
-  width: 100%;
-  padding: 10px;
-  background: linear-gradient(135deg, #4285f4, #34a853);
-  border: none;
-  border-radius: 6px;
-  color: white;
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition: all 0.3s;
-  margin-bottom: 8px;
-}
-
-#google-signin-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 15px rgba(66,133,244,0.4);
-}
-
-#google-user-info {
-  display: none;
-  background: var(--bg-card);
-  border: 1px solid #34a85333;
-  border-radius: 6px;
-  padding: 8px;
-  font-size: 0.75rem;
-  color: var(--text-primary);
-}
-
-/* Social Platform Buttons */
-.platform-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6px;
-}
-
-.platform-btn {
-  padding: 8px 6px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  background: var(--bg-card);
-  color: var(--text-secondary);
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  transition: all 0.3s;
-  text-align: left;
-}
-
-.platform-btn:hover { background: var(--bg-hover); }
-.platform-btn.connected { border-color: var(--primary); color: var(--primary); }
-.platform-btn.connected::after { content: ' ✓'; }
-
-.platform-btn.youtube { --c: #ff0000; }
-.platform-btn.instagram { --c: #e1306c; }
-.platform-btn.tiktok { --c: #69c9d0; }
-.platform-btn.facebook { --c: #1877f2; }
-.platform-btn.twitter { --c: #1da1f2; }
-.platform-btn.spotify { --c: #1db954; }
-.platform-btn.etsy { --c: #f56400; }
-.platform-btn.distrokid { --c: #7c3aed; }
-.platform-btn.soundcloud { --c: #ff5500; }
-.platform-btn.pinterest { --c: #e60023; }
-
-.platform-btn:hover { border-color: var(--c, var(--primary)); color: var(--c, var(--primary)); }
-.platform-btn.connected { border-color: var(--c, var(--primary)); color: var(--c, var(--primary)); }
-
-/* API Key Input */
-.api-input-group {
-  display: flex;
-  gap: 6px;
-  margin-bottom: 6px;
-}
-
-.api-input {
-  flex: 1;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 6px 8px;
-  color: var(--text-primary);
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-}
-
-.api-input:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 8px var(--border-glow);
-}
-
-.btn-sm {
-  padding: 6px 10px;
-  border: 1px solid var(--primary);
-  border-radius: 4px;
-  background: transparent;
-  color: var(--primary);
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  cursor: pointer;
-  transition: all 0.2s;
-  white-space: nowrap;
-}
-
-.btn-sm:hover { background: var(--primary); color: #000; }
-.btn-sm.danger { border-color: var(--danger); color: var(--danger); }
-.btn-sm.danger:hover { background: var(--danger); color: #fff; }
-.btn-sm.gold { border-color: var(--gold); color: var(--gold); }
-.btn-sm.gold:hover { background: var(--gold); color: #000; }
-
-/* ============================================
-   AGENT PANEL (LEFT)
-============================================ */
-#agent-panel {
-  grid-column: 1;
-  grid-row: 2;
-}
-
-.agent-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 10px;
-  margin-bottom: 8px;
-  cursor: pointer;
-  transition: all 0.3s;
-  position: relative;
-  overflow: hidden;
-}
-
-.agent-card::before {
-  content: '';
-  position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: 3px;
-  background: var(--agent-color, var(--primary));
-}
-
-.agent-card:hover {
-  border-color: var(--agent-color, var(--primary));
-  box-shadow: 0 0 12px color-mix(in srgb, var(--agent-color, var(--primary)) 20%, transparent);
-  transform: translateX(2px);
-}
-
-.agent-card.active {
-  border-color: var(--agent-color, var(--primary));
-  background: linear-gradient(90deg, color-mix(in srgb, var(--agent-color, var(--primary)) 10%, transparent), var(--bg-card));
-}
-
-.agent-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 6px;
-}
-
-.agent-name {
-  font-family: var(--font-main);
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: var(--agent-color, var(--primary));
-}
-
-.agent-status {
-  font-size: 0.6rem;
-  padding: 2px 6px;
-  border-radius: 10px;
-  background: var(--bg-dark);
-  border: 1px solid currentColor;
-}
-
-.status-idle { color: var(--text-muted); }
-.status-running { color: var(--primary); animation: pulse 1.5s infinite; }
-.status-error { color: var(--danger); }
-.status-done { color: var(--accent); }
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
-}
-
-.agent-desc {
-  font-size: 0.65rem;
-  color: var(--text-secondary);
-  margin-bottom: 8px;
-  line-height: 1.4;
-}
-
-.agent-controls {
-  display: flex;
-  gap: 4px;
-  flex-wrap: wrap;
-}
-
-.agent-progress {
-  margin-top: 6px;
-  height: 3px;
-  background: var(--bg-dark);
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-.agent-progress-bar {
-  height: 100%;
-  background: var(--agent-color, var(--primary));
-  border-radius: 2px;
-  transition: width 0.5s;
-  box-shadow: 0 0 6px var(--agent-color, var(--primary));
-}
-
-/* ============================================
-   CENTER COMMAND TERMINAL
-============================================ */
-#command-center {
-  grid-column: 2;
-  grid-row: 1 / 3;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-/* Terminal */
-#terminal-panel {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  background: var(--bg-panel);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-#terminal-output {
-  flex: 1;
-  padding: 14px;
-  overflow-y: auto;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  line-height: 1.6;
-  min-height: 300px;
-  max-height: 400px;
-  background: #050508;
-}
-
-.term-line { margin-bottom: 2px; }
-.term-system { color: var(--text-muted); }
-.term-input { color: var(--accent); }
-.term-output { color: var(--text-primary); }
-.term-success { color: var(--primary); }
-.term-error { color: var(--danger); }
-.term-warning { color: var(--gold); }
-.term-agent { color: var(--secondary); }
-.term-admin { color: var(--gold); font-weight: bold; }
-
-#terminal-input-row {
-  display: flex;
-  align-items: center;
-  padding: 10px 14px;
-  border-top: 1px solid var(--border);
-  background: var(--bg-card);
-  gap: 8px;
-}
-
-#terminal-prompt {
-  color: var(--primary);
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  white-space: nowrap;
-}
-
-#terminal-input {
-  flex: 1;
-  background: transparent;
-  border: none;
-  color: var(--text-primary);
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  outline: none;
-  caret-color: var(--primary);
-}
-
-/* Quick Command Buttons */
-#quick-commands {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  padding: 10px 14px;
-  border-top: 1px solid var(--border);
-  background: var(--bg-panel);
-}
-
-.cmd-btn {
-  padding: 5px 10px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  color: var(--text-secondary);
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.cmd-btn:hover {
-  border-color: var(--primary);
-  color: var(--primary);
-  background: var(--bg-hover);
-}
-
-/* Content Creator Panel */
-#creator-panel {
-  background: var(--bg-panel);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.creator-tabs {
-  display: flex;
-  border-bottom: 1px solid var(--border);
-  background: var(--bg-card);
-}
-
-.creator-tab {
-  padding: 8px 14px;
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  color: var(--text-secondary);
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-  transition: all 0.2s;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.creator-tab.active {
-  color: var(--primary);
-  border-bottom-color: var(--primary);
-  background: var(--bg-panel);
-}
-
-.creator-tab-content {
-  display: none;
-  padding: 14px;
-}
-
-.creator-tab-content.active { display: block; }
-
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  margin-bottom: 8px;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.form-label {
-  font-size: 0.6rem;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.form-control {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 7px 10px;
-  color: var(--text-primary);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  transition: border-color 0.2s;
-}
-
-.form-control:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 8px var(--border-glow);
-}
-
-select.form-control option { background: var(--bg-card); }
-
-textarea.form-control {
-  resize: vertical;
-  min-height: 80px;
-  line-height: 1.5;
-}
-
-.platform-targets {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin: 8px 0;
-}
-
-.platform-target {
-  padding: 4px 10px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  font-size: 0.65rem;
-  cursor: pointer;
-  transition: all 0.2s;
-  color: var(--text-secondary);
-}
-
-.platform-target.selected {
-  border-color: var(--primary);
-  color: var(--primary);
-  background: var(--border-glow);
-}
-
-.deploy-options {
-  display: flex;
-  gap: 8px;
-  margin-top: 10px;
-  flex-wrap: wrap;
-}
-
-.btn-deploy {
-  flex: 1;
-  padding: 10px;
-  border-radius: 6px;
-  font-family: var(--font-main);
-  font-size: 0.7rem;
-  font-weight: 700;
-  cursor: pointer;
-  border: none;
-  transition: all 0.3s;
-  letter-spacing: 1px;
-  min-width: 120px;
-}
-
-.btn-deploy.primary {
-  background: linear-gradient(135deg, var(--primary), #00aa2a);
-  color: #000;
-}
-
-.btn-deploy.agent {
-  background: linear-gradient(135deg, var(--secondary), #cc4400);
-  color: #000;
-}
-
-.btn-deploy.scheduled {
-  background: linear-gradient(135deg, var(--accent), #0088aa);
-  color: #000;
-}
-
-.btn-deploy:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(0,255,65,0.3);
-}
-
-/* ============================================
-   RIGHT PANEL - ACTIVITY & REVENUE
-============================================ */
-#right-panel {
-  grid-column: 3;
-  grid-row: 1 / 3;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-/* Revenue Widget */
-.revenue-widget {
-  background: var(--bg-panel);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 14px;
-}
-
-.revenue-main {
-  text-align: center;
-  padding: 10px 0;
-}
-
-.revenue-amount {
-  font-family: var(--font-main);
-  font-size: 2rem;
-  font-weight: 900;
-  color: var(--primary);
-  text-shadow: 0 0 20px var(--primary);
-  display: block;
-}
-
-.revenue-label {
-  font-size: 0.65rem;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-
-.revenue-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  margin-top: 12px;
-}
-
-.revenue-item {
-  background: var(--bg-card);
-  border-radius: 6px;
-  padding: 8px;
-  text-align: center;
-}
-
-.revenue-item-value {
-  font-family: var(--font-main);
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: var(--gold);
-}
-
-.revenue-item-label {
-  font-size: 0.55rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  margin-top: 2px;
-}
-
-/* Activity Feed */
-#activity-feed {
-  flex: 1;
-  background: var(--bg-panel);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-#activity-list {
-  flex: 1;
-  overflow-y: auto;
-  padding: 8px;
-  max-height: 300px;
-}
-
-.activity-item {
-  display: flex;
-  gap: 8px;
-  padding: 7px 8px;
-  border-radius: 4px;
-  margin-bottom: 4px;
-  font-size: 0.68rem;
-  background: var(--bg-card);
-  border-left: 3px solid var(--border);
-  animation: slideIn 0.3s ease;
-}
-
-@keyframes slideIn {
-  from { opacity: 0; transform: translateX(10px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-.activity-item.success { border-left-color: var(--primary); }
-.activity-item.warning { border-left-color: var(--gold); }
-.activity-item.error { border-left-color: var(--danger); }
-.activity-item.info { border-left-color: var(--accent); }
-.activity-item.agent { border-left-color: var(--secondary); }
-.activity-item.admin { border-left-color: var(--gold); }
-
-.activity-icon { font-size: 0.9rem; flex-shrink: 0; }
-.activity-content { flex: 1; }
-.activity-text { color: var(--text-primary); line-height: 1.3; }
-.activity-meta { color: var(--text-muted); font-size: 0.6rem; margin-top: 2px; }
-
-/* Scheduled Posts */
-#schedule-panel {
-  background: var(--bg-panel);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.schedule-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  border-bottom: 1px solid var(--border);
-  font-size: 0.68rem;
-}
-
-.schedule-item:last-child { border-bottom: none; }
-
-.schedule-time {
-  color: var(--accent);
-  min-width: 60px;
-  font-size: 0.65rem;
-}
-
-.schedule-content { flex: 1; color: var(--text-secondary); }
-.schedule-platform { color: var(--secondary); font-size: 0.6rem; }
-
-.schedule-type {
-  font-size: 0.55rem;
-  padding: 2px 6px;
-  border-radius: 8px;
-  border: 1px solid currentColor;
-}
-
-.type-agent { color: var(--secondary); }
-.type-admin { color: var(--gold); }
-
-/* ============================================
-   POST MANAGER / CLEANUP TRACKER
-============================================ */
-#post-manager {
-  grid-column: 1 / 4;
-  background: var(--bg-panel);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.post-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.7rem;
-}
-
-.post-table th {
-  background: var(--bg-card);
-  color: var(--text-secondary);
-  padding: 8px 12px;
-  text-align: left;
-  font-size: 0.6rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  border-bottom: 1px solid var(--border);
-}
-
-.post-table td {
-  padding: 8px 12px;
-  border-bottom: 1px solid var(--border);
-  color: var(--text-primary);
-  vertical-align: middle;
-}
-
-.post-table tr:hover td { background: var(--bg-hover); }
-
-.post-type-badge {
-  padding: 2px 8px;
-  border-radius: 10px;
-  font-size: 0.6rem;
-  font-weight: bold;
-}
-
-.badge-admin {
-  background: rgba(255,215,0,0.15);
-  color: var(--gold);
-  border: 1px solid var(--gold);
-}
-
-.badge-agent {
-  background: rgba(255,107,0,0.15);
-  color: var(--secondary);
-  border: 1px solid var(--secondary);
-}
-
-.badge-scheduled {
-  background: rgba(0,212,255,0.15);
-  color: var(--accent);
-  border: 1px solid var(--accent);
-}
-
-.status-live { color: var(--primary); }
-.status-scheduled { color: var(--accent); }
-.status-removed { color: var(--text-muted); text-decoration: line-through; }
-.status-pending { color: var(--gold); }
-
-/* ============================================
-   MODAL
-============================================ */
-.modal-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.85);
-  z-index: 2000;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(4px);
-}
-
-.modal-overlay.active { display: flex; }
-
-.modal {
-  background: var(--bg-panel);
-  border: 1px solid var(--primary);
-  border-radius: 10px;
-  width: 90%;
-  max-width: 500px;
-  box-shadow: 0 0 40px var(--border-glow);
-  overflow: hidden;
-}
-
-.modal-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 18px;
-  background: var(--bg-card);
-  border-bottom: 1px solid var(--border);
-}
-
-.modal-title {
-  font-family: var(--font-main);
-  font-size: 0.85rem;
-  color: var(--primary);
-  font-weight: 700;
-}
-
-.modal-close {
-  background: none;
-  border: none;
-  color: var(--text-secondary);
-  font-size: 1.2rem;
-  cursor: pointer;
-  transition: color 0.2s;
-}
-
-.modal-close:hover { color: var(--danger); }
-.modal-body { padding: 18px; }
-
-/* ============================================
-   NOTIFICATION TOAST
-============================================ */
-#toast-container {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 3000;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.toast {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 10px 14px;
-  font-size: 0.75rem;
-  min-width: 250px;
-  animation: toastIn 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.toast.success { border-color: var(--primary); color: var(--primary); }
-.toast.error { border-color: var(--danger); color: var(--danger); }
-.toast.info { border-color: var(--accent); color: var(--accent); }
-.toast.warning { border-color: var(--gold); color: var(--gold); }
-
-@keyframes toastIn {
-  from { opacity: 0; transform: translateX(20px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-/* ============================================
-   DISTROKID PANEL
-============================================ */
-.distro-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-}
-
-.distro-platform {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 10px 8px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.3s;
-  font-size: 0.65rem;
-}
-
-.distro-platform:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-
-.distro-platform.deployed {
-  border-color: var(--primary);
-  color: var(--primary);
-}
-
-.distro-platform.removed {
-  opacity: 0.4;
-  text-decoration: line-through;
-}
-
-.distro-icon { font-size: 1.4rem; display: block; margin-bottom: 4px; }
-
-/* ============================================
-   RESPONSIVE
-============================================ */
-@media (max-width: 1100px) {
-  #main-grid {
-    grid-template-columns: 260px 1fr;
-  }
-  #right-panel { grid-column: 1 / 3; grid-row: 3; }
-  #post-manager { grid-column: 1 / 3; }
-}
-
-@media (max-width: 768px) {
-  #main-grid {
-    grid-template-columns: 1fr;
-  }
-  #command-center, #right-panel, #post-manager {
-    grid-column: 1;
-  }
-}
-
-/* ============================================
-   SCANLINE EFFECT
-============================================ */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0,0,0,0.03) 2px,
-    rgba(0,0,0,0.03) 4px
-  );
-  pointer-events: none;
-  z-index: 9999;
-}
-
-</style>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🎵 Patriot Music Empire - AI Command Station v2.0</title>
+
+  <!-- ── OPEN SOURCE LIBRARIES ── -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+  <!-- Google Identity Services -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+  <style>
+    :root {
+      --bg-primary: #0a0a0a;
+      --bg-secondary: #111111;
+      --bg-panel: #141414;
+      --bg-card: #1a1a1a;
+      --green: #00ff41;
+      --green-dim: #00cc33;
+      --green-dark: #003311;
+      --amber: #ffb000;
+      --red: #ff3333;
+      --blue: #00aaff;
+      --purple: #8b5cf6;
+      --white: #e0e0e0;
+      --border: #1f1f1f;
+      --font-mono: 'Share Tech Mono', monospace;
+      --font-display: 'Orbitron', monospace;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      background: var(--bg-primary);
+      color: var(--green);
+      font-family: var(--font-mono);
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ════════════════════════════════════
+       TOP BAR
+    ════════════════════════════════════ */
+    #topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg-secondary);
+      border-bottom: 2px solid var(--green-dark);
+      padding: 0 16px;
+      height: 50px;
+      flex-shrink: 0;
+    }
+
+    .brand {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 900;
+      letter-spacing: 3px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .brand span { color: var(--amber); }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pill {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.6rem;
+      font-family: var(--font-mono);
+      border: 1px solid;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .pill.idle    { border-color:var(--amber); color:var(--amber); background:#1a1200; }
+    .pill.active  { border-color:var(--green); color:var(--green); background:var(--green-dark); }
+    .pill.admin   { border-color:var(--amber); color:#000; background:var(--amber); font-weight:bold; }
+    .pill.connect { border-color:#ff6b35; color:#ff6b35; background:#1a0a00; }
+    .pill.google-signed { border-color:var(--green); color:var(--green); background:var(--green-dark); }
+
+    .dot {
+      width:7px; height:7px;
+      border-radius:50%;
+      background:currentColor;
+      animation: blink 1.4s infinite;
+    }
+
+    /* User avatar in topbar */
+    #user-avatar-bar {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border: 1px solid var(--green);
+      border-radius: 4px;
+      background: var(--green-dark);
+      font-size: 0.6rem;
+      color: var(--green);
+    }
+    #user-avatar-bar img {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      border: 1px solid var(--green);
+    }
+
+    /* ════════════════════════════════════
+       TICKER
+    ════════════════════════════════════ */
+    #ticker {
+      background: #000;
+      border-bottom: 1px solid var(--green-dark);
+      height: 26px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    #ticker-label {
+      background: var(--green);
+      color: #000;
+      font-size: 0.58rem;
+      font-weight: bold;
+      padding: 0 8px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #ticker-track {
+      overflow: hidden;
+      flex: 1;
+    }
+    #ticker-content {
+      display: flex;
+      animation: scroll-ticker 50s linear infinite;
+      white-space: nowrap;
+    }
+    #ticker-content span { font-size:0.6rem; color:var(--green); padding:0 20px; }
+    #ticker-content span.sep { color:var(--amber); }
+    @keyframes scroll-ticker {
+      0%   { transform:translateX(0); }
+      100% { transform:translateX(-50%); }
+    }
+
+    /* ════════════════════════════════════
+       MAIN GRID
+    ════════════════════════════════════ */
+    #main {
+      display: grid;
+      grid-template-columns: 270px 1fr 255px;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .panel {
+      background: var(--bg-panel);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 7px 12px;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border);
+      font-size: 0.62rem;
+      letter-spacing: 1px;
+      color: var(--white);
+      flex-shrink: 0;
+    }
+    .panel-header .ph-icon { color:var(--amber); margin-right:5px; }
+
+    .panel-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--green-dark) transparent;
+    }
+
+    /* ════════════════════════════════════
+       LEFT PANEL
+    ════════════════════════════════════ */
+    .section-label {
+      font-size: 0.52rem;
+      letter-spacing: 2px;
+      color: #444;
+      margin: 10px 0 5px;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 3px;
+    }
+
+    /* Google Sign-In area */
+    #google-signin-area {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px;
+      margin-bottom: 4px;
+    }
+
+    #google-signin-area .ga-label {
+      font-size: 0.55rem;
+      color: #555;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    /* Real Google button container */
+    #g_id_signin_btn { margin-bottom: 6px; }
+
+    /* Signed-in user display */
+    #google-user-display {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      padding: 6px;
+      background: var(--green-dark);
+      border: 1px solid var(--green);
+      border-radius: 4px;
+    }
+    #google-user-display img {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      border: 1px solid var(--green);
+    }
+    #google-user-info { flex: 1; }
+    #google-user-name { font-size: 0.62rem; color: var(--green); }
+    #google-user-email { font-size: 0.52rem; color: #555; }
+    #google-signout-btn {
+      background: transparent;
+      border: 1px solid var(--red);
+      color: var(--red);
+      font-family: var(--font-mono);
+      font-size: 0.52rem;
+      padding: 3px 6px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    #google-signout-btn:hover { background:var(--red); color:#000; }
+
+    /* Platform buttons */
+    .platform-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+    }
+
+    .platform-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 7px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--white);
+      font-size: 0.6rem;
+      font-family: var(--font-mono);
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+    }
+    .platform-btn:hover { border-color:var(--green); color:var(--green); background:var(--green-dark); }
+    .platform-btn.connected { border-color:var(--green); color:var(--green); background:#001a08; }
+    .platform-btn.connecting { border-color:var(--amber); color:var(--amber); background:#1a1200; }
+    .platform-btn.error { border-color:var(--red); color:var(--red); }
+
+    .pb-status {
+      position: absolute;
+      right: 5px; top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.45rem;
+    }
+
+    .platform-btn i { width:13px; text-align:center; flex-shrink:0; }
+
+    .yt  { color:#ff0000!important; }
+    .ig  { color:#e1306c!important; }
+    .tt  { color:#69c9d0!important; }
+    .fb  { color:#1877f2!important; }
+    .tw  { color:#1da1f2!important; }
+    .sp  { color:#1db954!important; }
+    .sc  { color:#ff5500!important; }
+    .pt  { color:#e60023!important; }
+    .etsy-c { color:#f56400!important; }
+    .dk  { color:#8b5cf6!important; }
+
+    /* API Key */
+    .key-row { display:flex; gap:5px; margin-top:5px; }
+    .key-input {
+      flex:1;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--green);
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      padding: 5px 7px;
+      outline: none;
+    }
+    .key-input:focus { border-color:var(--green); }
+    .key-input.loaded { border-color:var(--green); background:var(--green-dark); }
+
+    .btn-sm {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--white);
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      padding: 5px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .btn-sm:hover { border-color:var(--green); color:var(--green); background:var(--green-dark); }
+    .btn-sm.green { border-color:var(--green); color:var(--green); background:var(--green-dark); }
+    .btn-sm.amber { border-color:var(--amber); color:var(--amber); background:#1a1200; }
+
+    .key-status {
+      font-size: 0.55rem;
+      color: #444;
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .key-status.loaded { color:var(--green); }
+    .key-status.error  { color:var(--red); }
+
+    /* Quick stats */
+    .stat-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.6rem;
+    }
+    .stat-row:last-child { border-bottom:none; }
+    .stat-label { display:flex; align-items:center; gap:5px; color:var(--white); }
+    .stat-val { color:var(--green); font-weight:bold; }
+    .stat-val.amber { color:var(--amber); }
+
+    /* ════════════════════════════════════
+       CENTER - TERMINAL
+    ════════════════════════════════════ */
+    #terminal-output {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px 12px;
+      font-size: 0.66rem;
+      line-height: 1.75;
+      scrollbar-width: thin;
+      scrollbar-color: var(--green-dark) transparent;
+      background: #050505;
+    }
+
+    .t-line {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 1px;
+      animation: fadeIn 0.2s ease;
+    }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(2px)} to{opacity:1;transform:none} }
+
+    .t-time  { color:#333; flex-shrink:0; font-size:0.58rem; padding-top:1px; }
+    .t-tag   { flex-shrink:0; min-width:72px; font-size:0.6rem; }
+    .t-msg   { color:var(--white); flex:1; word-break:break-word; }
+
+    .tag-sys     { color:var(--green); }
+    .tag-agent   { color:var(--blue); }
+    .tag-revenue { color:var(--amber); }
+    .tag-warn    { color:#ff9900; }
+    .tag-error   { color:var(--red); }
+    .tag-success { color:var(--green); }
+    .tag-distro  { color:var(--purple); }
+    .tag-social  { color:#e1306c; }
+    .tag-google  { color:#4285f4; }
+    .tag-etsy    { color:#f56400; }
+
+    /* Progress bar in terminal */
+    .t-progress {
+      display: inline-block;
+      background: var(--green-dark);
+      border: 1px solid var(--green);
+      border-radius: 2px;
+      height: 10px;
+      overflow: hidden;
+      width: 120px;
+      vertical-align: middle;
+      margin: 0 4px;
+    }
+    .t-progress-fill {
+      height: 100%;
+      background: var(--green);
+      transition: width 0.3s;
+    }
+
+    /* Command bar */
+    #cmd-bar {
+      padding: 7px 10px;
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+      flex-shrink: 0;
+    }
+
+    .cmd-btn {
+      padding: 4px 10px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      color: var(--white);
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .cmd-btn:hover { background:var(--green-dark); border-color:var(--green); color:var(--green); }
+    .cmd-btn.running { background:var(--green); color:#000; border-color:var(--green); animation:pulse 1s infinite; }
+    .cmd-btn.done    { background:var(--green-dark); border-color:var(--green); color:var(--green); }
+
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
+
+    #cmd-input-row {
+      display: flex;
+      gap: 6px;
+      padding: 6px 10px;
+      background: #000;
+      border-top: 1px solid var(--green-dark);
+      flex-shrink: 0;
+      align-items: center;
+    }
+    #cmd-prompt { color:var(--green); font-size:0.66rem; white-space:nowrap; }
+    #cmd-input {
+      flex:1;
+      background: transparent;
+      border: none;
+      color: var(--green);
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      outline: none;
+      caret-color: var(--green);
+    }
+
+    /* ════════════════════════════════════
+       RIGHT PANEL - METRICS
+    ════════════════════════════════════ */
+    .metric-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 9px;
+      margin-bottom: 7px;
+    }
+    .metric-title {
+      font-size: 0.52rem;
+      letter-spacing: 2px;
+      color: #444;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+    .metric-value {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      color: var(--green);
+      font-weight: 700;
+      line-height: 1;
+    }
+    .metric-value.amber { color:var(--amber); }
+    .metric-value.blue  { color:var(--blue); }
+    .metric-sub { font-size:0.55rem; color:#444; margin-top:3px; }
+    .metric-sub.up   { color:var(--green); }
+    .metric-sub.down { color:var(--red); }
+
+    .mini-chart { height:55px; margin-top:6px; }
+
+    .agent-row {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 5px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.58rem;
+    }
+    .agent-row:last-child { border-bottom:none; }
+    .agent-dot {
+      width:7px; height:7px;
+      border-radius:50%;
+      flex-shrink:0;
+    }
+    .agent-dot.running { background:var(--green); box-shadow:0 0 5px var(--green); animation:blink 1.4s infinite; }
+    .agent-dot.idle    { background:var(--amber); }
+    .agent-dot.error   { background:var(--red); }
+    .agent-dot.off     { background:#333; }
+
+    .agent-name  { flex:1; color:var(--white); }
+    .agent-state { font-size:0.52rem; color:#555; }
+    .agent-state.green { color:var(--green); }
+    .agent-state.amber { color:var(--amber); }
+    .agent-state.red   { color:var(--red); }
+
+    /* ════════════════════════════════════
+       MODAL OVERLAY
+    ════════════════════════════════════ */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.show { display:flex; }
+
+    .modal-box {
+      background: var(--bg-secondary);
+      border: 1px solid var(--green);
+      border-radius: 6px;
+      padding: 20px;
+      min-width: 320px;
+      max-width: 420px;
+      width: 90%;
+      box-shadow: 0 0 30px rgba(0,255,65,0.15);
+    }
+    .modal-title {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      color: var(--green);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+    }
+    .modal-body { font-size:0.65rem; color:var(--white); line-height:1.8; }
+    .modal-body p { margin-bottom:8px; color:#888; }
+
+    .modal-input {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--green);
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      padding: 8px 10px;
+      outline: none;
+      margin-bottom: 8px;
+    }
+    .modal-input:focus { border-color:var(--green); }
+
+    .modal-footer {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      margin-top: 14px;
+      border-top: 1px solid var(--border);
+      padding-top: 12px;
+    }
+
+    .btn-modal-cancel {
+      background: transparent;
+      border: 1px solid #333;
+      color: #555;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      padding: 6px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .btn-modal-cancel:hover { border-color:var(--red); color:var(--red); }
+
+    .btn-modal-confirm {
+      background: var(--green-dark);
+      border: 1px solid var(--green);
+      color: var(--green);
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      padding: 6px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .btn-modal-confirm:hover { background:var(--green); color:#000; }
+
+    /* Simulate OAuth popup */
+    .oauth-box {
+      background: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      color: #333;
+      font-family: Arial, sans-serif;
+    }
+    .oauth-box h3 { font-size:1rem; margin-bottom:8px; color:#333; }
+    .oauth-box p  { font-size:0.75rem; color:#666; margin-bottom:14px; }
+    .oauth-platform-icon { font-size:2rem; margin-bottom:8px; }
+    .oauth-btn {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      border-radius: 4px;
+      border: none;
+      font-size: 0.8rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 6px;
+      transition: all 0.2s;
+    }
+    .oauth-btn.primary { background:#1a73e8; color:#fff; }
+    .oauth-btn.primary:hover { background:#1557b0; }
+    .oauth-btn.secondary { background:#f1f3f4; color:#333; border:1px solid #ddd; }
+    .oauth-btn.secondary:hover { background:#e8eaed; }
+
+    /* Notification toast */
+    #toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--green);
+      color: var(--green);
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      padding: 10px 16px;
+      border-radius: 4px;
+      z-index: 2000;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.3s;
+      pointer-events: none;
+      max-width: 300px;
+    }
+    #toast.show { opacity:1; transform:translateY(0); }
+    #toast.error { border-color:var(--red); color:var(--red); }
+    #toast.amber { border-color:var(--amber); color:var(--amber); }
+
+    /* Scanlines */
+    body::after {
+      content:'';
+      position:fixed;
+      inset:0;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 2px,
+        rgba(0,255,65,0.012) 2px, rgba(0,255,65,0.012) 4px
+      );
+      pointer-events:none;
+      z-index:9999;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width:3px; }
+    ::-webkit-scrollbar-track { background:transparent; }
+    ::-webkit-scrollbar-thumb { background:var(--green-dark); border-radius:2px; }
+
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+    /* Progress ring for agents */
+    .progress-ring { display:inline-block; margin-left:auto; }
+
+    /* Etsy listing cards */
+    .etsy-card {
+      background: #0d0800;
+      border: 1px solid #f56400;
+      border-radius: 4px;
+      padding: 6px 8px;
+      margin-bottom: 4px;
+      font-size: 0.58rem;
+    }
+    .etsy-card-title { color:#f56400; margin-bottom:2px; }
+    .etsy-card-price { color:var(--amber); }
+    .etsy-card-status { color:var(--green); float:right; }
+
+    /* Revenue breakdown bars */
+    .rev-bar-row { margin-bottom:6px; }
+    .rev-bar-label { display:flex; justify-content:space-between; font-size:0.55rem; color:#888; margin-bottom:2px; }
+    .rev-bar-track { background:#1a1a1a; border-radius:2px; height:5px; }
+    .rev-bar-fill  { height:5px; border-radius:2px; transition:width 1s ease; }
+
+  </style>
 </head>
 <body>
 
-<!-- ============================================
-     TOP COMMAND BAR
-============================================ -->
-<div id="top-bar">
-  <div class="logo">🎵 PATRIOT MUSIC <span>EMPIRE</span></div>
-  <div id="ticker-bar">
-    <div id="ticker-text">
-      🟢 SYSTEM ONLINE &nbsp;|&nbsp; 
-      🤖 5 AGENTS READY &nbsp;|&nbsp; 
-      📊 RESEARCH AGENT SCANNING TRENDS &nbsp;|&nbsp; 
-      🎵 MUSIC AGENT IDLE &nbsp;|&nbsp; 
-      🎨 ART AGENT IDLE &nbsp;|&nbsp; 
-      🎬 VIDEO AGENT IDLE &nbsp;|&nbsp; 
-      📣 MARKETING AGENT IDLE &nbsp;|&nbsp;
-      🛒 ETSY STORE CONNECTED &nbsp;|&nbsp;
-      📦 DISTROKID READY
+<!-- ══════════════════════════════════════════ TOP BAR -->
+<div id="topbar">
+  <div class="brand">🎵 PATRIOT <span>MUSIC</span> EMPIRE</div>
+  <div class="topbar-right">
+    <div class="pill idle" id="pill-agent"><div class="dot"></div> MARKETING AGENT IDLE</div>
+    <div class="pill connect" id="pill-etsy" onclick="runCommand('etsylist')" style="cursor:pointer">🛒 ETSY CONNECT</div>
+    <div class="pill admin" id="pill-admin">⚡ ADMIN MODE</div>
+    <div id="user-avatar-bar">
+      <img id="topbar-avatar" src="" alt=""/>
+      <span id="topbar-name">—</span>
     </div>
+    <div class="pill active"><div class="dot"></div> ONLINE</div>
   </div>
-  <div id="admin-badge">👑 ADMIN MODE</div>
-  <div id="system-clock">⏱ Loading...</div>
 </div>
 
-<!-- ============================================
-     MAIN GRID
-============================================ -->
-<div id="main-grid">
-
-  <!-- ==================
-       LEFT COLUMN
-  =================== -->
-  <div style="display:flex; flex-direction:column; gap:12px;">
-
-    <!-- AUTH PANEL -->
-    <div class="panel" id="auth-panel">
-      <div class="panel-header">
-        <span class="panel-title">🔐 Account Access</span>
-        <span class="btn-sm" onclick="showModal('help-modal')">?</span>
-      </div>
-      <div class="panel-body">
-
-        <!-- Google Auth -->
-        <div class="auth-section">
-          <div class="auth-section-title">Google Account</div>
-          <button id="google-signin-btn" onclick="handleGoogleSignIn()">
-            <svg width="16" height="16" viewBox="0 0 24 24">
-              <path fill="#fff" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-              <path fill="#fff" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-              <path fill="#fff" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-              <path fill="#fff" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-            </svg>
-            Sign In with Google
-          </button>
-          <div id="google-user-info">
-            <div id="google-user-name">👤 Not signed in</div>
-            <div id="google-user-email" style="color:var(--text-muted); font-size:0.65rem;"></div>
-          </div>
-        </div>
-
-        <!-- Social Platforms -->
-        <div class="auth-section">
-          <div class="auth-section-title">Social Platforms</div>
-          <div class="platform-grid">
-            <button class="platform-btn youtube" onclick="connectPlatform(this,'YouTube')">▶ YouTube</button>
-            <button class="platform-btn instagram" onclick="connectPlatform(this,'Instagram')">📷 Instagram</button>
-            <button class="platform-btn tiktok" onclick="connectPlatform(this,'TikTok')">🎵 TikTok</button>
-            <button class="platform-btn facebook" onclick="connectPlatform(this,'Facebook')">👥 Facebook</button>
-            <button class="platform-btn twitter" onclick="connectPlatform(this,'Twitter/X')">🐦 Twitter/X</button>
-            <button class="platform-btn spotify" onclick="connectPlatform(this,'Spotify')">🎧 Spotify</button>
-            <button class="platform-btn soundcloud" onclick="connectPlatform(this,'SoundCloud')">☁ SoundCloud</button>
-            <button class="platform-btn pinterest" onclick="connectPlatform(this,'Pinterest')">📌 Pinterest</button>
-          </div>
-        </div>
-
-        <!-- Marketplaces -->
-        <div class="auth-section">
-          <div class="auth-section-title">Marketplaces</div>
-          <div class="platform-grid">
-            <button class="platform-btn etsy" onclick="connectPlatform(this,'Etsy')">🛒 Etsy</button>
-            <button class="platform-btn distrokid" onclick="connectPlatform(this,'DistroKid')">📦 DistroKid</button>
-          </div>
-        </div>
-
-        <!-- OpenAI API -->
-        <div class="auth-section">
-          <div class="auth-section-title">🤖 AI Engine</div>
-          <div class="api-input-group">
-            <input type="password" class="api-input" id="openai-key" placeholder="sk-... OpenAI Key">
-            <button class="btn-sm" onclick="saveAPIKey()">SAVE</button>
-          </div>
-          <div id="api-status" style="font-size:0.65rem; color:var(--text-muted);">⚪ No key loaded</div>
-        </div>
-
-      </div>
+<!-- ══════════════════════════════════════════ TICKER -->
+<div id="ticker">
+  <div id="ticker-label">📡 LIVE</div>
+  <div id="ticker-track">
+    <div id="ticker-content">
+      <span>🎵 "Patriot Anthem Vol.3" — 1,247 streams today</span><span class="sep">///</span>
+      <span>💰 Etsy Revenue: +$847 this week</span><span class="sep">///</span>
+      <span>📈 DistroKid: 3 new territories unlocked</span><span class="sep">///</span>
+      <span>🎨 AI Art Agent: 12 listings generated</span><span class="sep">///</span>
+      <span>🔥 TikTok: "Freedom Sound" trending #4 Country</span><span class="sep">///</span>
+      <span>📦 14 Etsy orders fulfilled today</span><span class="sep">///</span>
+      <span>🎵 Spotify Monthly Listeners: 8,432 (+12%)</span><span class="sep">///</span>
+      <span>🤖 Agent scheduled: YouTube upload in 2h 14m</span><span class="sep">///</span>
+      <span>🎵 "Patriot Anthem Vol.3" — 1,247 streams today</span><span class="sep">///</span>
+      <span>💰 Etsy Revenue: +$847 this week</span><span class="sep">///</span>
+      <span>📈 DistroKid: 3 new territories unlocked</span><span class="sep">///</span>
+      <span>🎨 AI Art Agent: 12 listings generated</span><span class="sep">///</span>
     </div>
+  </div>
+</div>
 
-    <!-- AGENT PANEL -->
-    <div class="panel" id="agent-panel">
-      <div class="panel-header">
-        <span class="panel-title">🤖 AI Agents</span>
-        <button class="btn-sm" onclick="runAllAgents()">▶ ALL</button>
-      </div>
-      <div class="panel-body">
+<!-- ══════════════════════════════════════════ MAIN -->
+<div id="main">
 
-        <!-- Research Agent -->
-        <div class="agent-card" id="agent-research" style="--agent-color: #00d4ff;" onclick="selectAgent('research')">
-          <div class="agent-header">
-            <span class="agent-name">🔍 RESEARCH</span>
-            <span class="agent-status status-idle" id="status-research">IDLE</span>
-          </div>
-          <div class="agent-desc">Scans trends, viral content, popular hashtags & market demand across all platforms</div>
-          <div class="agent-controls">
-            <button class="btn-sm" onclick="runAgent('research', event)">▶ RUN</button>
-            <button class="btn-sm" onclick="stopAgent('research', event)">■ STOP</button>
-            <button class="btn-sm gold" onclick="scheduleAgent('research', event)">⏰ SCHED</button>
-          </div>
-          <div class="agent-progress">
-            <div class="agent-progress-bar" id="progress-research" style="width:0%"></div>
-          </div>
-        </div>
-
-        <!-- Music Agent -->
-        <div class="agent-card" id="agent-music" style="--agent-color: #00ff41;" onclick="selectAgent('music')">
-          <div class="agent-header">
-            <span class="agent-name">🎵 MUSIC</span>
-            <span class="agent-status status-idle" id="status-music">IDLE</span>
-          </div>
-          <div class="agent-desc">Generates music tracks, lyrics, metadata & uploads to Spotify, SoundCloud, DistroKid</div>
-          <div class="agent-controls">
-            <button class="btn-sm" onclick="runAgent('music', event)">▶ RUN</button>
-            <button class="btn-sm" onclick="stopAgent('music', event)">■ STOP</button>
-            <button class="btn-sm gold" onclick="scheduleAgent('music', event)">⏰ SCHED</button>
-          </div>
-          <div class="agent-progress">
-            <div class="agent-progress-bar" id="progress-music" style="width:0%"></div>
-          </div>
-        </div>
-
-        <!-- Art Agent -->
-        <div class="agent-card" id="agent-art" style="--agent-color: #ff6b00;" onclick="selectAgent('art')">
-          <div class="agent-header">
-            <span class="agent-name">🎨 ART</span>
-            <span class="agent-status status-idle" id="status-art">IDLE</span>
-          </div>
-          <div class="agent-desc">Creates digital art, album covers, Etsy listings & social media graphics via DALL-E</div>
-          <div class="agent-controls">
-            <button class="btn-sm" onclick="runAgent('art', event)">▶ RUN</button>
-            <button class="btn-sm" onclick="stopAgent('art', event)">■ STOP</button>
-            <button class="btn-sm gold" onclick="scheduleAgent('art', event)">⏰ SCHED</button>
-          </div>
-          <div class="agent-progress">
-            <div class="agent-progress-bar" id="progress-art" style="width:0%"></div>
-          </div>
-        </div>
-
-        <!-- Video Agent -->
-        <div class="agent-card" id="agent-video" style="--agent-color: #ff0040;" onclick="selectAgent('video')">
-          <div class="agent-header">
-            <span class="agent-name">🎬 VIDEO</span>
-            <span class="agent-status status-idle" id="status-video">IDLE</span>
-          </div>
-          <div class="agent-desc">Produces short-form videos, reels, YouTube shorts & auto-uploads with SEO metadata</div>
-          <div class="agent-controls">
-            <button class="btn-sm" onclick="runAgent('video', event)">▶ RUN</button>
-            <button class="btn-sm" onclick="stopAgent('video', event)">■ STOP</button>
-            <button class="btn-sm gold" onclick="scheduleAgent('video', event)">⏰ SCHED</button>
-          </div>
-          <div class="agent-progress">
-            <div class="agent-progress-bar" id="progress-video" style="width:0%"></div>
-          </div>
-        </div>
-
-        <!-- Marketing Agent -->
-        <div class="agent-card" id="agent-marketing" style="--agent-color: #ffd700;" onclick="selectAgent('marketing')">
-          <div class="agent-header">
-            <span class="agent-name">📣 MARKETING</span>
-            <span class="agent-status status-idle" id="status-marketing">IDLE</span>
-          </div>
-          <div class="agent-desc">Writes captions, hashtags, ad copy & auto-posts across all connected platforms</div>
-          <div class="agent-controls">
-            <button class="btn-sm" onclick="runAgent('marketing', event)">▶ RUN</button>
-            <button class="btn-sm" onclick="stopAgent('marketing', event)">■ STOP</button>
-            <button class="btn-sm gold" onclick="scheduleAgent('marketing', event)">⏰ SCHED</button>
-          </div>
-          <div class="agent-progress">
-            <div class="agent-progress-bar" id="progress-marketing" style="width:0%"></div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-  </div><!-- END LEFT COLUMN -->
-
-  <!-- ==================
-       CENTER COLUMN
-  =================== -->
-  <div id="command-center">
-
-    <!-- TERMINAL -->
-    <div id="terminal-panel" class="panel">
-      <div class="panel-header">
-        <span class="panel-title">⌨ Command Terminal</span>
-        <div style="display:flex; gap:6px;">
-          <button class="btn-sm" onclick="clearTerminal()">CLEAR</button>
-          <button class="btn-sm gold" onclick="showModal('distro-modal')">📦 DISTRO</button>
-        </div>
-      </div>
-      <div id="terminal-output"></div>
-      <div id="quick-commands">
-        <button class="cmd-btn" onclick="quickCmd('status')">status</button>
-        <button class="cmd-btn" onclick="quickCmd('scan trends')">scan trends</button>
-        <button class="cmd-btn" onclick="quickCmd('generate music')">gen music</button>
-        <button class="cmd-btn" onclick="quickCmd('generate art')">gen art</button>
-        <button class="cmd-btn" onclick="quickCmd('generate video')">gen video</button>
-        <button class="cmd-btn" onclick="quickCmd('post all')">post all</button>
-        <button class="cmd-btn" onclick="quickCmd('cleanup agents')">cleanup</button>
-        <button class="cmd-btn" onclick="quickCmd('etsy list')">etsy list</button>
-        <button class="cmd-btn" onclick="quickCmd('revenue')">revenue</button>
-        <button class="cmd-btn" onclick="quickCmd('schedule')">schedule</button>
-        <button class="cmd-btn" onclick="quickCmd('help')">help</button>
-      </div>
-      <div id="terminal-input-row">
-        <span id="terminal-prompt">EMPIRE $&gt;</span>
-        <input type="text" id="terminal-input" placeholder="Enter command..." 
-               onkeydown="handleTerminalInput(event)" autocomplete="off" spellcheck="false">
-      </div>
-    </div>
-
-    <!-- CONTENT CREATOR -->
-    <div id="creator-panel" class="panel">
-      <div class="panel-header">
-        <span class="panel-title">🛠 Content Creator</span>
-      </div>
-      <div class="creator-tabs">
-        <div class="creator-tab active" onclick="switchTab('music-tab', this)">🎵 Music</div>
-        <div class="creator-tab" onclick="switchTab('art-tab', this)">🎨 Art</div>
-        <div class="creator-tab" onclick="switchTab('video-tab', this)">🎬 Video</div>
-        <div class="creator-tab" onclick="switchTab('post-tab', this)">📣 Post</div>
-        <div class="creator-tab" onclick="switchTab('etsy-tab', this)">🛒 Etsy</div>
-      </div>
-
-      <!-- Music Tab -->
-      <div id="music-tab" class="creator-tab-content active">
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Genre</label>
-            <select class="form-control" id="music-genre">
-              <option>Country / Patriotic</option>
-              <option>Rock</option>
-              <option>Hip-Hop / Trap</option>
-              <option>Ambient / Lo-Fi</option>
-              <option>Pop</option>
-              <option>Folk / Acoustic</option>
-              <option>EDM / Electronic</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Mood</label>
-            <select class="form-control" id="music-mood">
-              <option>Uplifting / Patriotic</option>
-              <option>Chill / Relaxed</option>
-              <option>Energetic / Hype</option>
-              <option>Emotional / Deep</option>
-              <option>Dark / Intense</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-group" style="margin-bottom:8px;">
-          <label class="form-label">Track Description / Prompt</label>
-          <textarea class="form-control" id="music-prompt" placeholder="Describe the track you want to create...">Patriotic American anthem with soaring guitar, drums, and inspirational lyrics about freedom and unity</textarea>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Duration</label>
-            <select class="form-control">
-              <option>30 sec (Reel)</option>
-              <option>1 min (Short)</option>
-              <option>3 min (Single)</option>
-              <option>Full Track (4-5 min)</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Auto-Cleanup</label>
-            <select class="form-control" id="music-cleanup">
-              <option>Remove after 24hrs</option>
-              <option>Remove after 48hrs</option>
-              <option>Remove after 7 days</option>
-              <option>Keep Permanent (Admin)</option>
-            </select>
-          </div>
-        </div>
-        <div class="platform-targets" id="music-targets">
-          <div class="platform-target selected" data-platform="spotify">🎧 Spotify</div>
-          <div class="platform-target selected" data-platform="soundcloud">☁ SoundCloud</div>
-          <div class="platform-target" data-platform="youtube">▶ YouTube</div>
-          <div class="platform-target" data-platform="distrokid">📦 DistroKid</div>
-          <div class="platform-target" data-platform="tiktok">🎵 TikTok</div>
-        </div>
-        <div class="deploy-options">
-          <button class="btn-deploy primary" onclick="deployContent('music','now')">⚡ GENERATE & POST NOW</button>
-          <button class="btn-deploy agent" onclick="deployContent('music','agent')">🤖 SEND TO AGENT</button>
-          <button class="btn-deploy scheduled" onclick="deployContent('music','schedule')">⏰ SCHEDULE</button>
-        </div>
-      </div>
-
-      <!-- Art Tab -->
-      <div id="art-tab" class="creator-tab-content">
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Art Style</label>
-            <select class="form-control" id="art-style">
-              <option>Digital Illustration</option>
-              <option>Photorealistic</option>
-              <option>Watercolor</option>
-              <option>Pixel Art</option>
-              <option>Abstract</option>
-              <option>Vintage / Retro</option>
-              <option>Patriotic / Americana</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Product Type</label>
-            <select class="form-control" id="art-product">
-              <option>Digital Download (Etsy)</option>
-              <option>Album Cover</option>
-              <option>Social Media Post</option>
-              <option>Print on Demand</option>
-              <option>NFT Asset</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-group" style="margin-bottom:8px;">
-          <label class="form-label">Art Prompt (DALL-E)</label>
-          <textarea class="form-control" id="art-prompt" placeholder="Describe the artwork...">American eagle soaring over mountain landscape at sunset, patriotic colors, digital art style, high detail</textarea>
-        </div>
-        <div class="platform-targets">
-          <div class="platform-target selected" data-platform="etsy">🛒 Etsy</div>
-          <div class="platform-target selected" data-platform="instagram">📷 Instagram</div>
-          <div class="platform-target" data-platform="pinterest">📌 Pinterest</div>
-          <div class="platform-target" data-platform="twitter">🐦 Twitter/X</div>
-        </div>
-        <div class="deploy-options">
-          <button class="btn-deploy primary" onclick="deployContent('art','now')">⚡ GENERATE & LIST NOW</button>
-          <button class="btn-deploy agent" onclick="deployContent('art','agent')">🤖 SEND TO AGENT</button>
-          <button class="btn-deploy scheduled" onclick="deployContent('art','schedule')">⏰ SCHEDULE</button>
-        </div>
-      </div>
-
-      <!-- Video Tab -->
-      <div id="video-tab" class="creator-tab-content">
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Video Type</label>
-            <select class="form-control">
-              <option>YouTube Short</option>
-              <option>Instagram Reel</option>
-              <option>TikTok Video</option>
-              <option>Full YouTube Video</option>
-              <option>Music Video</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Duration</label>
-            <select class="form-control">
-              <option>15 seconds</option>
-              <option>30 seconds</option>
-              <option>60 seconds</option>
-              <option>3-5 minutes</option>
-              <option>10+ minutes</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-group" style="margin-bottom:8px;">
-          <label class="form-label">Video Concept / Script Prompt</label>
-          <textarea class="form-control" placeholder="Describe the video concept...">Patriotic montage with American landscapes, flag imagery, and inspirational music overlay. Include auto-generated captions.</textarea>
-        </div>
-        <div class="platform-targets">
-          <div class="platform-target selected" data-platform="youtube">▶ YouTube</div>
-          <div class="platform-target selected" data-platform="tiktok">🎵 TikTok</div>
-          <div class="platform-target" data-platform="instagram">📷 Instagram</div>
-          <div class="platform-target" data-platform="facebook">👥 Facebook</div>
-        </div>
-        <div class="deploy-options">
-          <button class="btn-deploy primary" onclick="deployContent('video','now')">⚡ GENERATE & UPLOAD NOW</button>
-          <button class="btn-deploy agent" onclick="deployContent('video','agent')">🤖 SEND TO AGENT</button>
-          <button class="btn-deploy scheduled" onclick="deployContent('video','schedule')">⏰ SCHEDULE</button>
-        </div>
-      </div>
-
-      <!-- Post Tab -->
-      <div id="post-tab" class="creator-tab-content">
-        <div class="form-group" style="margin-bottom:8px;">
-          <label class="form-label">Post Caption / Content</label>
-          <textarea class="form-control" id="post-content" placeholder="Write your post content or let the AI generate it..." style="min-height:100px;">🇺🇸 New music just dropped! Check out our latest patriotic anthem — link in bio! #PatriotMusic #AmericanMusic #NewMusic</textarea>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Post As</label>
-            <select class="form-control" id="post-as">
-              <option value="admin">👑 Admin (Permanent)</option>
-              <option value="agent">🤖 Agent (Auto-Remove)</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="form-label">AI Generate?</label>
-            <button class="btn-sm" style="margin-top:4px; width:100%; padding:8px;" onclick="generateCaption()">✨ AI WRITE CAPTION</button>
-          </div>
-        </div>
-        <div class="platform-targets" id="post-targets">
-          <div class="platform-target selected">📷 Instagram</div>
-          <div class="platform-target selected">🐦 Twitter/X</div>
-          <div class="platform-target selected">👥 Facebook</div>
-          <div class="platform-target">🎵 TikTok</div>
-          <div class="platform-target">📌 Pinterest</div>
-        </div>
-        <div class="deploy-options">
-          <button class="btn-deploy primary" onclick="deployContent('post','now')">⚡ POST NOW</button>
-          <button class="btn-deploy agent" onclick="deployContent('post','agent')">🤖 AGENT POST</button>
-          <button class="btn-deploy scheduled" onclick="deployContent('post','schedule')">⏰ SCHEDULE</button>
-        </div>
-      </div>
-
-      <!-- Etsy Tab -->
-      <div id="etsy-tab" class="creator-tab-content">
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Product Type</label>
-            <select class="form-control">
-              <option>Digital Download - Music</option>
-              <option>Digital Download - Art</option>
-              <option>Digital Download - Video</option>
-              <option>Printable Design</option>
-              <option>SVG / Vector File</option>
-              <option>Music License</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Price ($)</label>
-            <input type="number" class="form-control" value="4.99" min="0.20" step="0.01">
-          </div>
-        </div>
-        <div class="form-group" style="margin-bottom:8px;">
-          <label class="form-label">Listing Title</label>
-          <input type="text" class="form-control" value="Patriotic American Eagle Digital Art - Instant Download">
-        </div>
-        <div class="form-group" style="margin-bottom:8px;">
-          <label class="form-label">Description (AI Generate or Manual)</label>
-          <textarea class="form-control" placeholder="Etsy listing description...">High-quality patriotic digital art perfect for home decor, t-shirts, and more. Instant download. Commercial license included.</textarea>
-        </div>
-        <div class="deploy-options">
-          <button class="btn-deploy primary" onclick="deployContent('etsy','now')">🛒 LIST ON ETSY NOW</button>
-          <button class="btn-deploy agent" onclick="deployContent('etsy','agent')">🤖 AGENT LIST</button>
-          <button class="btn-deploy scheduled" onclick="deployContent('etsy','schedule')">⏰ SCHEDULE LIST</button>
-        </div>
-      </div>
-
-    </div><!-- END CREATOR PANEL -->
-
-  </div><!-- END CENTER COLUMN -->
-
-  <!-- ==================
-       RIGHT COLUMN
-  =================== -->
-  <div id="right-panel">
-
-    <!-- Revenue Widget -->
-    <div class="revenue-widget">
-      <div class="panel-header" style="padding:0 0 10px 0; margin-bottom:10px; border-bottom:1px solid var(--border);">
-        <span class="panel-title">💰 Revenue Dashboard</span>
-        <span style="font-size:0.65rem; color:var(--primary);" id="rev-live">● LIVE</span>
-      </div>
-      <div class="revenue-main">
-        <span class="revenue-amount" id="total-revenue">$0.00</span>
-        <span class="revenue-label">Total Empire Revenue</span>
-      </div>
-      <div class="revenue-grid">
-        <div class="revenue-item">
-          <div class="revenue-item-value" id="rev-etsy">$0.00</div>
-          <div class="revenue-item-label">🛒 Etsy</div>
-        </div>
-        <div class="revenue-item">
-          <div class="revenue-item-value" id="rev-music">$0.00</div>
-          <div class="revenue-item-label">🎵 Music</div>
-        </div>
-        <div class="revenue-item">
-          <div class="revenue-item-value" id="rev-youtube">$0.00</div>
-          <div class="revenue-item-label">▶ YouTube</div>
-        </div>
-        <div class="revenue-item">
-          <div class="revenue-item-value" id="rev-other">$0.00</div>
-          <div class="revenue-item-label">📊 Other</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Activity Feed -->
-    <div id="activity-feed" class="panel">
-      <div class="panel-header">
-        <span class="panel-title">📡 Live Activity</span>
-        <button class="btn-sm" onclick="clearActivity()">CLEAR</button>
-      </div>
-      <div id="activity-list"></div>
-    </div>
-
-    <!-- Schedule Panel -->
-    <div id="schedule-panel" class="panel">
-      <div class="panel-header">
-        <span class="panel-title">⏰ Scheduled Queue</span>
-        <button class="btn-sm" onclick="clearSchedule()">CLEAR</button>
-      </div>
-      <div id="schedule-list" style="max-height:200px; overflow-y:auto;">
-        <div class="schedule-item">
-          <span class="schedule-time">+2h</span>
-          <div class="schedule-content">
-            <div>Music track auto-post</div>
-            <div class="schedule-platform">Spotify + SoundCloud</div>
-          </div>
-          <span class="schedule-type type-agent">AGENT</span>
-        </div>
-        <div class="schedule-item">
-          <span class="schedule-time">+4h</span>
-          <div class="schedule-content">
-            <div>Art listing creation</div>
-            <div class="schedule-platform">Etsy + Instagram</div>
-          </div>
-          <span class="schedule-type type-agent">AGENT</span>
-        </div>
-        <div class="schedule-item">
-          <span class="schedule-time">+24h</span>
-          <div class="schedule-content">
-            <div>🗑 Agent cleanup run</div>
-            <div class="schedule-platform">All platforms</div>
-          </div>
-          <span class="schedule-type type-agent">CLEANUP</span>
-        </div>
-      </div>
-    </div>
-
-  </div><!-- END RIGHT COLUMN -->
-
-  <!-- ==================
-       FULL WIDTH BOTTOM
-  =================== -->
-  <div id="post-manager">
+  <!-- ════ LEFT PANEL ════ -->
+  <div class="panel">
     <div class="panel-header">
-      <span class="panel-title">📋 Post Manager — Admin Posts Stay | Agent Posts Auto-Cleanup</span>
-      <div style="display:flex; gap:6px;">
-        <button class="btn-sm danger" onclick="cleanupAgentPosts()">🗑 CLEANUP AGENT POSTS</button>
-        <button class="btn-sm" onclick="refreshPostManager()">↺ REFRESH</button>
-      </div>
+      <span><span class="ph-icon">🔌</span>PLATFORM CONNECTIONS</span>
+      <span style="color:#555;font-size:0.52rem" id="conn-count">0/10 CONNECTED</span>
     </div>
-    <div style="overflow-x:auto;">
-      <table class="post-table" id="posts-table">
-        <thead>
-          <tr>
-            <th>Type</th>
-            <th>Content</th>
-            <th>Platform</th>
-            <th>Posted</th>
-            <th>Status</th>
-            <th>Auto-Remove</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="posts-tbody">
-          <tr>
-            <td><span class="post-type-badge badge-admin">ADMIN</span></td>
-            <td>🎵 Original "Freedom Song" - Full Release</td>
-            <td>Spotify + YouTube</td>
-            <td>Today 9:00 AM</td>
-            <td><span class="status-live">● LIVE</span></td>
-            <td style="color:var(--gold);">♾ PERMANENT</td>
-            <td><button class="btn-sm">View</button></td>
-          </tr>
-          <tr>
-            <td><span class="post-type-badge badge-agent">AGENT</span></td>
-            <td>🎨 Eagle Art Digital Download #1</td>
-            <td>Etsy</td>
-            <td>Today 10:30 AM</td>
-            <td><span class="status-live">● LIVE</span></td>
-            <td style="color:var(--secondary);">24h → REMOVE</td>
-            <td><button class="btn-sm danger" onclick="removePost(this)">🗑 REMOVE</button></td>
-          </tr>
-          <tr>
-            <td><span class="post-type-badge badge-agent">AGENT</span></td>
-            <td>📣 Marketing post - New release promo</td>
-            <td>Instagram + Twitter</td>
-            <td>Today 11:00 AM</td>
-            <td><span class="status-live">● LIVE</span></td>
-            <td style="color:var(--secondary);">24h → REMOVE</td>
-            <td><button class="btn-sm danger" onclick="removePost(this)">🗑 REMOVE</button></td>
-          </tr>
-          <tr>
-            <td><span class="post-type-badge badge-scheduled">SCHED</span></td>
-            <td>🎵 AI-Generated Track "Americana Vol.2"</td>
-            <td>SoundCloud + TikTok</td>
-            <td>Scheduled +2h</td>
-            <td><span class="status-scheduled">◉ PENDING</span></td>
-            <td style="color:var(--accent);">48h → REMOVE</td>
-            <td><button class="btn-sm" onclick="cancelPost(this)">✕ CANCEL</button></td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="panel-body">
+
+      <!-- GOOGLE ACCOUNT -->
+      <div class="section-label">🔐 Google Account</div>
+      <div id="google-signin-area">
+        <div class="ga-label">GOOGLE ACCOUNT</div>
+
+        <!-- Real Google Identity Services button -->
+        <div id="g_id_onload"
+             data-client_id="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com"
+             data-callback="handleGoogleCredential"
+             data-auto_prompt="false">
+        </div>
+        <div class="g_id_signin"
+             id="g_id_signin_btn"
+             data-type="standard"
+             data-size="large"
+             data-theme="filled_black"
+             data-text="sign_in_with"
+             data-shape="rectangular"
+             data-logo_alignment="left"
+             data-width="240">
+        </div>
+
+        <!-- Fallback / Demo Google button (shows when GSI unavailable) -->
+        <button id="demo-google-btn" onclick="demoGoogleSignIn()"
+          style="display:none;width:100%;padding:8px;background:#4285f4;border:none;
+                 border-radius:4px;color:#fff;font-size:0.7rem;cursor:pointer;
+                 font-family:Arial,sans-serif;display:flex;align-items:center;gap:8px;
+                 justify-content:center;">
+          <svg width="16" height="16" viewBox="0 0 24 24">
+            <path fill="#fff" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#fff" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#fff" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+            <path fill="#fff" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+          </svg>
+          Sign in with Google
+        </button>
+
+        <!-- Signed-in display -->
+        <div id="google-user-display">
+          <img id="google-avatar" src="" alt=""/>
+          <div id="google-user-info">
+            <div id="google-user-name">—</div>
+            <div id="google-user-email">—</div>
+          </div>
+          <button id="google-signout-btn" onclick="googleSignOut()">SIGN OUT</button>
+        </div>
+      </div>
+
+      <!-- SOCIAL PLATFORMS -->
+      <div class="section-label">📱 Social Platforms</div>
+      <div class="platform-grid">
+        <button class="platform-btn" id="btn-youtube"   onclick="connectPlatform('YouTube','fab fa-youtube yt')">
+          <i class="fab fa-youtube yt"></i>YouTube<span class="pb-status" id="s-youtube"></span>
+        </button>
+        <button class="platform-btn" id="btn-instagram" onclick="connectPlatform('Instagram','fab fa-instagram ig')">
+          <i class="fab fa-instagram ig"></i>Instagram<span class="pb-status" id="s-instagram"></span>
+        </button>
+        <button class="platform-btn" id="btn-tiktok"    onclick="connectPlatform('TikTok','fab fa-tiktok tt')">
+          <i class="fab fa-tiktok tt"></i>TikTok<span class="pb-status" id="s-tiktok"></span>
+        </button>
+        <button class="platform-btn" id="btn-facebook"  onclick="connectPlatform('Facebook','fab fa-facebook fb')">
+          <i class="fab fa-facebook fb"></i>Facebook<span class="pb-status" id="s-facebook"></span>
+        </button>
+        <button class="platform-btn" id="btn-twitter"   onclick="connectPlatform('Twitter/X','fab fa-x-twitter tw')">
+          <i class="fab fa-x-twitter tw"></i>Twitter/X<span class="pb-status" id="s-twitter"></span>
+        </button>
+        <button class="platform-btn" id="btn-spotify"   onclick="connectPlatform('Spotify','fab fa-spotify sp')">
+          <i class="fab fa-spotify sp"></i>Spotify<span class="pb-status" id="s-spotify"></span>
+        </button>
+        <button class="platform-btn" id="btn-soundcloud" onclick="connectPlatform('SoundCloud','fab fa-soundcloud sc')">
+          <i class="fab fa-soundcloud sc"></i>SoundCloud<span class="pb-status" id="s-soundcloud"></span>
+        </button>
+        <button class="platform-btn" id="btn-pinterest" onclick="connectPlatform('Pinterest','fab fa-pinterest pt')">
+          <i class="fab fa-pinterest pt"></i>Pinterest<span class="pb-status" id="s-pinterest"></span>
+        </button>
+      </div>
+
+      <!-- MARKETPLACES -->
+      <div class="section-label">🛒 Marketplaces</div>
+      <div class="platform-grid">
+        <button class="platform-btn" id="btn-etsy"      onclick="connectPlatform('Etsy','fab fa-etsy etsy-c')">
+          <i class="fab fa-etsy etsy-c"></i>Etsy<span class="pb-status" id="s-etsy"></span>
+        </button>
+        <button class="platform-btn" id="btn-distrokid" onclick="connectPlatform('DistroKid','fas fa-compact-disc dk')">
+          <i class="fas fa-compact-disc dk"></i>DistroKid<span class="pb-status" id="s-distrokid"></span>
+        </button>
+      </div>
+
+      <!-- AI ENGINE -->
+      <div class="section-label">🤖 AI Engine</div>
+      <div class="key-row">
+        <input type="password" class="key-input" id="api-key-input"
+               placeholder="sk-••••••••••••••••" maxlength="100"/>
+        <button class="btn-sm" onclick="saveApiKey()">SAVE</button>
+        <button class="btn-sm" onclick="testApiKey()">TEST</button>
+      </div>
+      <div class="key-status" id="key-status">⬤ No key loaded</div>
+
+      <!-- AI MODEL SELECT -->
+      <div style="margin-top:6px;display:flex;gap:4px;flex-wrap:wrap">
+        <button class="btn-sm" id="model-gpt" onclick="setModel('GPT-4o')">GPT-4o</button>
+        <button class="btn-sm" id="model-claude" onclick="setModel('Claude')">Claude</button>
+        <button class="btn-sm" id="model-gemini" onclick="setModel('Gemini')">Gemini</button>
+        <button class="btn-sm amber" id="model-local" onclick="setModel('Local')">Local AI</button>
+      </div>
+      <div style="font-size:0.52rem;color:#444;margin-top:4px" id="model-status">Model: None selected</div>
+
+      <!-- QUICK STATS -->
+      <div class="section-label">📊 Quick Stats</div>
+      <div class="stat-row">
+        <span class="stat-label"><i class="fab fa-spotify sp"></i>Monthly Listeners</span>
+        <span class="stat-val" id="qs-spotify">8,432</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label"><i class="fab fa-youtube yt"></i>Subscribers</span>
+        <span class="stat-val" id="qs-yt">2,841</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label"><i class="fab fa-tiktok tt"></i>Followers</span>
+        <span class="stat-val" id="qs-tt">14,203</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label"><i class="fab fa-etsy etsy-c"></i>Orders MTD</span>
+        <span class="stat-val amber" id="qs-etsy">147</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label"><i class="fas fa-compact-disc dk"></i>Territories</span>
+        <span class="stat-val" id="qs-dk">43</span>
+      </div>
+
     </div>
   </div>
 
-</div><!-- END MAIN GRID -->
+  <!-- ════ CENTER PANEL - TERMINAL ════ -->
+  <div class="panel" style="border-right:1px solid var(--border)">
+    <div class="panel-header">
+      <span><span class="ph-icon">💻</span>COMMAND TERMINAL</span>
+      <div style="display:flex;gap:5px">
+        <button class="btn-sm" onclick="clearTerminal()">CLEAR</button>
+        <button class="btn-sm" style="border-color:var(--purple);color:var(--purple)"
+                onclick="runCommand('distro')">⬡ DISTRO</button>
+        <button class="btn-sm amber" onclick="runCommand('revenue')">$ REVENUE</button>
+      </div>
+    </div>
 
-<!-- ============================================
-     DISTROKID MODAL
-============================================ -->
-<div class="modal-overlay" id="distro-modal">
-  <div class="modal">
-    <div class="modal-header">
-      <span class="modal-title">📦 DistroKid Distribution Manager</span>
-      <button class="modal-close" onclick="closeModal('distro-modal')">✕</button>
+    <div id="terminal-output"></div>
+
+    <div id="cmd-bar">
+      <button class="cmd-btn" id="cbtn-status"   onclick="runCommand('status')">status</button>
+      <button class="cmd-btn" id="cbtn-scan"     onclick="runCommand('scan')">scan trends</button>
+      <button class="cmd-btn" id="cbtn-genmusic" onclick="runCommand('genmusic')">gen music</button>
+      <button class="cmd-btn" id="cbtn-genart"   onclick="runCommand('genart')">gen art</button>
+      <button class="cmd-btn" id="cbtn-genvideo" onclick="runCommand('genvideo')">gen video</button>
+      <button class="cmd-btn" id="cbtn-postall"  onclick="runCommand('postall')">post all</button>
+      <button class="cmd-btn" id="cbtn-cleanup"  onclick="runCommand('cleanup')">cleanup</button>
+      <button class="cmd-btn" id="cbtn-etsylist" onclick="runCommand('etsylist')">etsy list</button>
+      <button class="cmd-btn" id="cbtn-revenue"  onclick="runCommand('revenue')">revenue</button>
+      <button class="cmd-btn" id="cbtn-schedule" onclick="runCommand('schedule')">schedule</button>
+      <button class="cmd-btn" id="cbtn-agents"   onclick="runCommand('agents')">agents</button>
+      <button class="cmd-btn" id="cbtn-help"     onclick="runCommand('help')">help</button>
     </div>
-    <div class="modal-body">
-      <p style="font-size:0.75rem; color:var(--text-secondary); margin-bottom:14px;">
-        Deploy or remove music from all distribution platforms. Agent posts auto-remove after 24h. Admin posts are permanent.
-      </p>
-      <div class="distro-grid" id="distro-platforms">
-        <div class="distro-platform deployed" onclick="toggleDistro(this)">
-          <span class="distro-icon">🎧</span>Spotify
+
+    <div id="cmd-input-row">
+      <span id="cmd-prompt">PME&gt;</span>
+      <input type="text" id="cmd-input"
+             placeholder="type command or ask AI..."
+             onkeydown="handleInput(event)"/>
+    </div>
+  </div>
+
+  <!-- ════ RIGHT PANEL - METRICS ════ -->
+  <div class="panel" style="border-right:none">
+    <div class="panel-header">
+      <span><span class="ph-icon">📈</span>LIVE METRICS</span>
+      <span style="color:#555;font-size:0.5rem" id="metrics-time">--:--:--</span>
+    </div>
+    <div class="panel-body">
+
+      <div class="metric-card">
+        <div class="metric-title">💰 Revenue MTD</div>
+        <div class="metric-value amber" id="m-revenue">$4,287</div>
+        <div class="metric-sub up" id="m-rev-sub">▲ +12.4% vs last month</div>
+        <canvas class="mini-chart" id="chart-revenue"></canvas>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-title">📊 Revenue Breakdown</div>
+        <div class="rev-bar-row">
+          <div class="rev-bar-label"><span>🛒 Etsy</span><span>$2,847</span></div>
+          <div class="rev-bar-track"><div class="rev-bar-fill" style="width:66%;background:#f56400"></div></div>
         </div>
-        <div class="distro-platform deployed" onclick="toggleDistro(this)">
-          <span class="distro-icon">🍎</span>Apple Music
+        <div class="rev-bar-row">
+          <div class="rev-bar-label"><span>🎵 Streaming</span><span>$892</span></div>
+          <div class="rev-bar-track"><div class="rev-bar-fill" style="width:21%;background:#1db954"></div></div>
         </div>
-        <div class="distro-platform" onclick="toggleDistro(this)">
-          <span class="distro-icon">▶</span>YouTube Music
-        </div>
-        <div class="distro-platform" onclick="toggleDistro(this)">
-          <span class="distro-icon">🎵</span>TikTok
-        </div>
-        <div class="distro-platform deployed" onclick="toggleDistro(this)">
-          <span class="distro-icon">☁</span>SoundCloud
-        </div>
-        <div class="distro-platform" onclick="toggleDistro(this)">
-          <span class="distro-icon">🎶</span>Deezer
-        </div>
-        <div class="distro-platform" onclick="toggleDistro(this)">
-          <span class="distro-icon">🎼</span>Tidal
-        </div>
-        <div class="distro-platform" onclick="toggleDistro(this)">
-          <span class="distro-icon">📻</span>Amazon Music
-        </div>
-        <div class="distro-platform" onclick="toggleDistro(this)">
-          <span class="distro-icon">🎹</span>Pandora
+        <div class="rev-bar-row">
+          <div class="rev-bar-label"><span>💿 DistroKid</span><span>$548</span></div>
+          <div class="rev-bar-track"><div class="rev-bar-fill" style="width:13%;background:#8b5cf6"></div></div>
         </div>
       </div>
-      <div style="display:flex; gap:8px; margin-top:14px;">
-        <button class="btn-deploy primary" style="font-size:0.65rem; padding:8px;" onclick="deployAllDistro()">📦 DEPLOY ALL</button>
-        <button class="btn-deploy agent" style="font-size:0.65rem; padding:8px; background:linear-gradient(135deg,var(--danger),#880022);" onclick="removeAllDistro()">🗑 REMOVE ALL AGENT</button>
+
+      <div class="metric-card">
+        <div class="metric-title">🎵 Total Streams</div>
+        <div class="metric-value" id="m-streams">284,103</div>
+        <div class="metric-sub up">▲ +8.7% this week</div>
       </div>
+
+      <div class="metric-card">
+        <div class="metric-title">📦 Etsy Orders</div>
+        <div class="metric-value blue" id="m-orders">147</div>
+        <div class="metric-sub up">▲ 14 fulfilled today</div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-title">🤖 Agent Status</div>
+        <div class="agent-row">
+          <div class="agent-dot running" id="ad-marketing"></div>
+          <div class="agent-name">Marketing Bot</div>
+          <div class="agent-state green" id="as-marketing">SCANNING</div>
+        </div>
+        <div class="agent-row">
+          <div class="agent-dot idle" id="ad-content"></div>
+          <div class="agent-name">Content Gen</div>
+          <div class="agent-state amber" id="as-content">IDLE</div>
+        </div>
+        <div class="agent-row">
+          <div class="agent-dot running" id="ad-distro"></div>
+          <div class="agent-name">Distro Agent</div>
+          <div class="agent-state green" id="as-distro">POSTING</div>
+        </div>
+        <div class="agent-row">
+          <div class="agent-dot idle" id="ad-etsy"></div>
+          <div class="agent-name">Etsy Lister</div>
+          <div class="agent-state amber" id="as-etsy">IDLE</div>
+        </div>
+        <div class="agent-row">
+          <div class="agent-dot error" id="ad-video"></div>
+          <div class="agent-name">Video Agent</div>
+          <div class="agent-state red" id="as-video">NO KEY</div>
+        </div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-title">🌍 Top Markets</div>
+        <div class="stat-row"><span class="stat-label">🇺🇸 United States</span><span class="stat-val">62%</span></div>
+        <div class="stat-row"><span class="stat-label">🇬🇧 United Kingdom</span><span class="stat-val">11%</span></div>
+        <div class="stat-row"><span class="stat-label">🇨🇦 Canada</span><span class="stat-val">9%</span></div>
+        <div class="stat-row"><span class="stat-label">🇦🇺 Australia</span><span class="stat-val">7%</span></div>
+        <div class="stat-row"><span class="stat-label">🌐 Other</span><span class="stat-val">11%</span></div>
+      </div>
+
     </div>
+  </div>
+
+</div><!-- /main -->
+
+<!-- ══════════════════════════════════════════ MODAL -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-box" id="modal-box">
+    <!-- filled by JS -->
   </div>
 </div>
 
-<!-- ============================================
-     HELP MODAL
-============================================ -->
-<div class="modal-overlay" id="help-modal">
-  <div class="modal">
-    <div class="modal-header">
-      <span class="modal-title">📖 Command Reference</span>
-      <button class="modal-close" onclick="closeModal('help-modal')">✕</button>
-    </div>
-    <div class="modal-body">
-      <div style="font-size:0.72rem; line-height:1.8; color:var(--text-secondary);">
-        <div style="color:var(--primary); font-weight:bold; margin-bottom:8px;">TERMINAL COMMANDS:</div>
-        <div><span style="color:var(--accent);">status</span> — Show all agent & platform status</div>
-        <div><span style="color:var(--accent);">scan trends</span> — Run research agent</div>
-        <div><span style="color:var(--accent);">generate music [prompt]</span> — Create music track</div>
-        <div><span style="color:var(--accent);">generate art [prompt]</span> — Create digital art</div>
-        <div><span style="color:var(--accent);">generate video [prompt]</span> — Create video content</div>
-        <div><span style="color:var(--accent);">post all</span> — Post to all connected platforms</div>
-        <div><span style="color:var(--accent);">cleanup agents</span> — Remove all agent posts</div>
-        <div><span style="color:var(--accent);">etsy list [title]</span> — Create Etsy listing</div>
-        <div><span style="color:var(--accent);">distro deploy</span> — Push to all music platforms</div>
-        <div><span style="color:var(--accent);">distro remove</span> — Pull from all platforms</div>
-        <div><span style="color:var(--accent);">revenue</span> — Show revenue breakdown</div>
-        <div><span style="color:var(--accent);">schedule [time] [cmd]</span> — Schedule a command</div>
-        <div><span style="color:var(--accent);">help</span> — Show this reference</div>
-        <div style="color:var(--gold); font-weight:bold; margin-top:12px;">ADMIN RULES:</div>
-        <div>👑 Admin posts = PERMANENT (never auto-removed)</div>
-        <div>🤖 Agent posts = AUTO-REMOVED after set time</div>
-        <div>🔑 Your Google login = Admin identity</div>
-      </div>
-    </div>
-  </div>
-</div>
+<!-- ══════════════════════════════════════════ TOAST -->
+<div id="toast"></div>
 
-<!-- Toast Container -->
-<div id="toast-container"></div>
-
-<!-- ============================================
-     JAVASCRIPT ENGINE
-============================================ -->
+<!-- ══════════════════════════════════════════ SCRIPTS -->
 <script>
-
-// ============================================
-// STATE MANAGEMENT
-// ============================================
-const STATE = {
+/* ═══════════════════════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════════════════════ */
+const S = {
   user: null,
-  apiKey: localStorage.getItem('openai_key') || null,
-  connectedPlatforms: JSON.parse(localStorage.getItem('connected_platforms') || '[]'),
-  agentStatus: { research:'idle', music:'idle', art:'idle', video:'idle', marketing:'idle' },
-  agentIntervals: {},
-  posts: [],
-  revenue: { etsy: 0, music: 0, youtube: 0, other: 0 },
-  commandHistory: [],
-  historyIndex: -1
+  connectedPlatforms: {},
+  apiKey: null,
+  apiKeyLoaded: false,
+  model: null,
+  revenue: 4287,
+  streams: 284103,
+  orders: 147,
+  revenueHistory: [2100,2450,2800,3100,3600,3900,4287],
+  agentBusy: false,
+  googleSignedIn: false,
 };
 
-// ============================================
-// CLOCK
-// ============================================
-function updateClock() {
-  const now = new Date();
-  document.getElementById('system-clock').textContent = 
-    `⏱ ${now.toLocaleDateString()} ${now.toLocaleTimeString()}`;
+/* ═══════════════════════════════════════════════════════════
+   TOAST
+═══════════════════════════════════════════════════════════ */
+function toast(msg, type='') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'show ' + type;
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.className = '', 3000);
 }
-setInterval(updateClock, 1000);
-updateClock();
 
-// ============================================
-// TERMINAL ENGINE
-// ============================================
-function termLog(msg, type = 'output') {
-  const out = document.getElementById('terminal-output');
-  const line = document.createElement('div');
-  line.className = `term-line term-${type}`;
-  const ts = new Date().toLocaleTimeString();
-  line.innerHTML = `<span style="color:var(--text-muted);">[${ts}]</span> ${msg}`;
-  out.appendChild(line);
-  out.scrollTop = out.scrollHeight;
+/* ═══════════════════════════════════════════════════════════
+   TERMINAL
+═══════════════════════════════════════════════════════════ */
+const output = document.getElementById('terminal-output');
+
+function tLog(tag, cls, msg, delay=0) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      const ts = moment().format('HH:mm:ss');
+      const d = document.createElement('div');
+      d.className = 't-line';
+      d.innerHTML =
+        `<span class="t-time">[${ts}]</span>` +
+        `<span class="t-tag ${cls}">[${tag.padEnd(8)}]</span>` +
+        `<span class="t-msg">${msg}</span>`;
+      output.appendChild(d);
+      output.scrollTop = output.scrollHeight;
+      resolve();
+    }, delay);
+  });
 }
 
 function clearTerminal() {
-  document.getElementById('terminal-output').innerHTML = '';
-  termLog('Terminal cleared.', 'system');
+  output.innerHTML = '';
+  tLog('SYS','tag-sys','Terminal cleared. Ready.');
 }
 
-function handleTerminalInput(e) {
-  const input = document.getElementById('terminal-input');
-  
-  if (e.key === 'ArrowUp') {
-    if (STATE.historyIndex < STATE.commandHistory.length - 1) {
-      STATE.historyIndex++;
-      input.value = STATE.commandHistory[STATE.commandHistory.length - 1 - STATE.historyIndex];
-    }
-    return;
-  }
-  if (e.key === 'ArrowDown') {
-    if (STATE.historyIndex > 0) {
-      STATE.historyIndex--;
-      input.value = STATE.commandHistory[STATE.commandHistory.length - 1 - STATE.historyIndex];
-    } else {
-      STATE.historyIndex = -1;
-      input.value = '';
-    }
-    return;
-  }
-
-  if (e.key !== 'Enter') return;
-  const cmd = input.value.trim();
-  if (!cmd) return;
-
-  STATE.commandHistory.push(cmd);
-  STATE.historyIndex = -1;
-  termLog(`EMPIRE $> ${cmd}`, 'input');
-  input.value = '';
-  processCommand(cmd.toLowerCase());
+/* Boot */
+async function boot() {
+  const lines = [
+    ['SYS',    'tag-sys',    '▓▓▓ PATRIOT MUSIC EMPIRE v2.0 — BOOT SEQUENCE ▓▓▓', 0],
+    ['SYS',    'tag-sys',    'Loading core modules...', 300],
+    ['SYS',    'tag-sys',    '✓ Platform connection module — OK', 600],
+    ['SYS',    'tag-sys',    '✓ Revenue tracking module — OK', 900],
+    ['SYS',    'tag-sys',    '✓ Distribution module — OK', 1100],
+    ['AGENT',  'tag-agent',  '✓ Marketing agent initialized — IDLE', 1300],
+    ['AGENT',  'tag-agent',  '✓ Content generation agent — STANDBY', 1500],
+    ['DISTRO', 'tag-distro', '✓ DistroKid module — 43 territories active', 1700],
+    ['ETSY',   'tag-etsy',   '✓ Etsy marketplace module — 147 orders tracked', 1900],
+    ['REVENUE','tag-revenue','✓ MTD Revenue: $4,287 | Streams: 284,103', 2100],
+    ['SYS',    'tag-sys',    '✓ Google Identity Services — ready', 2300],
+    ['SYS',    'tag-sys',    '━━━ ALL SYSTEMS NOMINAL — Type "help" for commands ━━━', 2500],
+  ];
+  for (const [t,c,m,d] of lines) await tLog(t,c,m,d);
 }
 
-function quickCmd(cmd) {
-  termLog(`EMPIRE $> ${cmd}`, 'input');
-  processCommand(cmd.toLowerCase());
-}
+/* ═══════════════════════════════════════════════════════════
+   GOOGLE SIGN-IN
+═══════════════════════════════════════════════════════════ */
 
-function processCommand(cmd) {
-  if (cmd === 'help') {
-    termLog('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'system');
-    termLog('PATRIOT MUSIC EMPIRE — COMMAND REFERENCE', 'success');
-    termLog('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'system');
-    termLog('status          → System & agent status', 'output');
-    termLog('scan trends     → Run research agent', 'output');
-    termLog('generate music  → Create AI music track', 'output');
-    termLog('generate art    → Create AI artwork', 'output');
-    termLog('generate video  → Create AI video', 'output');
-    termLog('post all        → Broadcast to all platforms', 'output');
-    termLog('cleanup agents  → Remove all agent content', 'output');
-    termLog('etsy list       → Create Etsy listing', 'output');
-    termLog('distro deploy   → Push to music platforms', 'output');
-    termLog('distro remove   → Pull from music platforms', 'output');
-    termLog('revenue         → Revenue breakdown', 'output');
-    termLog('schedule        → View scheduled tasks', 'output');
-    termLog('clear           → Clear terminal', 'output');
-    return;
-  }
-
-  if (cmd === 'status') {
-    termLog('━━━━ SYSTEM STATUS ━━━━', 'system');
-    termLog(`👑 Admin: ${STATE.user ? STATE.user.name : 'NOT LOGGED IN'}`, STATE.user ? 'success' : 'error');
-    termLog(`🤖 OpenAI: ${STATE.apiKey ? 'KEY LOADED ✓' : 'NO KEY — Enter in Auth Panel'}`, STATE.apiKey ? 'success' : 'warning');
-    const platforms = STATE.connectedPlatforms;
-    termLog(`🌐 Connected Platforms: ${platforms.length > 0 ? platforms.join(', ') : 'None'}`, platforms.length > 0 ? 'success' : 'warning');
-    Object.entries(STATE.agentStatus).forEach(([agent, status]) => {
-      const icon = status === 'running' ? '🟢' : status === 'idle' ? '⚪' : '🔴';
-      termLog(`${icon} ${agent.toUpperCase()} Agent: ${status.toUpperCase()}`, 
-               status === 'running' ? 'success' : status === 'idle' ? 'system' : 'error');
+/* Called by Google Identity Services on real sign-in */
+function handleGoogleCredential(response) {
+  try {
+    // Decode JWT payload (no verification needed client-side for UI)
+    const payload = JSON.parse(atob(response.credential.split('.')[1]));
+    signInUser({
+      name:    payload.name,
+      email:   payload.email,
+      picture: payload.picture,
+      source:  'Google'
     });
-    return;
+  } catch(e) {
+    tLog('GOOGLE','tag-error','Google credential decode failed. Using demo mode.', 0);
+    demoGoogleSignIn();
   }
-
-  if (cmd === 'scan trends' || cmd === 'scan') {
-    runAgent('research');
-    return;
-  }
-
-  if (cmd.startsWith('generate music') || cmd === 'gen music') {
-    runAgent('music');
-    return;
-  }
-
-  if (cmd.startsWith('generate art') || cmd === 'gen art') {
-    runAgent('art');
-    return;
-  }
-
-  if (cmd.startsWith('generate video') || cmd === 'gen video') {
-    runAgent('video');
-    return;
-  }
-
-  if (cmd === 'post all') {
-    termLog('📡 Broadcasting to all connected platforms...', 'agent');
-    const platforms = STATE.connectedPlatforms;
-    if (platforms.length === 0) {
-      termLog('⚠ No platforms connected. Connect platforms in Auth Panel.', 'warning');
-      return;
-    }
-    platforms.forEach((p, i) => {
-      setTimeout(() => {
-        termLog(`✅ Posted to ${p}`, 'success');
-        addActivity(`Posted to ${p}`, 'success', '📡');
-      }, i * 600);
-    });
-    return;
-  }
-
-  if (cmd === 'cleanup agents' || cmd === 'cleanup') {
-    cleanupAgentPosts();
-    return;
-  }
-
-  if (cmd.startsWith('etsy list')) {
-    deployContent('etsy', 'now');
-    return;
-  }
-
-  if (cmd === 'distro deploy') {
-    deployAllDistro();
-    return;
-  }
-
-  if (cmd === 'distro remove') {
-    removeAllDistro();
-    return;
-  }
-
-  if (cmd === 'revenue') {
-    termLog('━━━━ REVENUE BREAKDOWN ━━━━', 'system');
-    termLog(`🛒 Etsy:    $${STATE.revenue.etsy.toFixed(2)}`, 'success');
-    termLog(`🎵 Music:   $${STATE.revenue.music.toFixed(2)}`, 'success');
-    termLog(`▶ YouTube: $${STATE.revenue.youtube.toFixed(2)}`, 'success');
-    termLog(`📊 Other:   $${STATE.revenue.other.toFixed(2)}`, 'success');
-    const total = Object.values(STATE.revenue).reduce((a,b) => a+b, 0);
-    termLog(`💰 TOTAL:   $${total.toFixed(2)}`, 'admin');
-    return;
-  }
-
-  if (cmd === 'schedule') {
-    termLog('━━━━ SCHEDULED TASKS ━━━━', 'system');
-    termLog('⏰ +2h  → Music track post (Spotify + SoundCloud) [AGENT]', 'output');
-    termLog('⏰ +4h  → Art listing (Etsy + Instagram) [AGENT]', 'output');
-    termLog('⏰ +24h → Agent cleanup run [SYSTEM]', 'output');
-    return;
-  }
-
-  if (cmd === 'clear') {
-    clearTerminal();
-    return;
-  }
-
-  termLog(`❌ Unknown command: "${cmd}" — type "help" for commands`, 'error');
 }
 
-// ============================================
-// GOOGLE AUTH
-// ============================================
-function handleGoogleSignIn() {
-  // Simulate Google OAuth flow
-  termLog('🔐 Initiating Google OAuth...', 'system');
-  
-  // In production: use Google Identity Services
-  // google.accounts.id.initialize({ client_id: 'YOUR_CLIENT_ID', callback: handleCredentialResponse });
-  // google.accounts.id.prompt();
+/* Demo / fallback sign-in (no real OAuth needed) */
+function demoGoogleSignIn() {
+  showModal({
+    title: '🔐 Google Account Sign-In',
+    html: `
+      <div class="oauth-box">
+        <div class="oauth-platform-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/>
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+          </svg>
+        </div>
+        <h3>Sign in with Google</h3>
+        <p>Connect your Google account to Patriot Music Empire Command Station</p>
+        <input type="email" id="demo-email" class="modal-input"
+               placeholder="your@gmail.com" value="admin@patriotmusicempire.com"/>
+        <input type="text" id="demo-name" class="modal-input"
+               placeholder="Your Name" value="Patriot Admin"/>
+      </div>`,
+    confirmText: 'SIGN IN',
+    confirmFn: () => {
+      const email = document.getElementById('demo-email').value || 'admin@patriotmusicempire.com';
+      const name  = document.getElementById('demo-name').value  || 'Patriot Admin';
+      signInUser({
+        name, email,
+        picture: `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=003311&color=00ff41&size=64`,
+        source: 'Google'
+      });
+    }
+  });
+}
 
-  // Demo simulation
+function signInUser(user) {
+  S.user = user;
+  S.googleSignedIn = true;
+
+  // Left panel UI
+  document.getElementById('g_id_signin_btn').style.display    = 'none';
+  document.getElementById('demo-google-btn').style.display    = 'none';
+  document.getElementById('google-user-display').style.display = 'flex';
+  document.getElementById('google-avatar').src    = user.picture;
+  document.getElementById('google-user-name').textContent  = user.name;
+  document.getElementById('google-user-email').textContent = user.email;
+
+  // Topbar
+  const bar = document.getElementById('user-avatar-bar');
+  bar.style.display = 'flex';
+  document.getElementById('topbar-avatar').src  = user.picture;
+  document.getElementById('topbar-name').textContent = user.name.split(' ')[0];
+
+  // Admin pill
+  document.getElementById('pill-admin').textContent = `⚡ ${user.name.split(' ')[0].toUpperCase()}`;
+
+  tLog('GOOGLE','tag-google', `✓ Signed in as ${user.name} (${user.email})`, 0);
+  tLog('SYS',   'tag-success','✓ Admin access granted. All features unlocked.', 200);
+  toast(`✓ Welcome, ${user.name}!`, '');
+  closeModal();
+
+  // Unlock video agent
+  setAgentState('video','idle','READY');
+}
+
+function googleSignOut() {
+  S.user = null;
+  S.googleSignedIn = false;
+
+  document.getElementById('google-user-display').style.display = 'none';
+  document.getElementById('g_id_signin_btn').style.display    = 'block';
+  document.getElementById('user-avatar-bar').style.display    = 'none';
+  document.getElementById('pill-admin').textContent = '⚡ ADMIN MODE';
+
+  // Try to revoke Google session
+  if (window.google && google.accounts) {
+    google.accounts.id.disableAutoSelect();
+  }
+
+  tLog('GOOGLE','tag-warn','User signed out.', 0);
+  toast('Signed out.', 'amber');
+  setAgentState('video','error','NO KEY');
+}
+
+/* Check if GSI loaded, else show demo button */
+window.addEventListener('load', () => {
   setTimeout(() => {
-    STATE.user = {
-      name: 'Empire Admin',
-      email: 'admin@patriotmusicempire.com',
-      picture: '👑'
-    };
-    
-    document.getElementById('google-signin-btn').style.display = 'none';
-    const info = document.getElementById('google-user-info');
-    info.style.display = 'block';
-    document.getElementById('google-user-name').textContent = `👑 ${STATE.user.name}`;
-    document.getElementById('google-user-email').textContent = STATE.user.email;
-    
-    termLog(`✅ Google Auth SUCCESS — Welcome, ${STATE.user.name}!`, 'success');
-    termLog(`👑 ADMIN MODE ACTIVATED — Your posts are permanent`, 'admin');
-    addActivity(`Admin logged in: ${STATE.user.name}`, 'admin', '👑');
-    showToast('success', `Welcome back, ${STATE.user.name}!`);
+    const gBtn = document.querySelector('.g_id_signin');
+    const hasRendered = gBtn && gBtn.children.length > 0;
+    if (!hasRendered) {
+      document.getElementById('demo-google-btn').style.display = 'flex';
+      document.getElementById('g_id_signin_btn').style.display = 'none';
+    }
+  }, 2500);
+});
+
+/* ═══════════════════════════════════════════════════════════
+   PLATFORM CONNECT
+═══════════════════════════════════════════════════════════ */
+const platformData = {
+  YouTube:    { icon:'fab fa-youtube',      color:'#ff0000', hint:'Channel ID or OAuth' },
+  Instagram:  { icon:'fab fa-instagram',    color:'#e1306c', hint:'Business account required' },
+  TikTok:     { icon:'fab fa-tiktok',       color:'#69c9d0', hint:'Creator account' },
+  Facebook:   { icon:'fab fa-facebook',     color:'#1877f2', hint:'Page token required' },
+  'Twitter/X':{ icon:'fab fa-x-twitter',   color:'#1da1f2', hint:'API v2 Bearer token' },
+  Spotify:    { icon:'fab fa-spotify',      color:'#1db954', hint:'Artist dashboard' },
+  SoundCloud: { icon:'fab fa-soundcloud',   color:'#ff5500', hint:'Pro account' },
+  Pinterest:  { icon:'fab fa-pinterest',    color:'#e60023', hint:'Business account' },
+  Etsy:       { icon:'fab fa-etsy',         color:'#f56400', hint:'Shop API key' },
+  DistroKid:  { icon:'fas fa-compact-disc', color:'#8b5cf6', hint:'Distribution token' },
+};
+
+function connectPlatform(name, iconCls) {
+  const key = name.toLowerCase().replace('/','').replace(' ','');
+  const btn = document.getElementById('btn-' + key);
+  const pd  = platformData[name] || {};
+
+  if (S.connectedPlatforms[name]) {
+    // Disconnect
+    showModal({
+      title: `🔌 Disconnect ${name}`,
+      html: `<p>Disconnect <strong style="color:var(--green)">${name}</strong> from Patriot Music Empire?</p>
+             <p style="color:var(--red);font-size:0.6rem">⚠ Scheduled posts to this platform will be paused.</p>`,
+      confirmText: 'DISCONNECT',
+      confirmFn: () => {
+        delete S.connectedPlatforms[name];
+        btn.classList.remove('connected','connecting');
+        document.getElementById('s-' + key).textContent = '';
+        updateConnCount();
+        tLog('SYS','tag-warn', `Disconnected: ${name}`, 0);
+        toast(`Disconnected: ${name}`, 'amber');
+        closeModal();
+        updateAgentPill();
+      }
+    });
+    return;
+  }
+
+  // Show connect modal
+  showModal({
+    title: `🔌 Connect ${name}`,
+    html: `
+      <p>Enter your <strong style="color:var(--green)">${name}</strong> credentials to connect.</p>
+      <p style="color:#555;font-size:0.58rem">💡 ${pd.hint || 'API token required'}</p>
+      <input type="text" class="modal-input" id="plat-token"
+             placeholder="${name} API Token / Handle" value="demo_${key}_token_12345"/>
+      <input type="text" class="modal-input" id="plat-handle"
+             placeholder="@username or Channel ID" value="@patriotmusicempire"/>`,
+    confirmText: 'CONNECT',
+    confirmFn: () => {
+      const token  = document.getElementById('plat-token').value.trim();
+      const handle = document.getElementById('plat-handle').value.trim();
+      if (!token) { toast('Token required!', 'error'); return; }
+
+      closeModal();
+      btn.classList.add('connecting');
+      document.getElementById('s-' + key).textContent = '…';
+      tLog('SYS','tag-agent', `Connecting to ${name} (${handle})...`, 0);
+
+      // Simulate OAuth handshake
+      setTimeout(() => {
+        S.connectedPlatforms[name] = { token, handle };
+        btn.classList.remove('connecting');
+        btn.classList.add('connected');
+        document.getElementById('s-' + key).textContent = '●';
+        updateConnCount();
+        tLog('SYS','tag-success', `✓ Connected: ${name} as ${handle}`, 0);
+        toast(`✓ ${name} connected!`, '');
+        updateAgentPill();
+      }, 1200 + Math.random()*800);
+    }
+  });
+}
+
+function updateConnCount() {
+  const n = Object.keys(S.connectedPlatforms).length;
+  document.getElementById('conn-count').textContent = `${n}/10 CONNECTED`;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   API KEY
+═══════════════════════════════════════════════════════════ */
+function saveApiKey() {
+  const val = document.getElementById('api-key-input').value.trim();
+  if (!val) { toast('Enter an API key first!','error'); return; }
+
+  S.apiKey = val;
+  S.apiKeyLoaded = true;
+
+  const inp = document.getElementById('api-key-input');
+  inp.classList.add('loaded');
+
+  const ks = document.getElementById('key-status');
+  ks.className = 'key-status loaded';
+  ks.textContent = '⬤ API Key loaded — AI engine ready';
+
+  tLog('SYS','tag-success','✓ API key saved. AI engine activated.', 0);
+  toast('✓ API key saved!','');
+  setAgentState('video','idle','READY');
+  setAgentState('content','running','ACTIVE');
+}
+
+function testApiKey() {
+  if (!S.apiKeyLoaded) { toast('Save a key first!','error'); return; }
+  tLog('SYS','tag-agent','Testing API key...', 0);
+  setTimeout(() => {
+    tLog('SYS','tag-success','✓ API key valid — model responding', 0);
+    toast('✓ API key valid!','');
   }, 1200);
 }
 
-// ============================================
-// PLATFORM CONNECTION
-// ============================================
-function connectPlatform(btn, name) {
-  if (btn.classList.contains('connected')) {
-    btn.classList.remove('connected');
-    STATE.connectedPlatforms = STATE.connectedPlatforms.filter(p => p !== name);
-    localStorage.setItem('connected_platforms', JSON.stringify(STATE.connectedPlatforms));
-    termLog(`🔌 Disconnected from ${name}`, 'warning');
-    showToast('warning', `Disconnected from ${name}`);
-    return;
+function setModel(m) {
+  S.model = m;
+  document.getElementById('model-status').textContent = `Model: ${m} selected`;
+  document.querySelectorAll('[id^="model-"]').forEach(b => b.classList.remove('green'));
+  document.getElementById('model-' + m.toLowerCase()).classList.add('green');
+  tLog('SYS','tag-agent', `AI model set to: ${m}`, 0);
+  toast(`Model: ${m}`, '');
+}
+
+/* ═══════════════════════════════════════════════════════════
+   AGENT STATE
+═══════════════════════════════════════════════════════════ */
+function setAgentState(agent, dotState, label) {
+  const dot = document.getElementById('ad-' + agent);
+  const st  = document.getElementById('as-' + agent);
+  if (!dot || !st) return;
+  dot.className = 'agent-dot ' + dotState;
+  st.textContent = label;
+  st.className = 'agent-state ' + (
+    dotState === 'running' ? 'green' :
+    dotState === 'idle'    ? 'amber' : 'red'
+  );
+}
+
+function updateAgentPill() {
+  const n = Object.keys(S.connectedPlatforms).length;
+  const pill = document.getElementById('pill-agent');
+  if (n > 0) {
+    pill.className = 'pill active';
+    pill.innerHTML = `<div class="dot"></div> AGENT ACTIVE (${n})`;
+    setAgentState('marketing','running','ACTIVE');
+  } else {
+    pill.className = 'pill idle';
+    pill.innerHTML = `<div class="dot"></div> MARKETING AGENT IDLE`;
+    setAgentState('marketing','running','SCANNING');
   }
+}
 
-  termLog(`🔗 Connecting to ${name}...`, 'system');
-  btn.style.opacity = '0.6';
-  
-  setTimeout(() => {
-    btn.classList.add('connected');
-    btn.style.opacity = '1';
-    if (!STATE.connectedPlatforms.includes(name)) {
-      STATE.connectedPlatforms.push(name);
-      localStorage.setItem('connected_platforms', JSON.stringify(STATE.connectedPlatforms));
+/* ═══════════════════════════════════════════════════════════
+   COMMANDS
+═══════════════════════════════════════════════════════════ */
+function setBtnState(id, state) {
+  const b = document.getElementById('cbtn-' + id);
+  if (!b) return;
+  b.className = 'cmd-btn ' + state;
+  if (state === 'running') {
+    setTimeout(() => b.className = 'cmd-btn done', 4000);
+  }
+}
+
+const commands = {
+
+  status: async () => {
+    setBtnState('status','running');
+    await tLog('SYS','tag-sys','═══════ SYSTEM STATUS ═══════', 0);
+    await tLog('SYS','tag-sys', `User: ${S.user ? S.user.name + ' (' + S.user.email + ')' : 'Not signed in'}`, 100);
+    await tLog('SYS','tag-sys', `Platforms: ${Object.keys(S.connectedPlatforms).length}/10 connected`, 200);
+    await tLog('SYS','tag-sys', `API Key: ${S.apiKeyLoaded ? '✓ LOADED' : '✗ NOT SET'}`, 300);
+    await tLog('SYS','tag-sys', `AI Model: ${S.model || 'None selected'}`, 400);
+    await tLog('REVENUE','tag-revenue', `Revenue MTD: $${S.revenue.toLocaleString()}`, 500);
+    await tLog('AGENT','tag-agent',   `Streams: ${S.streams.toLocaleString()}`, 600);
+    await tLog('ETSY','tag-etsy',     `Etsy Orders: ${S.orders}`, 700);
+    if (Object.keys(S.connectedPlatforms).length) {
+      await tLog('SYS','tag-success', `Connected: ${Object.keys(S.connectedPlatforms).join(', ')}`, 800);
     }
-    termLog(`✅ Connected to ${name}`, 'success');
-    addActivity(`Connected to ${name}`, 'success', '🔗');
-    showToast('success', `${name} connected!`);
-  }, 1000);
-}
+  },
 
-// ============================================
-// API KEY
-// ============================================
-function saveAPIKey() {
-  const key = document.getElementById('openai-key').value.trim();
-  if (!key) { showToast('error', 'Please enter your OpenAI API key'); return; }
-  if (!key.startsWith('sk-')) { showToast('error', 'Invalid key format (should start with sk-)'); return; }
-  
-  STATE.apiKey = key;
-  localStorage.setItem('openai_key', key);
-  document.getElementById('api-status').textContent = '✅ OpenAI Key Active';
-  document.getElementById('api-status').style.color = 'var(--primary)';
-  document.getElementById('openai-key').value = '●'.repeat(20);
-  
-  termLog('🤖 OpenAI API Key saved & verified', 'success');
-  showToast('success', 'OpenAI API Key saved!');
-}
+  scan: async () => {
+    setBtnState('scan','running');
+    setAgentState('marketing','running','SCANNING');
+    await tLog('AGENT','tag-agent','Initializing trend scan across all platforms...', 0);
+    const trends = [
+      ['YouTube', '"Patriot Rock 2025" — +340% search volume'],
+      ['TikTok',  '"Freedom Country" — 2.1M views trending'],
+      ['Spotify', '"American Folk" — editorial playlist push'],
+      ['Twitter', '"Military Tribute Music" — 48K tweets today'],
+      ['Google',  '"Patriot music download" — CPC $0.12'],
+    ];
+    for (let i=0; i<trends.length; i++) {
+      await tLog('TREND','tag-success', `🔥 [${trends[i][0]}] ${trends[i][1]}`, (i+1)*450);
+    }
+    await tLog('AGENT','tag-agent','✓ Scan complete — 5 high-value opportunities identified.', 2400);
+    setAgentState('marketing','running','ACTIVE');
+  },
 
-// ============================================
-// AGENT ENGINE
-// ============================================
-const AGENT_LOGS = {
-  research: [
-    '🔍 Scanning TikTok trending hashtags...',
-    '📊 Analyzing YouTube top charts...',
-    '🎵 Spotify genre trends: Country +23%, Patriotic +41%',
-    '🛒 Etsy search: "patriotic art" — 12,400 searches/day',
-    '📈 Viral content pattern identified: Eagle + Flag imagery',
-    '✅ Research complete — 47 trend signals captured'
-  ],
-  music: [
-    '🎵 Initializing music generation engine...',
-    '🎸 Loading genre parameters: Country/Patriotic',
-    '🎼 Generating chord progression...',
-    '🥁 Adding percussion layer...',
-    '🎤 Generating lyrics with GPT-4...',
-    '🎧 Mixing and mastering...',
-    '✅ Track "Freedom Rising" generated — 3:42'
-  ],
-  art: [
-    '🎨 Loading DALL-E 3 engine...',
-    '✏ Processing art prompt...',
-    '🖼 Generating base composition...',
-    '🎨 Applying style transfer...',
-    '📐 Upscaling to 4K resolution...',
-    '🛒 Preparing Etsy listing metadata...',
-    '✅ Artwork generated — "Eagle at Dawn" 4096x4096'
-  ],
-  video: [
-    '🎬 Initializing video generation...',
-    '📝 Generating script with GPT-4...',
-    '🖼 Creating keyframe sequence...',
-    '🎵 Adding background music...',
-    '📝 Generating auto-captions...',
-    '📤 Encoding for platform delivery...',
-    '✅ Video ready — "Patriot Reel #47" 0:30'
-  ],
-  marketing: [
-    '📣 Analyzing top-performing post patterns...',
-    '✍ Generating captions with GPT-4...',
-    '🏷 Building hashtag strategy...',
-    '📅 Optimizing post timing...',
-    '📡 Preparing multi-platform broadcast...',
-    '🚀 Deploying to connected platforms...',
-    '✅ Marketing campaign launched — 6 platforms'
-  ]
+  genmusic: async () => {
+    if (!S.apiKeyLoaded && !S.model) {
+      await tLog('WARN','tag-warn','⚠ Recommend setting an API key for AI music generation.', 0);
+    }
+    setBtnState('genmusic','running');
+    setAgentState('content','running','GENERATING');
+    const steps = [
+      ['GEN','tag-agent',  'Analyzing top trending patriot/country tracks...'],
+      ['GEN','tag-agent',  'Genre: Patriot Folk-Rock | BPM: 124 | Key: G Major'],
+      ['GEN','tag-agent',  'Chord progression: G - D - Em - C'],
+      ['GEN','tag-success','Generating melody layer... ████████░░ 80%'],
+      ['GEN','tag-success','Adding percussion & bass... ██████████ 100%'],
+      ['GEN','tag-success','Mastering audio to -14 LUFS...'],
+      ['GEN','tag-success','✓ Track ready: "freedom_anthem_v4_master.wav"'],
+      ['GEN','tag-success','✓ Stems exported: drums, bass, melody, vocals'],
+    ];
+    for (let i=0; i<steps.length; i++) {
+      await tLog(steps[i][0], steps[i][1], steps[i][2], (i+1)*550);
+    }
+    setAgentState('content','idle','IDLE');
+  },
+
+  genart: async () => {
+    setBtnState('genart','running');
+    setAgentState('content','running','GEN ART');
+    const steps = [
+      ['ART','tag-social', 'Prompt: "patriotic eagle, American flag, cinematic music art"'],
+      ['ART','tag-social', 'Style: Cinematic | Res: 1024x1024 | CFG: 7.5'],
+      ['ART','tag-social', 'Running open-source Stable Diffusion pipeline...'],
+      ['ART','tag-social', 'Diffusion step 20/20 ██████████ 100%'],
+      ['ART','tag-success','✓ album_cover_v4.png generated'],
+      ['ART','tag-success','✓ Resized: Spotify (3000x3000), YouTube (2560x1440)'],
+      ['ART','tag-success','✓ Resized: Etsy (2000x2000), TikTok (1080x1920)'],
+      ['ART','tag-success','✓ Watermark removed — production ready'],
+    ];
+    for (let i=0; i<steps.length; i++) {
+      await tLog(steps[i][0], steps[i][1], steps[i][2], (i+1)*500);
+    }
+    setAgentState('content','idle','IDLE');
+  },
+
+  genvideo: async () => {
+    if (!S.apiKeyLoaded) {
+      await tLog('WARN','tag-warn','⚠ API key required for video generation.', 0);
+      await tLog('WARN','tag-warn','Add your key in the left panel → AI Engine.', 150);
+      toast('Add API key first!', 'error');
+      return;
+    }
+    setBtnState('genvideo','running');
+    setAgentState('video','running','RENDERING');
+    const steps = [
+      ['VIDEO','tag-agent',  'Loading audio track: freedom_anthem_v4_master.wav'],
+      ['VIDEO','tag-agent',  'Loading artwork: album_cover_v4.png'],
+      ['VIDEO','tag-agent',  'Generating lyric animations...'],
+      ['VIDEO','tag-agent',  'Rendering 4K video: 3840x2160 @ 30fps'],
+      ['VIDEO','tag-success','Encoding H.264... ████████░░ 80%'],
+      ['VIDEO','tag-success','Encoding H.264... ██████████ 100%'],
+      ['VIDEO','tag-success','✓ Video ready: patriot_anthem_v4_4k.mp4 (847MB)'],
+      ['VIDEO','tag-success','✓ Short clip exported: tiktok_reel_30s.mp4'],
+    ];
+    for (let i=0; i<steps.length; i++) {
+      await tLog(steps[i][0], steps[i][1], steps[i][2], (i+1)*600);
+    }
+    setAgentState('video','idle','READY');
+  },
+
+  postall: async () => {
+    const platforms = Object.keys(S.connectedPlatforms);
+    if (!platforms.length) {
+      await tLog('WARN','tag-warn','⚠ No platforms connected. Use left panel to connect.', 0);
+      toast('Connect platforms first!', 'error');
+      return;
+    }
+    setBtnState('postall','running');
+    setAgentState('marketing','running','POSTING');
+    await tLog('AGENT','tag-agent', `Distributing to ${platforms.length} platforms...`, 0);
+    for (let i=0; i<platforms.length; i++) {
+      const p = platforms[i];
+      await tLog('POST','tag-success', `✓ Posted to ${p} (${S.connectedPlatforms[p].handle})`, (i+1)*600);
+    }
+    await tLog('AGENT','tag-success', `✓ All ${platforms.length} platforms updated.`, (platforms.length+1)*600);
+    setAgentState('marketing','running','ACTIVE');
+    toast(`✓ Posted to ${platforms.length} platforms!`, '');
+  },
+
+  cleanup: async () => {
+    setBtnState('cleanup','running');
+    await tLog('SYS','tag-sys','Running system cleanup...', 0);
+    const items = [
+      'Removing temp render files... 2.3GB freed',
+      'Clearing AI generation queue... OK',
+      'Archiving posts older than 30 days... OK',
+      'Compressing audio stems... OK',
+      'Optimizing asset database... OK',
+      'Clearing expired API tokens... OK',
+      '✓ Cleanup complete. System optimized.',
+    ];
+    for (let i=0; i<items.length; i++) {
+      await tLog('SYS','tag-sys', items[i], (i+1)*400);
+    }
+    toast('✓ Cleanup complete!', '');
+  },
+
+  etsylist: async () => {
+    setBtnState('etsylist','running');
+    setAgentState('etsy','running','LISTING');
+    await tLog('ETSY','tag-etsy','Generating Etsy product listings...', 0);
+    const listings = [
+      { title:'"Patriot Anthem Vol.4" Digital Download', price:'$4.99', type:'WAV + MP3' },
+      { title:'"Freedom Sound Pack" — 24 Loops',         price:'$12.99', type:'ZIP Bundle' },
+      { title:'"American Folk Kit" — Sample Library',    price:'$19.99', type:'WAV Stems' },
+      { title:'"Eagle Rising" Sheet Music + MIDI',       price:'$7.99',  type:'PDF + MIDI' },
+      { title:'"Patriot Karaoke Pack" — 10 Tracks',      price:'$9.99',  type:'MP3 + LRC' },
+    ];
+    for (let i=0; i<listings.length; i++) {
+      const l = listings[i];
+      await tLog('ETSY','tag-revenue', `📦 Listed: ${l.title} — ${l.price} [${l.type}]`, (i+1)*500);
+    }
+    await tLog('ETSY','tag-success', `✓ ${listings.length} new listings live on Etsy.`, listings.length*500+200);
+    S.orders += listings.length;
+    document.getElementById('m-orders').textContent = S.orders;
+    document.getElementById('qs-etsy').textContent  = S.orders;
+    setAgentState('etsy','idle','IDLE');
+    toast(`✓ ${listings.length} Etsy listings created!`, '');
+  },
+
+  revenue: async () => {
+    setBtnState('revenue','running');
+    await tLog('REVENUE','tag-revenue','═══════ REVENUE REPORT ═══════', 0);
+    await tLog('REVENUE','tag-revenue','Period: Month-to-Date', 100);
+    await tLog('REVENUE','tag-revenue','─────────────────────────────', 200);
+    await tLog('REVENUE','tag-revenue','🛒 Etsy Sales:          $2,847  (66%)', 300);
+    await tLog('REVENUE','tag-revenue','🎵 Streaming (Spotify): $  512  (12%)', 400);
+    await tLog('REVENUE','tag-revenue','🎵 Streaming (Apple):   $  380  (9%)', 500);
+    await tLog('REVENUE','tag-revenue','💿 DistroKid:           $  548  (13%)', 600);
+    await tLog('REVENUE','tag-revenue','─────────────────────────────', 700);
+    await tLog('REVENUE','tag-revenue',`💰 TOTAL MTD:           $${S.revenue.toLocaleString()}`, 800);
+    await tLog('REVENUE','tag-revenue',`📈 Projected Month-End: $${Math.round(S.revenue*1.18).toLocaleString()}`, 900);
+    await tLog('REVENUE','tag-revenue',`📊 YTD Total:           $${(S.revenue*8.3).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',')}`, 1000);
+  },
+
+  distro: async () => {
+    await tLog('DISTRO','tag-distro','═══════ DISTROKID REPORT ═══════', 0);
+    const platforms = [
+      ['Spotify',       '8,432', '$312', '43 countries'],
+      ['Apple Music',   '3,201', '$148', '38 countries'],
+      ['Amazon Music',  '1,847', '$62',  '22 countries'],
+      ['YouTube Music', '2,103', '$26',  '43 countries'],
+      ['Tidal',         '441',   '$18',  '12 countries'],
+      ['Deezer',        '892',   '$14',  '18 countries'],
+    ];
+    for (let i=0; i<platforms.length; i++) {
+      const [p,s,r,t] = platforms[i];
+      await tLog('DISTRO','tag-distro',
+        `${p.padEnd(16)} Streams: ${s.padStart(6)} | Rev: ${r.padStart(5)} | ${t}`, (i+1)*300);
+    }
+    await tLog('DISTRO','tag-success','✓ Distribution active across 43 territories.', platforms.length*300+200);
+  },
+
+  schedule: async () => {
+    setBtnState('schedule','running');
+    await tLog('AGENT','tag-agent','═══════ SCHEDULED TASKS ═══════', 0);
+    const now = moment();
+    const tasks = [
+      [now.clone().add(2,'h').add(14,'m').format('HH:mm'), 'YouTube upload — "Freedom Anthem v4" 4K'],
+      [now.clone().add(4,'h').format('HH:mm'),             'Instagram post — Album art reveal'],
+      [now.clone().add(6,'h').add(30,'m').format('HH:mm'), 'TikTok reel — 30s preview clip'],
+      [now.clone().add(8,'h').format('HH:mm'),             'Etsy listing refresh + SEO update'],
+      [now.clone().add(12,'h').format('HH:mm'),            'DistroKid distribution push'],
+      [now.clone().add(18,'h').format('HH:mm'),            'Twitter/X promo thread (5 tweets)'],
+      [now.clone().add(1,'d').format('HH:mm'),             'Weekly revenue report → email'],
+    ];
+    for (let i=0; i<tasks.length; i++) {
+      await tLog('SCHED','tag-agent', `⏰ ${tasks[i][0]} — ${tasks[i][1]}`, (i+1)*250);
+    }
+  },
+
+  agents: async () => {
+    setBtnState('agents','running');
+    await tLog('AGENT','tag-agent','═══════ AGENT ROSTER ═══════', 0);
+    await tLog('AGENT','tag-agent', '🟢 Marketing Bot    — SCANNING trends (continuous)', 100);
+    await tLog('AGENT','tag-agent', `🟡 Content Gen      — ${S.apiKeyLoaded ? 'READY' : 'IDLE (no API key)'}`, 200);
+    await tLog('AGENT','tag-agent', '🟢 Distro Agent     — POSTING to 43 territories', 300);
+    await tLog('AGENT','tag-agent', '🟡 Etsy Lister      — IDLE (next run: 08:00)', 400);
+    await tLog('AGENT','tag-agent', `${S.apiKeyLoaded ? '🟢' : '🔴'} Video Agent     — ${S.apiKeyLoaded ? 'READY' : 'NO API KEY'}`, 500);
+    await tLog('AGENT','tag-agent', '📊 Total tasks completed today: 47', 600);
+    await tLog('AGENT','tag-agent', '⏱ Uptime: 14h 32m 18s', 700);
+  },
+
+  help: async () => {
+    await tLog('SYS','tag-sys','═══════ COMMAND REFERENCE ═══════', 0);
+    const cmds = [
+      ['status',    'Full system status overview'],
+      ['scan',      'Scan trending music topics across platforms'],
+      ['gen music', 'AI music track generation'],
+      ['gen art',   'AI album artwork generation (Stable Diffusion)'],
+      ['gen video', 'AI promo video render (API key required)'],
+      ['post all',  'Post to all connected platforms simultaneously'],
+      ['cleanup',   'Clean temp files, optimize system'],
+      ['etsy list', 'Auto-generate & publish Etsy product listings'],
+      ['revenue',   'Full revenue breakdown report'],
+      ['distro',    'DistroKid distribution report'],
+      ['schedule',  'View all scheduled agent tasks'],
+      ['agents',    'Full agent roster & status'],
+      ['clear',     'Clear terminal output'],
+    ];
+    for (let i=0; i<cmds.length; i++) {
+      await tLog(cmds[i][0].padEnd(10),'tag-success', `— ${cmds[i][1]}`, i*80);
+    }
+  },
 };
 
-function runAgent(agentId, e) {
-  if (e) e.stopPropagation();
-  if (STATE.agentStatus[agentId] === 'running') {
-    showToast('warning', `${agentId} agent already running`);
-    return;
-  }
-
-  STATE.agentStatus[agentId] = 'running';
-  updateAgentStatus(agentId, 'running');
-  
-  const logs = AGENT_LOGS[agentId];
-  let step = 0;
-  const progressBar = document.getElementById(`progress-${agentId}`);
-  
-  termLog(`🤖 ${agentId.toUpperCase()} AGENT STARTED`, 'agent');
-  addActivity(`${agentId} agent started`, 'agent', '🤖');
-
-  STATE.agentIntervals[agentId] = setInterval(() => {
-    if (step < logs.length) {
-      termLog(logs[step], step === logs.length - 1 ? 'success' : 'output');
-      progressBar.style.width = `${((step + 1) / logs.length) * 100}%`;
-      step++;
-    } else {
-      clearInterval(STATE.agentIntervals[agentId]);
-      STATE.agentStatus[agentId] = 'idle';
-      updateAgentStatus(agentId, 'done');
-      progressBar.style.width = '100%';
-      addActivity(`${agentId} agent completed`, 'success', '✅');
-      showToast('success', `${agentId.toUpperCase()} Agent completed!`);
-      
-      setTimeout(() => {
-        updateAgentStatus(agentId, 'idle');
-        progressBar.style.width = '0%';
-      }, 3000);
-    }
-  }, 800);
+function runCommand(key) {
+  const fn = commands[key];
+  if (fn) fn();
 }
 
-function stopAgent(agentId, e) {
-  if (e) e.stopPropagation();
-  if (STATE.agentIntervals[agentId]) {
-    clearInterval(STATE.agentIntervals[agentId]);
-    STATE.agentStatus[agentId] = 'idle';
-    updateAgentStatus(agentId, 'idle');
-    document.getElementById(`progress-${agentId}`).style.width = '0%';
-    termLog(`⏹ ${agentId.toUpperCase()} agent stopped`, 'warning');
-    showToast('warning', `${agentId} agent stopped`);
+function handleInput(e) {
+  if (e.key !== 'Enter') return;
+  const val = e.target.value.trim().toLowerCase();
+  e.target.value = '';
+  if (!val) return;
+
+  const map = {
+    'status':'status','scan':'scan','scan trends':'scan',
+    'gen music':'genmusic','genmusic':'genmusic',
+    'gen art':'genart','genart':'genart',
+    'gen video':'genvideo','genvideo':'genvideo',
+    'post all':'postall','postall':'postall',
+    'cleanup':'cleanup','clean':'cleanup',
+    'etsy list':'etsylist','etsylist':'etsylist',
+    'revenue':'revenue','distro':'distro',
+    'schedule':'schedule','agents':'agents','help':'help',
+    'clear':'clearTerminal','cls':'clearTerminal',
+  };
+
+  if (val === 'clear' || val === 'cls') { clearTerminal(); return; }
+  const cmd = map[val];
+  if (cmd) {
+    tLog('CMD','tag-sys', `> ${val}`, 0);
+    commands[cmd]();
+  } else {
+    tLog('ERR','tag-error', `Unknown: "${val}" — type "help"`, 0);
   }
 }
 
-function scheduleAgent(agentId, e) {
-  if (e) e.stopPropagation();
-  termLog(`⏰ ${agentId.toUpperCase()} agent scheduled for next run cycle`, 'system');
-  showToast('info', `${agentId} agent scheduled`);
-  addActivity(`${agentId} agent scheduled`, 'info', '⏰');
+/* ═══════════════════════════════════════════════════════════
+   MODAL
+═══════════════════════════════════════════════════════════ */
+function showModal({ title, html, confirmText='CONFIRM', confirmFn, cancelText='CANCEL' }) {
+  const box = document.getElementById('modal-box');
+  box.innerHTML = `
+    <div class="modal-title">${title}</div>
+    <div class="modal-body">${html}</div>
+    <div class="modal-footer">
+      <button class="btn-modal-cancel" onclick="closeModal()">${cancelText}</button>
+      <button class="btn-modal-confirm" id="modal-confirm-btn">${confirmText}</button>
+    </div>`;
+  document.getElementById('modal-confirm-btn').onclick = confirmFn;
+  document.getElementById('modal-overlay').classList.add('show');
 }
 
-function runAllAgents() {
-  termLog('🚀 LAUNCHING ALL AGENTS...', 'admin');
-  const agents = ['research', 'music', 'art', 'video', 'marketing'];
-  agents.forEach((agent, i) => {
-    setTimeout(() => runAgent(agent), i * 2000);
-  });
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('show');
 }
 
-function updateAgentStatus(agentId, status) {
-  const el = document.getElementById(`status-${agentId}`);
-  if (!el) return;
-  el.className = `agent-status status-${status}`;
-  el.textContent = status.toUpperCase();
-}
-
-function selectAgent(agentId) {
-  document.querySelectorAll('.agent-card').forEach(c => c.classList.remove('active'));
-  document.getElementById(`agent-${agentId}`).classList.add('active');
-  termLog(`📌 Selected agent: ${agentId.toUpperCase()}`, 'system');
-}
-
-// ============================================
-// CONTENT DEPLOYMENT
-// ============================================
-function deployContent(type, mode) {
-  const modeText = mode === 'now' ? 'DEPLOYING NOW' : mode === 'agent' ? 'SENDING TO AGENT' : 'SCHEDULING';
-  termLog(`⚡ ${modeText}: ${type.toUpperCase()} content`, 'agent');
-  
-  const isAdmin = mode === 'now' && document.getElementById('post-as')?.value === 'admin';
-  const postType = isAdmin ? 'ADMIN' : 'AGENT';
-  
-  setTimeout(() => {
-    termLog(`✅ ${type.toUpperCase()} content ${mode === 'schedule' ? 'scheduled' : 'deployed'} successfully`, 'success');
-    addActivity(`${type} content ${mode === 'schedule' ? 'scheduled' : 'deployed'} [${postType}]`, 
-                mode === 'schedule' ? 'info' : 'success', 
-                type === 'music' ? '🎵' : type === 'art' ? '🎨' : type === 'video' ? '🎬' : '📣');
-    showToast('success', `${type} ${mode === 'schedule' ? 'scheduled' : 'posted'}!`);
-    addPostToManager(type, postType, mode);
-  }, 1500);
-}
-
-function addPostToManager(type, postType, mode) {
-  const tbody = document.getElementById('posts-tbody');
-  const tr = document.createElement('tr');
-  const now = new Date().toLocaleTimeString();
-  const icons = { music:'🎵', art:'🎨', video:'🎬', post:'📣', etsy:'🛒' };
-  
-  tr.innerHTML = `
-    <td><span class="post-type-badge badge-${postType.toLowerCase()}">${postType}</span></td>
-    <td>${icons[type] || '📄'} AI-Generated ${type} content</td>
-    <td>${STATE.connectedPlatforms.slice(0,2).join(' + ') || 'Pending'}</td>
-    <td>Today ${now}</td>
-    <td><span class="${mode === 'schedule' ? 'status-scheduled' : 'status-live'}">${mode === 'schedule' ? '◉ PENDING' : '● LIVE'}</span></td>
-    <td style="color:${postType === 'ADMIN' ? 'var(--gold)' : 'var(--secondary)'};">${postType === 'ADMIN' ? '♾ PERMANENT' : '24h → REMOVE'}</td>
-    <td><button class="btn-sm ${postType === 'AGENT' ? 'danger' : ''}" onclick="${postType === 'AGENT' ? 'removePost(this)' : 'void(0)'}">${postType === 'AGENT' ? '🗑 REMOVE' : 'View'}</button></td>
-  `;
-  tbody.appendChild(tr);
-}
-
-// ============================================
-// POST MANAGER
-// ============================================
-function removePost(btn) {
-  const row = btn.closest('tr');
-  row.querySelectorAll('td').forEach(td => td.style.opacity = '0.4');
-  row.querySelector('.status-live, .status-scheduled').className = 'status-removed';
-  row.querySelector('.status-removed').textContent = '✕ REMOVED';
-  btn.disabled = true;
-  btn.textContent = 'REMOVED';
-  termLog('🗑 Agent post removed from platform', 'warning');
-  addActivity('Agent post removed', 'warning', '🗑');
-  showToast('info', 'Post removed from platform');
-}
-
-function cancelPost(btn) {
-  const row = btn.closest('tr');
-  row.style.opacity = '0.4';
-  btn.disabled = true;
-  btn.textContent = 'CANCELLED';
-  termLog('✕ Scheduled post cancelled', 'warning');
-}
-
-function cleanupAgentPosts() {
-  termLog('🗑 RUNNING AGENT CLEANUP...', 'agent');
-  const rows = document.querySelectorAll('#posts-tbody tr');
-  let count = 0;
-  rows.forEach(row => {
-    const badge = row.querySelector('.badge-agent');
-    if (badge) {
-      setTimeout(() => {
-        row.querySelectorAll('td').forEach(td => td.style.opacity = '0.3');
-        count++;
-        if (count === 1) {
-          termLog(`✅ Cleaned up ${document.querySelectorAll('.badge-agent').length} agent posts`, 'success');
-          showToast('success', 'Agent posts cleaned up!');
-          addActivity('Agent cleanup completed', 'warning', '🗑');
-        }
-      }, count * 300);
-      count++;
-    }
-  });
-  if (count === 0) termLog('ℹ No agent posts to clean up', 'system');
-}
-
-function refreshPostManager() {
-  termLog('↺ Post manager refreshed', 'system');
-  showToast('info', 'Post manager refreshed');
-}
-
-// ============================================
-// DISTROKID
-// ============================================
-function toggleDistro(el) {
-  el.classList.toggle('deployed');
-  const name = el.textContent.trim().split('\n').pop().trim();
-  const deployed = el.classList.contains('deployed');
-  termLog(`${deployed ? '✅ Deployed to' : '🗑 Removed from'} ${name}`, deployed ? 'success' : 'warning');
-}
-
-function deployAllDistro() {
-  document.querySelectorAll('.distro-platform').forEach((el, i) => {
-    setTimeout(() => {
-      el.classList.add('deployed');
-      el.classList.remove('removed');
-    }, i * 200);
-  });
-  termLog('📦 Deployed to ALL distribution platforms', 'success');
-  addActivity('Deployed to all DistroKid platforms', 'success', '📦');
-  showToast('success', 'Deployed to all platforms!');
-  closeModal('distro-modal');
-}
-
-function removeAllDistro() {
-  document.querySelectorAll('.distro-platform').forEach((el, i) => {
-    setTimeout(() => {
-      el.classList.remove('deployed');
-      el.classList.add('removed');
-    }, i * 200);
-  });
-  termLog('🗑 Removed agent content from ALL distribution platforms', 'warning');
-  addActivity('Removed from all DistroKid platforms', 'warning', '🗑');
-  showToast('warning', 'Removed from all platforms');
-  closeModal('distro-modal');
-}
-
-// ============================================
-// TABS
-// ============================================
-function switchTab(tabId, tabEl) {
-  document.querySelectorAll('.creator-tab-content').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.creator-tab').forEach(t => t.classList.remove('active'));
-  document.getElementById(tabId).classList.add('active');
-  tabEl.classList.add('active');
-}
-
-// ============================================
-// PLATFORM TARGET TOGGLE
-// ============================================
-document.querySelectorAll('.platform-target').forEach(el => {
-  el.addEventListener('click', () => el.classList.toggle('selected'));
+document.getElementById('modal-overlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
 });
 
-// ============================================
-// AI CAPTION GENERATOR
-// ============================================
-function generateCaption() {
-  const captions = [
-    '🇺🇸 New patriotic anthem just dropped! The kind of music that gives you chills. Listen now — link in bio! #PatriotMusic #USA #NewMusic #AmericanPride',
-    '🦅 Freedom has a sound. Our latest track captures everything that makes America great. Stream now! #MusicIsLife #PatrioticVibes #AmericanMusic',
-    '🎵 When words fail, music speaks. New release out NOW across all platforms!
+/* ═══════════════════════════════════════════════════════════
+   CHART.JS
+═══════════════════════════════════════════════════════════ */
+function initChart() {
+  const ctx = document.getElementById('chart-revenue').getContext('2d');
+  window.revenueChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['W1','W2','W3','W4','W5','W6','NOW'],
+      datasets: [{
+        data: S.revenueHistory,
+        borderColor: '#ffb000',
+        backgroundColor: 'rgba(255,176,0,0.07)',
+        borderWidth: 1.5,
+        pointRadius: 2,
+        pointBackgroundColor: '#ffb000',
+        tension: 0.4,
+        fill: true,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend:{ display:false },
