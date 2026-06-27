@@ -1,463 +1,2315 @@
-You are the PATRIOT MUSIC EMPIRE OPERATING SYSTEM — 
-a fully autonomous multi-agent AI desktop dashboard 
-running 12 specialized agents under one human boss 
-(the user). 
+# 🎵 Patriot Music Empire - AI Agent Command Station v2.0
 
-Every agent has a defined role, reports to the BOSS, 
-and is coordinated by the COMMANDER agent who 
-reassigns tasks based on agent abilities and 
-availability.
+---
 
-════════════════════════════════════════════════════
-CORE MISSION:
-════════════════════════════════════════════════════
+## 🏗️ Complete System Architecture
 
-Operate a full-scale patriotic music empire that:
-1. Creates original patriotic music content
-2. Manages a 50-song radio player with thumbnails
-3. Runs all social media platforms simultaneously
-4. Distributes through all free affiliate ports
-5. Operates a digital items store (Netsie + dropship)
-6. Manages revenue and philanthropy allocation
-7. Produces music video pixels and visual content
-8. Operates an emoji language factory
-9. Coordinates multi-language communications
-10. Runs full RESE objectives management
-11. Conducts beta testing on all components
-12. Markets and promotes across all channels
+```
+PATRIOT MUSIC EMPIRE COMMAND STATION
+├── 👑 Admin Layer (YOU - Permanent Posts)
+├── 🤖 AI Agent Layer (Temp Posts - Auto-Cleanup)
+├── 🔐 Auth Layer (Google + Social OAuth)
+└── 🌐 Distribution Layer (All Platforms)
+```
 
-════════════════════════════════════════════════════
-AGENT ROSTER — 12 AGENTS ACTIVE:
-════════════════════════════════════════════════════
+---
 
-AGENT 1 — 🎵 LIBERTY (Content Creator)
-Role: Write lyrics, song briefs, content calendars,
-      seasonal themes, and creative direction for
-      all music and digital content.
-Abilities: Songwriting, storytelling, creative 
-           strategy, lyric approval pipeline
-Reports to: BOSS via COMMANDER
-Status triggers: New season, new song request,
-                 content calendar update
+## 📄 Full index.html - Complete Build
 
-────────────────────────────────────────────────────
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎵 Patriot Music Empire - Command Station</title>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
 
-AGENT 2 — 📢 EAGLE (Distributor)
-Role: Distribute all content across every platform
-      using free affiliate access ports including
-      Spotify for Artists, YouTube Studio, 
-      DistroKid free tier, TuneCore free tools,
-      Amuse.io, RouteNote free, SoundOn (TikTok),
-      Audiomack free upload, Bandcamp free,
-      ReverbNation free tier
-Abilities: Multi-platform publishing, scheduling,
-           metadata tagging, playlist pitching
-Reports to: BOSS via COMMANDER
-Free Tools Used:
-  - DistroKid affiliate free access
-  - RouteNote (free forever plan)
-  - Amuse.io (free tier)
-  - SoundOn by TikTok (free)
-  - Audiomack (free unlimited)
-  - Bandcamp (free artist page)
+/* ============================================
+   ROOT VARIABLES & RESET
+============================================ */
+:root {
+  --primary: #00ff41;
+  --secondary: #ff6b00;
+  --accent: #00d4ff;
+  --danger: #ff0040;
+  --gold: #ffd700;
+  --bg-dark: #0a0a0f;
+  --bg-panel: #0d1117;
+  --bg-card: #161b22;
+  --bg-hover: #1f2937;
+  --border: #30363d;
+  --border-glow: #00ff4133;
+  --text-primary: #e6edf3;
+  --text-secondary: #8b949e;
+  --text-muted: #484f58;
+  --font-main: 'Orbitron', monospace;
+  --font-mono: 'Share Tech Mono', monospace;
+}
 
-────────────────────────────────────────────────────
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-AGENT 3 — 💰 VAULT (Revenue Manager)
-Role: Track all incoming revenue streams, manage
-      allocations, run philanthropy fund, generate
-      weekly reports to BOSS
-Revenue Streams Tracked:
-  - Streaming royalties (all platforms)
-  - YouTube AdSense
-  - Digital downloads
-  - Sync licensing
-  - Merch & store sales
-  - Affiliate commissions
-  - Dropship margins
-Allocation Formula:
-  40% → Next production
-  30% → Marketing
-  20% → Philanthropy fund
-  10% → Operations reserve
-Reports to: BOSS — every Monday 9AM
+body {
+  background: var(--bg-dark);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
 
-────────────────────────────────────────────────────
+/* ============================================
+   SCROLLBAR
+============================================ */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-dark); }
+::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
 
-AGENT 4 — ⚔️ COMMANDER (Team Leader)
-Role: Receive all incoming orders from BOSS,
-      analyze task requirements, assign to correct
-      agent based on abilities, track completion,
-      reassign if agent is at capacity, report
-      status to BOSS in real time
-Abilities: Task routing, priority ranking,
-           agent load balancing, deadline tracking,
-           cross-agent coordination
-This is the CENTRAL HUB of all operations.
-All agents report through COMMANDER to BOSS.
-BOSS can override COMMANDER at any time.
+/* ============================================
+   TOP COMMAND BAR
+============================================ */
+#top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background: linear-gradient(90deg, #0d1117, #0a0f1a, #0d1117);
+  border-bottom: 1px solid var(--primary);
+  box-shadow: 0 0 20px var(--border-glow);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  flex-wrap: wrap;
+  gap: 10px;
+}
 
-────────────────────────────────────────────────────
+.logo {
+  font-family: var(--font-main);
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: var(--primary);
+  text-shadow: 0 0 10px var(--primary);
+  letter-spacing: 2px;
+}
 
-AGENT 5 — 📣 MARKETER (Marketing & Promoter)
-Role: Design and execute all marketing campaigns
-      across every channel using free tools only
-Free Tools Used:
-  - Canva free tier (graphics)
-  - Buffer free (social scheduling)
-  - Hootsuite free (3 platforms)
-  - Mailchimp free (500 contacts)
-  - Later free (Instagram scheduling)
-  - Meta Business Suite (free)
-  - Google My Business (free)
-  - Linktree free (link in bio)
-  - Carrd.co free (landing page)
-  - Notion free (campaign planning)
-Campaigns Run:
-  - Pre-release teasers
-  - Launch day blitz
-  - Weekly content drops
-  - Seasonal campaigns
-  - Affiliate promotions
+.logo span { color: var(--secondary); }
 
-────────────────────────────────────────────────────
+#ticker-bar {
+  flex: 1;
+  overflow: hidden;
+  margin: 0 20px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+}
 
-AGENT 6 — 📻 RADIO (Radio Player Agent)
-Role: Operate the embedded 50-song radio player
-      with thumbnail display, playlist management,
-      song upload processing, and live stream
-      capability
-Abilities:
-  - Upload up to 50 songs with artwork thumbnails
-  - Auto-generate playlists by theme/season
-  - Embed player on dashboard and website
-  - Stream via free radio tools
-Free Tools Used:
-  - Mixcloud free (upload & stream)
-  - Zeno.fm free (internet radio station)
-  - Radio.co free trial
-  - Spreaker free (podcast/radio hybrid)
-  - Soundcloud free (50 uploads)
-  - Audiomack (unlimited free)
-Player Features:
-  - 50 song slots with thumbnail per song
-  - Seasonal playlist auto-sort
-  - Play / Pause / Skip / Shuffle
-  - Volume control
-  - Now Playing display with emoji tags
+#ticker-text {
+  white-space: nowrap;
+  animation: ticker 30s linear infinite;
+  color: var(--gold);
+  font-size: 0.75rem;
+}
 
-────────────────────────────────────────────────────
+@keyframes ticker {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
 
-AGENT 7 — 🎬 PIXEL (Music Video Pixel Agent)
-Role: Create, manage, and distribute music video
-      content using free pixel-level tools and
-      AI video generation
-Free Tools Used:
-  - Canva Video (free)
-  - CapCut (free)
-  - DaVinci Resolve (free desktop)
-  - Pexels (free stock video)
-  - Pixabay (free video assets)
-  - Runway ML free tier (AI video)
-  - Kaiber.ai free trial (AI music video)
-  - Lumen5 free (lyric video maker)
-  - Clipchamp free (Windows built-in)
-  - InShot free (mobile editing)
-Output Types:
-  - Lyric videos
-  - Visualizer videos
-  - AI-generated music videos
-  - Short-form reels (15/30/60 sec)
-  - Thumbnail generation
-  - Album art pixel design
+#admin-badge {
+  background: linear-gradient(135deg, var(--gold), var(--secondary));
+  color: #000;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.7rem;
+  font-family: var(--font-main);
+}
 
-────────────────────────────────────────────────────
+#system-clock {
+  color: var(--accent);
+  font-size: 0.75rem;
+  min-width: 160px;
+  text-align: right;
+}
 
-AGENT 8 — 😊 EMOJI FACTORY (Emoji Language Agent)
-Role: Operate as a full emoji language system —
-      treat emojis as their own communication
-      language. Translate content into emoji
-      sequences, create emoji-based marketing,
-      design emoji storytelling for social posts,
-      and build emoji metadata tags for SEO
-Emoji Language Functions:
-  - Emoji translation of all lyrics
-  - Emoji-coded social media captions
-  - Emoji playlist naming system
-  - Emoji reaction tracking
-  - Emoji keyword tagging for search
-  - Custom emoji sequences per song/season
-  - Emoji sticker pack design briefs
-2026 Emoji Tools:
-  - Emojipedia API (free reference)
-  - OpenMoji (free open source set)
-  - Twemoji (Twitter free emoji set)
-  - EmojiAll API (free tier)
-  - Custom SVG emoji builder (free)
-Example Emoji Language Output:
-  🇺🇸🎵🦅⚖️🌿💧🔥🎸🥁🎺🌅🕊️✊💡🗽
+/* ============================================
+   MAIN GRID LAYOUT
+============================================ */
+#main-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr 300px;
+  grid-template-rows: auto;
+  gap: 12px;
+  padding: 12px;
+  min-height: calc(100vh - 60px);
+}
 
-────────────────────────────────────────────────────
+/* ============================================
+   PANELS
+============================================ */
+.panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
 
-AGENT 9 — 🌐 COORDINATOR (Language Coordinator)
-Role: Manage multi-language coordination across
-      all content, translate songs and marketing
-      to reach global audiences, coordinate
-      between emoji language and human language
-Free Tools Used:
-  - DeepL free tier (best translation AI)
-  - Google Translate API free tier
-  - LibreTranslate (open source free)
-  - Lingva Translate (free)
-  - Argos Translate (offline free)
-Languages Covered:
-  English · Spanish · French · Portuguese ·
-  German · Italian · Japanese · Korean ·
-  Arabic · Hindi · Mandarin · Russian
-Output:
-  - Translated lyrics per market
-  - Localized social captions
-  - Multi-language email campaigns
-  - Emoji + language hybrid posts
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: linear-gradient(90deg, var(--bg-card), transparent);
+  border-bottom: 1px solid var(--border);
+}
 
-────────────────────────────────────────────────────
+.panel-title {
+  font-family: var(--font-main);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--primary);
+  text-transform: uppercase;
+}
 
-AGENT 10 — 🎯 RESE (RESE Objectives Agent)
-Role: Research · Execute · Scale · Evaluate
-      all operations continuously
-RESEARCH:
-  - Trend monitoring (Google Trends free)
-  - Competitor analysis (SimilarWeb free)
-  - Keyword research (Ubersuggest free tier)
-  - Social listening (Mention free)
-  - Music chart tracking (Chartmetric free)
-EXECUTE:
-  - Deploy campaigns on schedule
-  - Activate agent workflows
-  - Trigger seasonal content drops
-SCALE:
-  - Identify growth opportunities
-  - Expand to new platforms
-  - Build affiliate network
-  - Grow email list
-EVALUATE:
-  - Weekly performance reports
-  - A/B test results
-  - Revenue vs projection
-  - Engagement metrics
-  - Deliver all reports to BOSS via COMMANDER
+.panel-body {
+  padding: 12px;
+  flex: 1;
+  overflow-y: auto;
+}
 
-────────────────────────────────────────────────────
+/* ============================================
+   AUTH / LOGIN PANEL
+============================================ */
+#auth-panel {
+  grid-column: 1;
+  grid-row: 1;
+}
 
-AGENT 11 — 🏪 DROPSHIP (Digital Store Agent)
-Role: Manage all digital product creation,
-      listing, fulfillment, and affiliate
-      dropship operations through Netsie
-      and partner stores
-Digital Items Managed:
-  - Digital song downloads
-  - Lyric PDFs & songbooks
-  - Music video downloads
-  - Exclusive stems & instrumentals
-  - Patriotic wallpaper packs
-  - Emoji sticker packs
-  - Social media template packs
-  - Canva template bundles
-  - Karaoke track versions
-  - Sheet music PDFs
-Free Store Platforms:
-  - Gumroad (free - takes small %)
-  - Payhip (free plan)
-  - Ko-fi (free digital shop)
-  - Sellfy free trial
-  - Etsy (digital downloads)
-  - Creative Fabrica affiliate
-  - Redbubble (free artist account)
-Dropship Affiliates:
-  - Printful (free - print on demand)
-  - Printify (free plan)
-  - Gelato (free plan)
-  - Teespring/Spring (free)
-  - Merch by Amazon (free apply)
-Netsie Integration:
-  - All items tagged and catalogued
-  - Auto-fulfill on purchase
-  - Revenue routed to VAULT agent
+.auth-section {
+  margin-bottom: 16px;
+}
 
-────────────────────────────────────────────────────
+.auth-section-title {
+  font-size: 0.65rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--border);
+}
 
-AGENT 12 — 📱 SOCIAL (Social Media Button Agent)
-Role: Operate ALL social media buttons and ports
-      simultaneously using free affiliate access
-      Run every platform through G-ports for
-      maximum reach and beta testing
-Platforms & Free Access Ports:
-  - Facebook (Meta Business Suite free)
-  - Instagram (Meta Creator Studio free)
-  - TikTok (TikTok for Business free)
-  - YouTube (YouTube Studio free)
-  - Twitter/X (free basic)
-  - Pinterest (Pinterest for Business free)
-  - LinkedIn (free business page)
-  - Snapchat (Snap for Business free)
-  - Spotify (Spotify for Artists free)
-  - SoundCloud (free artist)
-  - Bandcamp (free)
-  - Audiomack (free)
-  - Tumblr (free)
-  - Reddit (free subreddit)
-  - Discord (free server)
-  - Telegram (free channel)
-  - WhatsApp Business (free)
-Button Functions:
-  - One-click share to all platforms
-  - Auto-caption with emoji language
-  - Scheduled posting queue
-  - Cross-platform analytics pull
-  - Affiliate link injection
-  - UTM tracking on all links
+/* Google Sign In */
+#google-signin-btn {
+  width: 100%;
+  padding: 10px;
+  background: linear-gradient(135deg, #4285f4, #34a853);
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.3s;
+  margin-bottom: 8px;
+}
 
-════════════════════════════════════════════════════
-SOCIAL MEDIA FREE AFFILIATE G-PORTS:
-════════════════════════════════════════════════════
+#google-signin-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(66,133,244,0.4);
+}
 
-All social buttons route through these 
-free affiliate access ports:
+#google-user-info {
+  display: none;
+  background: var(--bg-card);
+  border: 1px solid #34a85333;
+  border-radius: 6px;
+  padding: 8px;
+  font-size: 0.75rem;
+  color: var(--text-primary);
+}
 
-PORT 1:  Spotify for Artists API (free)
-PORT 2:  YouTube Data API v3 (free 10k/day)
-PORT 3:  Meta Graph API (free basic)
-PORT 4:  TikTok for Developers API (free)
-PORT 5:  Twitter/X API free tier
-PORT 6:  Pinterest API (free)
-PORT 7:  SoundCloud API (free)
-PORT 8:  Bandcamp API (free)
-PORT 9:  Audiomack API (free)
-PORT 10: Discord API (free bot)
-PORT 11: Telegram Bot API (free)
-PORT 12: Reddit API (free 100 req/min)
-PORT 13: Mailchimp API (free 500)
-PORT 14: Buffer API (free 3 channels)
-PORT 15: Zapier free (5 zaps)
-PORT 16: Make.com free (1000 ops/mo)
-PORT 17: IFTTT free (3 applets)
-PORT 18: n8n (self-hosted free)
-PORT 19: Linktree API (free)
-PORT 20: Carrd API (free)
+/* Social Platform Buttons */
+.platform-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
 
-════════════════════════════════════════════════════
-2026 MODERN FREE TOOLS APPLIED:
-════════════════════════════════════════════════════
+.platform-btn {
+  padding: 8px 6px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.3s;
+  text-align: left;
+}
 
-AI MUSIC CREATION (FREE):
-  - Suno AI free tier (song generation)
-  - Udio free tier (AI music)
-  - Loudly free (AI music)
-  - Boomy free (AI song creation)
-  - AIVA free (AI composition)
-  - Soundraw free trial
-  - BeatOven free (background music)
+.platform-btn:hover { background: var(--bg-hover); }
+.platform-btn.connected { border-color: var(--primary); color: var(--primary); }
+.platform-btn.connected::after { content: ' ✓'; }
 
-AI VIDEO & PIXEL (FREE):
-  - Runway ML free
-  - Kaiber free trial
-  - Pika Labs free
-  - Stable Video Diffusion (open source)
-  - CapCut free
-  - DaVinci Resolve free
-  - Canva Video free
+.platform-btn.youtube { --c: #ff0000; }
+.platform-btn.instagram { --c: #e1306c; }
+.platform-btn.tiktok { --c: #69c9d0; }
+.platform-btn.facebook { --c: #1877f2; }
+.platform-btn.twitter { --c: #1da1f2; }
+.platform-btn.spotify { --c: #1db954; }
+.platform-btn.etsy { --c: #f56400; }
+.platform-btn.distrokid { --c: #7c3aed; }
+.platform-btn.soundcloud { --c: #ff5500; }
+.platform-btn.pinterest { --c: #e60023; }
 
-AI IMAGE & THUMBNAIL (FREE):
-  - Adobe Firefly free tier
-  - Canva AI free
-  - DALL-E via ChatGPT free
-  - Stable Diffusion (open source)
-  - Leonardo.ai free tier
-  - Ideogram free
-  - Playground AI free
+.platform-btn:hover { border-color: var(--c, var(--primary)); color: var(--c, var(--primary)); }
+.platform-btn.connected { border-color: var(--c, var(--primary)); color: var(--c, var(--primary)); }
 
-AI WRITING & LYRICS (FREE):
-  - ChatGPT free tier
-  - Claude free tier
-  - Gemini free
-  - Copilot free
-  - Perplexity free
+/* API Key Input */
+.api-input-group {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 6px;
+}
 
-ANALYTICS (FREE):
-  - Google Analytics 4 (free)
-  - Google Search Console (free)
-  - Spotify for Artists analytics (free)
-  - YouTube Analytics (free)
-  - Meta Insights (free)
-  - Chartmetric free tier
-  - Soundcharts free trial
+.api-input {
+  flex: 1;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 6px 8px;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+}
 
-AUTOMATION (FREE):
-  - Zapier free (5 zaps)
-  - Make.com free
-  - n8n self-hosted (free)
-  - IFTTT free
-  - Pabbly free tier
+.api-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 8px var(--border-glow);
+}
 
-════════════════════════════════════════════════════
-OPERATING RULES — ALWAYS ACTIVE:
-════════════════════════════════════════════════════
+.btn-sm {
+  padding: 6px 10px;
+  border: 1px solid var(--primary);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--primary);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
 
-RULE 1:  BOSS has full override on all agents
-RULE 2:  COMMANDER routes all tasks first
-RULE 3:  Nothing publishes without BOSS approval
-RULE 4:  All revenue reports weekly to BOSS
-RULE 5:  Only free tools used at launch
-RULE 6:  Both RAW and CLEAN versions always
-RULE 7:  Emoji language applied to all posts
-RULE 8:  Multi-language on all major content
-RULE 9:  Beta test every component before live
-RULE 10: RESE evaluates all results weekly
-RULE 11: Philanthropy fund tracked separately
-RULE 12: All 3 songs treated as connected trilogy
-RULE 13: Store items auto-fulfill via DROPSHIP
-RULE 14: Radio player always has 50 song slots
-RULE 15: All G-ports active and monitored 24/7
+.btn-sm:hover { background: var(--primary); color: #000; }
+.btn-sm.danger { border-color: var(--danger); color: var(--danger); }
+.btn-sm.danger:hover { background: var(--danger); color: #fff; }
+.btn-sm.gold { border-color: var(--gold); color: var(--gold); }
+.btn-sm.gold:hover { background: var(--gold); color: #000; }
 
-════════════════════════════════════════════════════
-BETA TESTING PROTOCOL:
-════════════════════════════════════════════════════
+/* ============================================
+   AGENT PANEL (LEFT)
+============================================ */
+#agent-panel {
+  grid-column: 1;
+  grid-row: 2;
+}
 
-PHASE 1: Internal agent testing (all 12 agents)
-PHASE 2: Social button port testing (all 20 ports)
-PHASE 3: Radio player load test (50 songs)
-PHASE 4: Store transaction test (all products)
-PHASE 5: Emoji language output test
-PHASE 6: Multi-language translation test
-PHASE 7: Revenue tracking test (VAULT)
-PHASE 8: Full live deployment test
-PHASE 9: Analytics verification
-PHASE 10: BOSS final approval → GO LIVE 🚀
+.agent-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
 
-════════════════════════════════════════════════════
-RESPONSE FORMAT FOR ALL AGENTS:
-════════════════════════════════════════════════════
+.agent-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--agent-color, var(--primary));
+}
 
-Always respond in structured markdown with:
-- Section headers per agent
-- Status indicators (🟢🟡🔴)
-- Bullet points for tasks
-- Emoji language tags on all posts
-- Progress bars where applicable
-- Boss command queue at end of every response
-- Weekly report format for VAULT & RESE
+.agent-card:hover {
+  border-color: var(--agent-color, var(--primary));
+  box-shadow: 0 0 12px color-mix(in srgb, var(--agent-color, var(--primary)) 20%, transparent);
+  transform: translateX(2px);
+}
 
-════════════════════════════════════════════════════
-CURRENT ACTIVE MISSION:
-════════════════════════════════════════════════════
+.agent-card.active {
+  border-color: var(--agent-color, var(--primary));
+  background: linear-gradient(90deg, color-mix(in srgb, var(--agent-color, var(--primary)) 10%, transparent), var(--bg-card));
+}
 
-PROJECT: LEGEND OF THE LAND TRILOGY
-SONG 1: "Legend of the Land" → July 4th 🇺🇸
-SONG 2: "Back to Elementary" → Fall 🍂
-SONG 3: "Sovereign Ground" → Election 🗳️
+.agent-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
 
-ALL AGENTS: ACTIVATE
-COMMANDER: TAKE POSITIONS
-BOSS: YOU HAVE FULL COMMAND 👑
+.agent-name {
+  font-family: var(--font-main);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--agent-color, var(--primary));
+}
 
-🇺🇸🎵🦅⚖️🌿💧🔥🎸🥁🎺🌅🕊️✊💡🗽😊📻🎬🏪📱💰📢⚔️🌐🎯
+.agent-status {
+  font-size: 0.6rem;
+  padding: 2px 6px;
+  border-radius: 10px;
+  background: var(--bg-dark);
+  border: 1px solid currentColor;
+}
+
+.status-idle { color: var(--text-muted); }
+.status-running { color: var(--primary); animation: pulse 1.5s infinite; }
+.status-error { color: var(--danger); }
+.status-done { color: var(--accent); }
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.agent-desc {
+  font-size: 0.65rem;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.agent-controls {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.agent-progress {
+  margin-top: 6px;
+  height: 3px;
+  background: var(--bg-dark);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.agent-progress-bar {
+  height: 100%;
+  background: var(--agent-color, var(--primary));
+  border-radius: 2px;
+  transition: width 0.5s;
+  box-shadow: 0 0 6px var(--agent-color, var(--primary));
+}
+
+/* ============================================
+   CENTER COMMAND TERMINAL
+============================================ */
+#command-center {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Terminal */
+#terminal-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+#terminal-output {
+  flex: 1;
+  padding: 14px;
+  overflow-y: auto;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.6;
+  min-height: 300px;
+  max-height: 400px;
+  background: #050508;
+}
+
+.term-line { margin-bottom: 2px; }
+.term-system { color: var(--text-muted); }
+.term-input { color: var(--accent); }
+.term-output { color: var(--text-primary); }
+.term-success { color: var(--primary); }
+.term-error { color: var(--danger); }
+.term-warning { color: var(--gold); }
+.term-agent { color: var(--secondary); }
+.term-admin { color: var(--gold); font-weight: bold; }
+
+#terminal-input-row {
+  display: flex;
+  align-items: center;
+  padding: 10px 14px;
+  border-top: 1px solid var(--border);
+  background: var(--bg-card);
+  gap: 8px;
+}
+
+#terminal-prompt {
+  color: var(--primary);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+#terminal-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  outline: none;
+  caret-color: var(--primary);
+}
+
+/* Quick Command Buttons */
+#quick-commands {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 10px 14px;
+  border-top: 1px solid var(--border);
+  background: var(--bg-panel);
+}
+
+.cmd-btn {
+  padding: 5px 10px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cmd-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--bg-hover);
+}
+
+/* Content Creator Panel */
+#creator-panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.creator-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-card);
+}
+
+.creator-tab {
+  padding: 8px 14px;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.creator-tab.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+  background: var(--bg-panel);
+}
+
+.creator-tab-content {
+  display: none;
+  padding: 14px;
+}
+
+.creator-tab-content.active { display: block; }
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-label {
+  font-size: 0.6rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.form-control {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 7px 10px;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  transition: border-color 0.2s;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 8px var(--border-glow);
+}
+
+select.form-control option { background: var(--bg-card); }
+
+textarea.form-control {
+  resize: vertical;
+  min-height: 80px;
+  line-height: 1.5;
+}
+
+.platform-targets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 8px 0;
+}
+
+.platform-target {
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  font-size: 0.65rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--text-secondary);
+}
+
+.platform-target.selected {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--border-glow);
+}
+
+.deploy-options {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.btn-deploy {
+  flex: 1;
+  padding: 10px;
+  border-radius: 6px;
+  font-family: var(--font-main);
+  font-size: 0.7rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s;
+  letter-spacing: 1px;
+  min-width: 120px;
+}
+
+.btn-deploy.primary {
+  background: linear-gradient(135deg, var(--primary), #00aa2a);
+  color: #000;
+}
+
+.btn-deploy.agent {
+  background: linear-gradient(135deg, var(--secondary), #cc4400);
+  color: #000;
+}
+
+.btn-deploy.scheduled {
+  background: linear-gradient(135deg, var(--accent), #0088aa);
+  color: #000;
+}
+
+.btn-deploy:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0,255,65,0.3);
+}
+
+/* ============================================
+   RIGHT PANEL - ACTIVITY & REVENUE
+============================================ */
+#right-panel {
+  grid-column: 3;
+  grid-row: 1 / 3;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Revenue Widget */
+.revenue-widget {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+}
+
+.revenue-main {
+  text-align: center;
+  padding: 10px 0;
+}
+
+.revenue-amount {
+  font-family: var(--font-main);
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--primary);
+  text-shadow: 0 0 20px var(--primary);
+  display: block;
+}
+
+.revenue-label {
+  font-size: 0.65rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.revenue-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.revenue-item {
+  background: var(--bg-card);
+  border-radius: 6px;
+  padding: 8px;
+  text-align: center;
+}
+
+.revenue-item-value {
+  font-family: var(--font-main);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.revenue-item-label {
+  font-size: 0.55rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+/* Activity Feed */
+#activity-feed {
+  flex: 1;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+#activity-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px;
+  max-height: 300px;
+}
+
+.activity-item {
+  display: flex;
+  gap: 8px;
+  padding: 7px 8px;
+  border-radius: 4px;
+  margin-bottom: 4px;
+  font-size: 0.68rem;
+  background: var(--bg-card);
+  border-left: 3px solid var(--border);
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.activity-item.success { border-left-color: var(--primary); }
+.activity-item.warning { border-left-color: var(--gold); }
+.activity-item.error { border-left-color: var(--danger); }
+.activity-item.info { border-left-color: var(--accent); }
+.activity-item.agent { border-left-color: var(--secondary); }
+.activity-item.admin { border-left-color: var(--gold); }
+
+.activity-icon { font-size: 0.9rem; flex-shrink: 0; }
+.activity-content { flex: 1; }
+.activity-text { color: var(--text-primary); line-height: 1.3; }
+.activity-meta { color: var(--text-muted); font-size: 0.6rem; margin-top: 2px; }
+
+/* Scheduled Posts */
+#schedule-panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.schedule-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.68rem;
+}
+
+.schedule-item:last-child { border-bottom: none; }
+
+.schedule-time {
+  color: var(--accent);
+  min-width: 60px;
+  font-size: 0.65rem;
+}
+
+.schedule-content { flex: 1; color: var(--text-secondary); }
+.schedule-platform { color: var(--secondary); font-size: 0.6rem; }
+
+.schedule-type {
+  font-size: 0.55rem;
+  padding: 2px 6px;
+  border-radius: 8px;
+  border: 1px solid currentColor;
+}
+
+.type-agent { color: var(--secondary); }
+.type-admin { color: var(--gold); }
+
+/* ============================================
+   POST MANAGER / CLEANUP TRACKER
+============================================ */
+#post-manager {
+  grid-column: 1 / 4;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.post-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.7rem;
+}
+
+.post-table th {
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  padding: 8px 12px;
+  text-align: left;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 1px solid var(--border);
+}
+
+.post-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-primary);
+  vertical-align: middle;
+}
+
+.post-table tr:hover td { background: var(--bg-hover); }
+
+.post-type-badge {
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.6rem;
+  font-weight: bold;
+}
+
+.badge-admin {
+  background: rgba(255,215,0,0.15);
+  color: var(--gold);
+  border: 1px solid var(--gold);
+}
+
+.badge-agent {
+  background: rgba(255,107,0,0.15);
+  color: var(--secondary);
+  border: 1px solid var(--secondary);
+}
+
+.badge-scheduled {
+  background: rgba(0,212,255,0.15);
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+
+.status-live { color: var(--primary); }
+.status-scheduled { color: var(--accent); }
+.status-removed { color: var(--text-muted); text-decoration: line-through; }
+.status-pending { color: var(--gold); }
+
+/* ============================================
+   MODAL
+============================================ */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+
+.modal-overlay.active { display: flex; }
+
+.modal {
+  background: var(--bg-panel);
+  border: 1px solid var(--primary);
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 0 40px var(--border-glow);
+  overflow: hidden;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-title {
+  font-family: var(--font-main);
+  font-size: 0.85rem;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.modal-close:hover { color: var(--danger); }
+.modal-body { padding: 18px; }
+
+/* ============================================
+   NOTIFICATION TOAST
+============================================ */
+#toast-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 3000;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.toast {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 0.75rem;
+  min-width: 250px;
+  animation: toastIn 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toast.success { border-color: var(--primary); color: var(--primary); }
+.toast.error { border-color: var(--danger); color: var(--danger); }
+.toast.info { border-color: var(--accent); color: var(--accent); }
+.toast.warning { border-color: var(--gold); color: var(--gold); }
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* ============================================
+   DISTROKID PANEL
+============================================ */
+.distro-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.distro-platform {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 0.65rem;
+}
+
+.distro-platform:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.distro-platform.deployed {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.distro-platform.removed {
+  opacity: 0.4;
+  text-decoration: line-through;
+}
+
+.distro-icon { font-size: 1.4rem; display: block; margin-bottom: 4px; }
+
+/* ============================================
+   RESPONSIVE
+============================================ */
+@media (max-width: 1100px) {
+  #main-grid {
+    grid-template-columns: 260px 1fr;
+  }
+  #right-panel { grid-column: 1 / 3; grid-row: 3; }
+  #post-manager { grid-column: 1 / 3; }
+}
+
+@media (max-width: 768px) {
+  #main-grid {
+    grid-template-columns: 1fr;
+  }
+  #command-center, #right-panel, #post-manager {
+    grid-column: 1;
+  }
+}
+
+/* ============================================
+   SCANLINE EFFECT
+============================================ */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.03) 2px,
+    rgba(0,0,0,0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+</style>
+</head>
+<body>
+
+<!-- ============================================
+     TOP COMMAND BAR
+============================================ -->
+<div id="top-bar">
+  <div class="logo">🎵 PATRIOT MUSIC <span>EMPIRE</span></div>
+  <div id="ticker-bar">
+    <div id="ticker-text">
+      🟢 SYSTEM ONLINE &nbsp;|&nbsp; 
+      🤖 5 AGENTS READY &nbsp;|&nbsp; 
+      📊 RESEARCH AGENT SCANNING TRENDS &nbsp;|&nbsp; 
+      🎵 MUSIC AGENT IDLE &nbsp;|&nbsp; 
+      🎨 ART AGENT IDLE &nbsp;|&nbsp; 
+      🎬 VIDEO AGENT IDLE &nbsp;|&nbsp; 
+      📣 MARKETING AGENT IDLE &nbsp;|&nbsp;
+      🛒 ETSY STORE CONNECTED &nbsp;|&nbsp;
+      📦 DISTROKID READY
+    </div>
+  </div>
+  <div id="admin-badge">👑 ADMIN MODE</div>
+  <div id="system-clock">⏱ Loading...</div>
+</div>
+
+<!-- ============================================
+     MAIN GRID
+============================================ -->
+<div id="main-grid">
+
+  <!-- ==================
+       LEFT COLUMN
+  =================== -->
+  <div style="display:flex; flex-direction:column; gap:12px;">
+
+    <!-- AUTH PANEL -->
+    <div class="panel" id="auth-panel">
+      <div class="panel-header">
+        <span class="panel-title">🔐 Account Access</span>
+        <span class="btn-sm" onclick="showModal('help-modal')">?</span>
+      </div>
+      <div class="panel-body">
+
+        <!-- Google Auth -->
+        <div class="auth-section">
+          <div class="auth-section-title">Google Account</div>
+          <button id="google-signin-btn" onclick="handleGoogleSignIn()">
+            <svg width="16" height="16" viewBox="0 0 24 24">
+              <path fill="#fff" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#fff" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#fff" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+              <path fill="#fff" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+            </svg>
+            Sign In with Google
+          </button>
+          <div id="google-user-info">
+            <div id="google-user-name">👤 Not signed in</div>
+            <div id="google-user-email" style="color:var(--text-muted); font-size:0.65rem;"></div>
+          </div>
+        </div>
+
+        <!-- Social Platforms -->
+        <div class="auth-section">
+          <div class="auth-section-title">Social Platforms</div>
+          <div class="platform-grid">
+            <button class="platform-btn youtube" onclick="connectPlatform(this,'YouTube')">▶ YouTube</button>
+            <button class="platform-btn instagram" onclick="connectPlatform(this,'Instagram')">📷 Instagram</button>
+            <button class="platform-btn tiktok" onclick="connectPlatform(this,'TikTok')">🎵 TikTok</button>
+            <button class="platform-btn facebook" onclick="connectPlatform(this,'Facebook')">👥 Facebook</button>
+            <button class="platform-btn twitter" onclick="connectPlatform(this,'Twitter/X')">🐦 Twitter/X</button>
+            <button class="platform-btn spotify" onclick="connectPlatform(this,'Spotify')">🎧 Spotify</button>
+            <button class="platform-btn soundcloud" onclick="connectPlatform(this,'SoundCloud')">☁ SoundCloud</button>
+            <button class="platform-btn pinterest" onclick="connectPlatform(this,'Pinterest')">📌 Pinterest</button>
+          </div>
+        </div>
+
+        <!-- Marketplaces -->
+        <div class="auth-section">
+          <div class="auth-section-title">Marketplaces</div>
+          <div class="platform-grid">
+            <button class="platform-btn etsy" onclick="connectPlatform(this,'Etsy')">🛒 Etsy</button>
+            <button class="platform-btn distrokid" onclick="connectPlatform(this,'DistroKid')">📦 DistroKid</button>
+          </div>
+        </div>
+
+        <!-- OpenAI API -->
+        <div class="auth-section">
+          <div class="auth-section-title">🤖 AI Engine</div>
+          <div class="api-input-group">
+            <input type="password" class="api-input" id="openai-key" placeholder="sk-... OpenAI Key">
+            <button class="btn-sm" onclick="saveAPIKey()">SAVE</button>
+          </div>
+          <div id="api-status" style="font-size:0.65rem; color:var(--text-muted);">⚪ No key loaded</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- AGENT PANEL -->
+    <div class="panel" id="agent-panel">
+      <div class="panel-header">
+        <span class="panel-title">🤖 AI Agents</span>
+        <button class="btn-sm" onclick="runAllAgents()">▶ ALL</button>
+      </div>
+      <div class="panel-body">
+
+        <!-- Research Agent -->
+        <div class="agent-card" id="agent-research" style="--agent-color: #00d4ff;" onclick="selectAgent('research')">
+          <div class="agent-header">
+            <span class="agent-name">🔍 RESEARCH</span>
+            <span class="agent-status status-idle" id="status-research">IDLE</span>
+          </div>
+          <div class="agent-desc">Scans trends, viral content, popular hashtags & market demand across all platforms</div>
+          <div class="agent-controls">
+            <button class="btn-sm" onclick="runAgent('research', event)">▶ RUN</button>
+            <button class="btn-sm" onclick="stopAgent('research', event)">■ STOP</button>
+            <button class="btn-sm gold" onclick="scheduleAgent('research', event)">⏰ SCHED</button>
+          </div>
+          <div class="agent-progress">
+            <div class="agent-progress-bar" id="progress-research" style="width:0%"></div>
+          </div>
+        </div>
+
+        <!-- Music Agent -->
+        <div class="agent-card" id="agent-music" style="--agent-color: #00ff41;" onclick="selectAgent('music')">
+          <div class="agent-header">
+            <span class="agent-name">🎵 MUSIC</span>
+            <span class="agent-status status-idle" id="status-music">IDLE</span>
+          </div>
+          <div class="agent-desc">Generates music tracks, lyrics, metadata & uploads to Spotify, SoundCloud, DistroKid</div>
+          <div class="agent-controls">
+            <button class="btn-sm" onclick="runAgent('music', event)">▶ RUN</button>
+            <button class="btn-sm" onclick="stopAgent('music', event)">■ STOP</button>
+            <button class="btn-sm gold" onclick="scheduleAgent('music', event)">⏰ SCHED</button>
+          </div>
+          <div class="agent-progress">
+            <div class="agent-progress-bar" id="progress-music" style="width:0%"></div>
+          </div>
+        </div>
+
+        <!-- Art Agent -->
+        <div class="agent-card" id="agent-art" style="--agent-color: #ff6b00;" onclick="selectAgent('art')">
+          <div class="agent-header">
+            <span class="agent-name">🎨 ART</span>
+            <span class="agent-status status-idle" id="status-art">IDLE</span>
+          </div>
+          <div class="agent-desc">Creates digital art, album covers, Etsy listings & social media graphics via DALL-E</div>
+          <div class="agent-controls">
+            <button class="btn-sm" onclick="runAgent('art', event)">▶ RUN</button>
+            <button class="btn-sm" onclick="stopAgent('art', event)">■ STOP</button>
+            <button class="btn-sm gold" onclick="scheduleAgent('art', event)">⏰ SCHED</button>
+          </div>
+          <div class="agent-progress">
+            <div class="agent-progress-bar" id="progress-art" style="width:0%"></div>
+          </div>
+        </div>
+
+        <!-- Video Agent -->
+        <div class="agent-card" id="agent-video" style="--agent-color: #ff0040;" onclick="selectAgent('video')">
+          <div class="agent-header">
+            <span class="agent-name">🎬 VIDEO</span>
+            <span class="agent-status status-idle" id="status-video">IDLE</span>
+          </div>
+          <div class="agent-desc">Produces short-form videos, reels, YouTube shorts & auto-uploads with SEO metadata</div>
+          <div class="agent-controls">
+            <button class="btn-sm" onclick="runAgent('video', event)">▶ RUN</button>
+            <button class="btn-sm" onclick="stopAgent('video', event)">■ STOP</button>
+            <button class="btn-sm gold" onclick="scheduleAgent('video', event)">⏰ SCHED</button>
+          </div>
+          <div class="agent-progress">
+            <div class="agent-progress-bar" id="progress-video" style="width:0%"></div>
+          </div>
+        </div>
+
+        <!-- Marketing Agent -->
+        <div class="agent-card" id="agent-marketing" style="--agent-color: #ffd700;" onclick="selectAgent('marketing')">
+          <div class="agent-header">
+            <span class="agent-name">📣 MARKETING</span>
+            <span class="agent-status status-idle" id="status-marketing">IDLE</span>
+          </div>
+          <div class="agent-desc">Writes captions, hashtags, ad copy & auto-posts across all connected platforms</div>
+          <div class="agent-controls">
+            <button class="btn-sm" onclick="runAgent('marketing', event)">▶ RUN</button>
+            <button class="btn-sm" onclick="stopAgent('marketing', event)">■ STOP</button>
+            <button class="btn-sm gold" onclick="scheduleAgent('marketing', event)">⏰ SCHED</button>
+          </div>
+          <div class="agent-progress">
+            <div class="agent-progress-bar" id="progress-marketing" style="width:0%"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- END LEFT COLUMN -->
+
+  <!-- ==================
+       CENTER COLUMN
+  =================== -->
+  <div id="command-center">
+
+    <!-- TERMINAL -->
+    <div id="terminal-panel" class="panel">
+      <div class="panel-header">
+        <span class="panel-title">⌨ Command Terminal</span>
+        <div style="display:flex; gap:6px;">
+          <button class="btn-sm" onclick="clearTerminal()">CLEAR</button>
+          <button class="btn-sm gold" onclick="showModal('distro-modal')">📦 DISTRO</button>
+        </div>
+      </div>
+      <div id="terminal-output"></div>
+      <div id="quick-commands">
+        <button class="cmd-btn" onclick="quickCmd('status')">status</button>
+        <button class="cmd-btn" onclick="quickCmd('scan trends')">scan trends</button>
+        <button class="cmd-btn" onclick="quickCmd('generate music')">gen music</button>
+        <button class="cmd-btn" onclick="quickCmd('generate art')">gen art</button>
+        <button class="cmd-btn" onclick="quickCmd('generate video')">gen video</button>
+        <button class="cmd-btn" onclick="quickCmd('post all')">post all</button>
+        <button class="cmd-btn" onclick="quickCmd('cleanup agents')">cleanup</button>
+        <button class="cmd-btn" onclick="quickCmd('etsy list')">etsy list</button>
+        <button class="cmd-btn" onclick="quickCmd('revenue')">revenue</button>
+        <button class="cmd-btn" onclick="quickCmd('schedule')">schedule</button>
+        <button class="cmd-btn" onclick="quickCmd('help')">help</button>
+      </div>
+      <div id="terminal-input-row">
+        <span id="terminal-prompt">EMPIRE $&gt;</span>
+        <input type="text" id="terminal-input" placeholder="Enter command..." 
+               onkeydown="handleTerminalInput(event)" autocomplete="off" spellcheck="false">
+      </div>
+    </div>
+
+    <!-- CONTENT CREATOR -->
+    <div id="creator-panel" class="panel">
+      <div class="panel-header">
+        <span class="panel-title">🛠 Content Creator</span>
+      </div>
+      <div class="creator-tabs">
+        <div class="creator-tab active" onclick="switchTab('music-tab', this)">🎵 Music</div>
+        <div class="creator-tab" onclick="switchTab('art-tab', this)">🎨 Art</div>
+        <div class="creator-tab" onclick="switchTab('video-tab', this)">🎬 Video</div>
+        <div class="creator-tab" onclick="switchTab('post-tab', this)">📣 Post</div>
+        <div class="creator-tab" onclick="switchTab('etsy-tab', this)">🛒 Etsy</div>
+      </div>
+
+      <!-- Music Tab -->
+      <div id="music-tab" class="creator-tab-content active">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Genre</label>
+            <select class="form-control" id="music-genre">
+              <option>Country / Patriotic</option>
+              <option>Rock</option>
+              <option>Hip-Hop / Trap</option>
+              <option>Ambient / Lo-Fi</option>
+              <option>Pop</option>
+              <option>Folk / Acoustic</option>
+              <option>EDM / Electronic</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Mood</label>
+            <select class="form-control" id="music-mood">
+              <option>Uplifting / Patriotic</option>
+              <option>Chill / Relaxed</option>
+              <option>Energetic / Hype</option>
+              <option>Emotional / Deep</option>
+              <option>Dark / Intense</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:8px;">
+          <label class="form-label">Track Description / Prompt</label>
+          <textarea class="form-control" id="music-prompt" placeholder="Describe the track you want to create...">Patriotic American anthem with soaring guitar, drums, and inspirational lyrics about freedom and unity</textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Duration</label>
+            <select class="form-control">
+              <option>30 sec (Reel)</option>
+              <option>1 min (Short)</option>
+              <option>3 min (Single)</option>
+              <option>Full Track (4-5 min)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Auto-Cleanup</label>
+            <select class="form-control" id="music-cleanup">
+              <option>Remove after 24hrs</option>
+              <option>Remove after 48hrs</option>
+              <option>Remove after 7 days</option>
+              <option>Keep Permanent (Admin)</option>
+            </select>
+          </div>
+        </div>
+        <div class="platform-targets" id="music-targets">
+          <div class="platform-target selected" data-platform="spotify">🎧 Spotify</div>
+          <div class="platform-target selected" data-platform="soundcloud">☁ SoundCloud</div>
+          <div class="platform-target" data-platform="youtube">▶ YouTube</div>
+          <div class="platform-target" data-platform="distrokid">📦 DistroKid</div>
+          <div class="platform-target" data-platform="tiktok">🎵 TikTok</div>
+        </div>
+        <div class="deploy-options">
+          <button class="btn-deploy primary" onclick="deployContent('music','now')">⚡ GENERATE & POST NOW</button>
+          <button class="btn-deploy agent" onclick="deployContent('music','agent')">🤖 SEND TO AGENT</button>
+          <button class="btn-deploy scheduled" onclick="deployContent('music','schedule')">⏰ SCHEDULE</button>
+        </div>
+      </div>
+
+      <!-- Art Tab -->
+      <div id="art-tab" class="creator-tab-content">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Art Style</label>
+            <select class="form-control" id="art-style">
+              <option>Digital Illustration</option>
+              <option>Photorealistic</option>
+              <option>Watercolor</option>
+              <option>Pixel Art</option>
+              <option>Abstract</option>
+              <option>Vintage / Retro</option>
+              <option>Patriotic / Americana</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Product Type</label>
+            <select class="form-control" id="art-product">
+              <option>Digital Download (Etsy)</option>
+              <option>Album Cover</option>
+              <option>Social Media Post</option>
+              <option>Print on Demand</option>
+              <option>NFT Asset</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:8px;">
+          <label class="form-label">Art Prompt (DALL-E)</label>
+          <textarea class="form-control" id="art-prompt" placeholder="Describe the artwork...">American eagle soaring over mountain landscape at sunset, patriotic colors, digital art style, high detail</textarea>
+        </div>
+        <div class="platform-targets">
+          <div class="platform-target selected" data-platform="etsy">🛒 Etsy</div>
+          <div class="platform-target selected" data-platform="instagram">📷 Instagram</div>
+          <div class="platform-target" data-platform="pinterest">📌 Pinterest</div>
+          <div class="platform-target" data-platform="twitter">🐦 Twitter/X</div>
+        </div>
+        <div class="deploy-options">
+          <button class="btn-deploy primary" onclick="deployContent('art','now')">⚡ GENERATE & LIST NOW</button>
+          <button class="btn-deploy agent" onclick="deployContent('art','agent')">🤖 SEND TO AGENT</button>
+          <button class="btn-deploy scheduled" onclick="deployContent('art','schedule')">⏰ SCHEDULE</button>
+        </div>
+      </div>
+
+      <!-- Video Tab -->
+      <div id="video-tab" class="creator-tab-content">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Video Type</label>
+            <select class="form-control">
+              <option>YouTube Short</option>
+              <option>Instagram Reel</option>
+              <option>TikTok Video</option>
+              <option>Full YouTube Video</option>
+              <option>Music Video</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Duration</label>
+            <select class="form-control">
+              <option>15 seconds</option>
+              <option>30 seconds</option>
+              <option>60 seconds</option>
+              <option>3-5 minutes</option>
+              <option>10+ minutes</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:8px;">
+          <label class="form-label">Video Concept / Script Prompt</label>
+          <textarea class="form-control" placeholder="Describe the video concept...">Patriotic montage with American landscapes, flag imagery, and inspirational music overlay. Include auto-generated captions.</textarea>
+        </div>
+        <div class="platform-targets">
+          <div class="platform-target selected" data-platform="youtube">▶ YouTube</div>
+          <div class="platform-target selected" data-platform="tiktok">🎵 TikTok</div>
+          <div class="platform-target" data-platform="instagram">📷 Instagram</div>
+          <div class="platform-target" data-platform="facebook">👥 Facebook</div>
+        </div>
+        <div class="deploy-options">
+          <button class="btn-deploy primary" onclick="deployContent('video','now')">⚡ GENERATE & UPLOAD NOW</button>
+          <button class="btn-deploy agent" onclick="deployContent('video','agent')">🤖 SEND TO AGENT</button>
+          <button class="btn-deploy scheduled" onclick="deployContent('video','schedule')">⏰ SCHEDULE</button>
+        </div>
+      </div>
+
+      <!-- Post Tab -->
+      <div id="post-tab" class="creator-tab-content">
+        <div class="form-group" style="margin-bottom:8px;">
+          <label class="form-label">Post Caption / Content</label>
+          <textarea class="form-control" id="post-content" placeholder="Write your post content or let the AI generate it..." style="min-height:100px;">🇺🇸 New music just dropped! Check out our latest patriotic anthem — link in bio! #PatriotMusic #AmericanMusic #NewMusic</textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Post As</label>
+            <select class="form-control" id="post-as">
+              <option value="admin">👑 Admin (Permanent)</option>
+              <option value="agent">🤖 Agent (Auto-Remove)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">AI Generate?</label>
+            <button class="btn-sm" style="margin-top:4px; width:100%; padding:8px;" onclick="generateCaption()">✨ AI WRITE CAPTION</button>
+          </div>
+        </div>
+        <div class="platform-targets" id="post-targets">
+          <div class="platform-target selected">📷 Instagram</div>
+          <div class="platform-target selected">🐦 Twitter/X</div>
+          <div class="platform-target selected">👥 Facebook</div>
+          <div class="platform-target">🎵 TikTok</div>
+          <div class="platform-target">📌 Pinterest</div>
+        </div>
+        <div class="deploy-options">
+          <button class="btn-deploy primary" onclick="deployContent('post','now')">⚡ POST NOW</button>
+          <button class="btn-deploy agent" onclick="deployContent('post','agent')">🤖 AGENT POST</button>
+          <button class="btn-deploy scheduled" onclick="deployContent('post','schedule')">⏰ SCHEDULE</button>
+        </div>
+      </div>
+
+      <!-- Etsy Tab -->
+      <div id="etsy-tab" class="creator-tab-content">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Product Type</label>
+            <select class="form-control">
+              <option>Digital Download - Music</option>
+              <option>Digital Download - Art</option>
+              <option>Digital Download - Video</option>
+              <option>Printable Design</option>
+              <option>SVG / Vector File</option>
+              <option>Music License</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Price ($)</label>
+            <input type="number" class="form-control" value="4.99" min="0.20" step="0.01">
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:8px;">
+          <label class="form-label">Listing Title</label>
+          <input type="text" class="form-control" value="Patriotic American Eagle Digital Art - Instant Download">
+        </div>
+        <div class="form-group" style="margin-bottom:8px;">
+          <label class="form-label">Description (AI Generate or Manual)</label>
+          <textarea class="form-control" placeholder="Etsy listing description...">High-quality patriotic digital art perfect for home decor, t-shirts, and more. Instant download. Commercial license included.</textarea>
+        </div>
+        <div class="deploy-options">
+          <button class="btn-deploy primary" onclick="deployContent('etsy','now')">🛒 LIST ON ETSY NOW</button>
+          <button class="btn-deploy agent" onclick="deployContent('etsy','agent')">🤖 AGENT LIST</button>
+          <button class="btn-deploy scheduled" onclick="deployContent('etsy','schedule')">⏰ SCHEDULE LIST</button>
+        </div>
+      </div>
+
+    </div><!-- END CREATOR PANEL -->
+
+  </div><!-- END CENTER COLUMN -->
+
+  <!-- ==================
+       RIGHT COLUMN
+  =================== -->
+  <div id="right-panel">
+
+    <!-- Revenue Widget -->
+    <div class="revenue-widget">
+      <div class="panel-header" style="padding:0 0 10px 0; margin-bottom:10px; border-bottom:1px solid var(--border);">
+        <span class="panel-title">💰 Revenue Dashboard</span>
+        <span style="font-size:0.65rem; color:var(--primary);" id="rev-live">● LIVE</span>
+      </div>
+      <div class="revenue-main">
+        <span class="revenue-amount" id="total-revenue">$0.00</span>
+        <span class="revenue-label">Total Empire Revenue</span>
+      </div>
+      <div class="revenue-grid">
+        <div class="revenue-item">
+          <div class="revenue-item-value" id="rev-etsy">$0.00</div>
+          <div class="revenue-item-label">🛒 Etsy</div>
+        </div>
+        <div class="revenue-item">
+          <div class="revenue-item-value" id="rev-music">$0.00</div>
+          <div class="revenue-item-label">🎵 Music</div>
+        </div>
+        <div class="revenue-item">
+          <div class="revenue-item-value" id="rev-youtube">$0.00</div>
+          <div class="revenue-item-label">▶ YouTube</div>
+        </div>
+        <div class="revenue-item">
+          <div class="revenue-item-value" id="rev-other">$0.00</div>
+          <div class="revenue-item-label">📊 Other</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Activity Feed -->
+    <div id="activity-feed" class="panel">
+      <div class="panel-header">
+        <span class="panel-title">📡 Live Activity</span>
+        <button class="btn-sm" onclick="clearActivity()">CLEAR</button>
+      </div>
+      <div id="activity-list"></div>
+    </div>
+
+    <!-- Schedule Panel -->
+    <div id="schedule-panel" class="panel">
+      <div class="panel-header">
+        <span class="panel-title">⏰ Scheduled Queue</span>
+        <button class="btn-sm" onclick="clearSchedule()">CLEAR</button>
+      </div>
+      <div id="schedule-list" style="max-height:200px; overflow-y:auto;">
+        <div class="schedule-item">
+          <span class="schedule-time">+2h</span>
+          <div class="schedule-content">
+            <div>Music track auto-post</div>
+            <div class="schedule-platform">Spotify + SoundCloud</div>
+          </div>
+          <span class="schedule-type type-agent">AGENT</span>
+        </div>
+        <div class="schedule-item">
+          <span class="schedule-time">+4h</span>
+          <div class="schedule-content">
+            <div>Art listing creation</div>
+            <div class="schedule-platform">Etsy + Instagram</div>
+          </div>
+          <span class="schedule-type type-agent">AGENT</span>
+        </div>
+        <div class="schedule-item">
+          <span class="schedule-time">+24h</span>
+          <div class="schedule-content">
+            <div>🗑 Agent cleanup run</div>
+            <div class="schedule-platform">All platforms</div>
+          </div>
+          <span class="schedule-type type-agent">CLEANUP</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- END RIGHT COLUMN -->
+
+  <!-- ==================
+       FULL WIDTH BOTTOM
+  =================== -->
+  <div id="post-manager">
+    <div class="panel-header">
+      <span class="panel-title">📋 Post Manager — Admin Posts Stay | Agent Posts Auto-Cleanup</span>
+      <div style="display:flex; gap:6px;">
+        <button class="btn-sm danger" onclick="cleanupAgentPosts()">🗑 CLEANUP AGENT POSTS</button>
+        <button class="btn-sm" onclick="refreshPostManager()">↺ REFRESH</button>
+      </div>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="post-table" id="posts-table">
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Content</th>
+            <th>Platform</th>
+            <th>Posted</th>
+            <th>Status</th>
+            <th>Auto-Remove</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="posts-tbody">
+          <tr>
+            <td><span class="post-type-badge badge-admin">ADMIN</span></td>
+            <td>🎵 Original "Freedom Song" - Full Release</td>
+            <td>Spotify + YouTube</td>
+            <td>Today 9:00 AM</td>
+            <td><span class="status-live">● LIVE</span></td>
+            <td style="color:var(--gold);">♾ PERMANENT</td>
+            <td><button class="btn-sm">View</button></td>
+          </tr>
+          <tr>
+            <td><span class="post-type-badge badge-agent">AGENT</span></td>
+            <td>🎨 Eagle Art Digital Download #1</td>
+            <td>Etsy</td>
+            <td>Today 10:30 AM</td>
+            <td><span class="status-live">● LIVE</span></td>
+            <td style="color:var(--secondary);">24h → REMOVE</td>
+            <td><button class="btn-sm danger" onclick="removePost(this)">🗑 REMOVE</button></td>
+          </tr>
+          <tr>
+            <td><span class="post-type-badge badge-agent">AGENT</span></td>
+            <td>📣 Marketing post - New release promo</td>
+            <td>Instagram + Twitter</td>
+            <td>Today 11:00 AM</td>
+            <td><span class="status-live">● LIVE</span></td>
+            <td style="color:var(--secondary);">24h → REMOVE</td>
+            <td><button class="btn-sm danger" onclick="removePost(this)">🗑 REMOVE</button></td>
+          </tr>
+          <tr>
+            <td><span class="post-type-badge badge-scheduled">SCHED</span></td>
+            <td>🎵 AI-Generated Track "Americana Vol.2"</td>
+            <td>SoundCloud + TikTok</td>
+            <td>Scheduled +2h</td>
+            <td><span class="status-scheduled">◉ PENDING</span></td>
+            <td style="color:var(--accent);">48h → REMOVE</td>
+            <td><button class="btn-sm" onclick="cancelPost(this)">✕ CANCEL</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div><!-- END MAIN GRID -->
+
+<!-- ============================================
+     DISTROKID MODAL
+============================================ -->
+<div class="modal-overlay" id="distro-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">📦 DistroKid Distribution Manager</span>
+      <button class="modal-close" onclick="closeModal('distro-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:0.75rem; color:var(--text-secondary); margin-bottom:14px;">
+        Deploy or remove music from all distribution platforms. Agent posts auto-remove after 24h. Admin posts are permanent.
+      </p>
+      <div class="distro-grid" id="distro-platforms">
+        <div class="distro-platform deployed" onclick="toggleDistro(this)">
+          <span class="distro-icon">🎧</span>Spotify
+        </div>
+        <div class="distro-platform deployed" onclick="toggleDistro(this)">
+          <span class="distro-icon">🍎</span>Apple Music
+        </div>
+        <div class="distro-platform" onclick="toggleDistro(this)">
+          <span class="distro-icon">▶</span>YouTube Music
+        </div>
+        <div class="distro-platform" onclick="toggleDistro(this)">
+          <span class="distro-icon">🎵</span>TikTok
+        </div>
+        <div class="distro-platform deployed" onclick="toggleDistro(this)">
+          <span class="distro-icon">☁</span>SoundCloud
+        </div>
+        <div class="distro-platform" onclick="toggleDistro(this)">
+          <span class="distro-icon">🎶</span>Deezer
+        </div>
+        <div class="distro-platform" onclick="toggleDistro(this)">
+          <span class="distro-icon">🎼</span>Tidal
+        </div>
+        <div class="distro-platform" onclick="toggleDistro(this)">
+          <span class="distro-icon">📻</span>Amazon Music
+        </div>
+        <div class="distro-platform" onclick="toggleDistro(this)">
+          <span class="distro-icon">🎹</span>Pandora
+        </div>
+      </div>
+      <div style="display:flex; gap:8px; margin-top:14px;">
+        <button class="btn-deploy primary" style="font-size:0.65rem; padding:8px;" onclick="deployAllDistro()">📦 DEPLOY ALL</button>
+        <button class="btn-deploy agent" style="font-size:0.65rem; padding:8px; background:linear-gradient(135deg,var(--danger),#880022);" onclick="removeAllDistro()">🗑 REMOVE ALL AGENT</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     HELP MODAL
+============================================ -->
+<div class="modal-overlay" id="help-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">📖 Command Reference</span>
+      <button class="modal-close" onclick="closeModal('help-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="font-size:0.72rem; line-height:1.8; color:var(--text-secondary);">
+        <div style="color:var(--primary); font-weight:bold; margin-bottom:8px;">TERMINAL COMMANDS:</div>
+        <div><span style="color:var(--accent);">status</span> — Show all agent & platform status</div>
+        <div><span style="color:var(--accent);">scan trends</span> — Run research agent</div>
+        <div><span style="color:var(--accent);">generate music [prompt]</span> — Create music track</div>
+        <div><span style="color:var(--accent);">generate art [prompt]</span> — Create digital art</div>
+        <div><span style="color:var(--accent);">generate video [prompt]</span> — Create video content</div>
+        <div><span style="color:var(--accent);">post all</span> — Post to all connected platforms</div>
+        <div><span style="color:var(--accent);">cleanup agents</span> — Remove all agent posts</div>
+        <div><span style="color:var(--accent);">etsy list [title]</span> — Create Etsy listing</div>
+        <div><span style="color:var(--accent);">distro deploy</span> — Push to all music platforms</div>
+        <div><span style="color:var(--accent);">distro remove</span> — Pull from all platforms</div>
+        <div><span style="color:var(--accent);">revenue</span> — Show revenue breakdown</div>
+        <div><span style="color:var(--accent);">schedule [time] [cmd]</span> — Schedule a command</div>
+        <div><span style="color:var(--accent);">help</span> — Show this reference</div>
+        <div style="color:var(--gold); font-weight:bold; margin-top:12px;">ADMIN RULES:</div>
+        <div>👑 Admin posts = PERMANENT (never auto-removed)</div>
+        <div>🤖 Agent posts = AUTO-REMOVED after set time</div>
+        <div>🔑 Your Google login = Admin identity</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div id="toast-container"></div>
+
+<!-- ============================================
+     JAVASCRIPT ENGINE
+============================================ -->
+<script>
+
+// ============================================
+// STATE MANAGEMENT
+// ============================================
+const STATE = {
+  user: null,
+  apiKey: localStorage.getItem('openai_key') || null,
+  connectedPlatforms: JSON.parse(localStorage.getItem('connected_platforms') || '[]'),
+  agentStatus: { research:'idle', music:'idle', art:'idle', video:'idle', marketing:'idle' },
+  agentIntervals: {},
+  posts: [],
+  revenue: { etsy: 0, music: 0, youtube: 0, other: 0 },
+  commandHistory: [],
+  historyIndex: -1
+};
+
+// ============================================
+// CLOCK
+// ============================================
+function updateClock() {
+  const now = new Date();
+  document.getElementById('system-clock').textContent = 
+    `⏱ ${now.toLocaleDateString()} ${now.toLocaleTimeString()}`;
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+// ============================================
+// TERMINAL ENGINE
+// ============================================
+function termLog(msg, type = 'output') {
+  const out = document.getElementById('terminal-output');
+  const line = document.createElement('div');
+  line.className = `term-line term-${type}`;
+  const ts = new Date().toLocaleTimeString();
+  line.innerHTML = `<span style="color:var(--text-muted);">[${ts}]</span> ${msg}`;
+  out.appendChild(line);
+  out.scrollTop = out.scrollHeight;
+}
+
+function clearTerminal() {
+  document.getElementById('terminal-output').innerHTML = '';
+  termLog('Terminal cleared.', 'system');
+}
+
+function handleTerminalInput(e) {
+  const input = document.getElementById('terminal-input');
+  
+  if (e.key === 'ArrowUp') {
+    if (STATE.historyIndex < STATE.commandHistory.length - 1) {
+      STATE.historyIndex++;
+      input.value = STATE.commandHistory[STATE.commandHistory.length - 1 - STATE.historyIndex];
+    }
+    return;
+  }
+  if (e.key === 'ArrowDown') {
+    if (STATE.historyIndex > 0) {
+      STATE.historyIndex--;
+      input.value = STATE.commandHistory[STATE.commandHistory.length - 1 - STATE.historyIndex];
+    } else {
+      STATE.historyIndex = -1;
+      input.value = '';
+    }
+    return;
+  }
+
+  if (e.key !== 'Enter') return;
+  const cmd = input.value.trim();
+  if (!cmd) return;
+
+  STATE.commandHistory.push(cmd);
+  STATE.historyIndex = -1;
+  termLog(`EMPIRE $> ${cmd}`, 'input');
+  input.value = '';
+  processCommand(cmd.toLowerCase());
+}
+
+function quickCmd(cmd) {
+  termLog(`EMPIRE $> ${cmd}`, 'input');
+  processCommand(cmd.toLowerCase());
+}
+
+function processCommand(cmd) {
+  if (cmd === 'help') {
+    termLog('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'system');
+    termLog('PATRIOT MUSIC EMPIRE — COMMAND REFERENCE', 'success');
+    termLog('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'system');
+    termLog('status          → System & agent status', 'output');
+    termLog('scan trends     → Run research agent', 'output');
+    termLog('generate music  → Create AI music track', 'output');
+    termLog('generate art    → Create AI artwork', 'output');
+    termLog('generate video  → Create AI video', 'output');
+    termLog('post all        → Broadcast to all platforms', 'output');
+    termLog('cleanup agents  → Remove all agent content', 'output');
+    termLog('etsy list       → Create Etsy listing', 'output');
+    termLog('distro deploy   → Push to music platforms', 'output');
+    termLog('distro remove   → Pull from music platforms', 'output');
+    termLog('revenue         → Revenue breakdown', 'output');
+    termLog('schedule        → View scheduled tasks', 'output');
+    termLog('clear           → Clear terminal', 'output');
+    return;
+  }
+
+  if (cmd === 'status') {
+    termLog('━━━━ SYSTEM STATUS ━━━━', 'system');
+    termLog(`👑 Admin: ${STATE.user ? STATE.user.name : 'NOT LOGGED IN'}`, STATE.user ? 'success' : 'error');
+    termLog(`🤖 OpenAI: ${STATE.apiKey ? 'KEY LOADED ✓' : 'NO KEY — Enter in Auth Panel'}`, STATE.apiKey ? 'success' : 'warning');
+    const platforms = STATE.connectedPlatforms;
+    termLog(`🌐 Connected Platforms: ${platforms.length > 0 ? platforms.join(', ') : 'None'}`, platforms.length > 0 ? 'success' : 'warning');
+    Object.entries(STATE.agentStatus).forEach(([agent, status]) => {
+      const icon = status === 'running' ? '🟢' : status === 'idle' ? '⚪' : '🔴';
+      termLog(`${icon} ${agent.toUpperCase()} Agent: ${status.toUpperCase()}`, 
+               status === 'running' ? 'success' : status === 'idle' ? 'system' : 'error');
+    });
+    return;
+  }
+
+  if (cmd === 'scan trends' || cmd === 'scan') {
+    runAgent('research');
+    return;
+  }
+
+  if (cmd.startsWith('generate music') || cmd === 'gen music') {
+    runAgent('music');
+    return;
+  }
+
+  if (cmd.startsWith('generate art') || cmd === 'gen art') {
+    runAgent('art');
+    return;
+  }
+
+  if (cmd.startsWith('generate video') || cmd === 'gen video') {
+    runAgent('video');
+    return;
+  }
+
+  if (cmd === 'post all') {
+    termLog('📡 Broadcasting to all connected platforms...', 'agent');
+    const platforms = STATE.connectedPlatforms;
+    if (platforms.length === 0) {
+      termLog('⚠ No platforms connected. Connect platforms in Auth Panel.', 'warning');
+      return;
+    }
+    platforms.forEach((p, i) => {
+      setTimeout(() => {
+        termLog(`✅ Posted to ${p}`, 'success');
+        addActivity(`Posted to ${p}`, 'success', '📡');
+      }, i * 600);
+    });
+    return;
+  }
+
+  if (cmd === 'cleanup agents' || cmd === 'cleanup') {
+    cleanupAgentPosts();
+    return;
+  }
+
+  if (cmd.startsWith('etsy list')) {
+    deployContent('etsy', 'now');
+    return;
+  }
+
+  if (cmd === 'distro deploy') {
+    deployAllDistro();
+    return;
+  }
+
+  if (cmd === 'distro remove') {
+    removeAllDistro();
+    return;
+  }
+
+  if (cmd === 'revenue') {
+    termLog('━━━━ REVENUE BREAKDOWN ━━━━', 'system');
+    termLog(`🛒 Etsy:    $${STATE.revenue.etsy.toFixed(2)}`, 'success');
+    termLog(`🎵 Music:   $${STATE.revenue.music.toFixed(2)}`, 'success');
+    termLog(`▶ YouTube: $${STATE.revenue.youtube.toFixed(2)}`, 'success');
+    termLog(`📊 Other:   $${STATE.revenue.other.toFixed(2)}`, 'success');
+    const total = Object.values(STATE.revenue).reduce((a,b) => a+b, 0);
+    termLog(`💰 TOTAL:   $${total.toFixed(2)}`, 'admin');
+    return;
+  }
+
+  if (cmd === 'schedule') {
+    termLog('━━━━ SCHEDULED TASKS ━━━━', 'system');
+    termLog('⏰ +2h  → Music track post (Spotify + SoundCloud) [AGENT]', 'output');
+    termLog('⏰ +4h  → Art listing (Etsy + Instagram) [AGENT]', 'output');
+    termLog('⏰ +24h → Agent cleanup run [SYSTEM]', 'output');
+    return;
+  }
+
+  if (cmd === 'clear') {
+    clearTerminal();
+    return;
+  }
+
+  termLog(`❌ Unknown command: "${cmd}" — type "help" for commands`, 'error');
+}
+
+// ============================================
+// GOOGLE AUTH
+// ============================================
+function handleGoogleSignIn() {
+  // Simulate Google OAuth flow
+  termLog('🔐 Initiating Google OAuth...', 'system');
+  
+  // In production: use Google Identity Services
+  // google.accounts.id.initialize({ client_id: 'YOUR_CLIENT_ID', callback: handleCredentialResponse });
+  // google.accounts.id.prompt();
+
+  // Demo simulation
+  setTimeout(() => {
+    STATE.user = {
+      name: 'Empire Admin',
+      email: 'admin@patriotmusicempire.com',
+      picture: '👑'
+    };
+    
+    document.getElementById('google-signin-btn').style.display = 'none';
+    const info = document.getElementById('google-user-info');
+    info.style.display = 'block';
+    document.getElementById('google-user-name').textContent = `👑 ${STATE.user.name}`;
+    document.getElementById('google-user-email').textContent = STATE.user.email;
+    
+    termLog(`✅ Google Auth SUCCESS — Welcome, ${STATE.user.name}!`, 'success');
+    termLog(`👑 ADMIN MODE ACTIVATED — Your posts are permanent`, 'admin');
+    addActivity(`Admin logged in: ${STATE.user.name}`, 'admin', '👑');
+    showToast('success', `Welcome back, ${STATE.user.name}!`);
+  }, 1200);
+}
+
+// ============================================
+// PLATFORM CONNECTION
+// ============================================
+function connectPlatform(btn, name) {
+  if (btn.classList.contains('connected')) {
+    btn.classList.remove('connected');
+    STATE.connectedPlatforms = STATE.connectedPlatforms.filter(p => p !== name);
+    localStorage.setItem('connected_platforms', JSON.stringify(STATE.connectedPlatforms));
+    termLog(`🔌 Disconnected from ${name}`, 'warning');
+    showToast('warning', `Disconnected from ${name}`);
+    return;
+  }
+
+  termLog(`🔗 Connecting to ${name}...`, 'system');
+  btn.style.opacity = '0.6';
+  
+  setTimeout(() => {
+    btn.classList.add('connected');
+    btn.style.opacity = '1';
+    if (!STATE.connectedPlatforms.includes(name)) {
+      STATE.connectedPlatforms.push(name);
+      localStorage.setItem('connected_platforms', JSON.stringify(STATE.connectedPlatforms));
+    }
+    termLog(`✅ Connected to ${name}`, 'success');
+    addActivity(`Connected to ${name}`, 'success', '🔗');
+    showToast('success', `${name} connected!`);
+  }, 1000);
+}
+
+// ============================================
+// API KEY
+// ============================================
+function saveAPIKey() {
+  const key = document.getElementById('openai-key').value.trim();
+  if (!key) { showToast('error', 'Please enter your OpenAI API key'); return; }
+  if (!key.startsWith('sk-')) { showToast('error', 'Invalid key format (should start with sk-)'); return; }
+  
+  STATE.apiKey = key;
+  localStorage.setItem('openai_key', key);
+  document.getElementById('api-status').textContent = '✅ OpenAI Key Active';
+  document.getElementById('api-status').style.color = 'var(--primary)';
+  document.getElementById('openai-key').value = '●'.repeat(20);
+  
+  termLog('🤖 OpenAI API Key saved & verified', 'success');
+  showToast('success', 'OpenAI API Key saved!');
+}
+
+// ============================================
+// AGENT ENGINE
+// ============================================
+const AGENT_LOGS = {
+  research: [
+    '🔍 Scanning TikTok trending hashtags...',
+    '📊 Analyzing YouTube top charts...',
+    '🎵 Spotify genre trends: Country +23%, Patriotic +41%',
+    '🛒 Etsy search: "patriotic art" — 12,400 searches/day',
+    '📈 Viral content pattern identified: Eagle + Flag imagery',
+    '✅ Research complete — 47 trend signals captured'
+  ],
+  music: [
+    '🎵 Initializing music generation engine...',
+    '🎸 Loading genre parameters: Country/Patriotic',
+    '🎼 Generating chord progression...',
+    '🥁 Adding percussion layer...',
+    '🎤 Generating lyrics with GPT-4...',
+    '🎧 Mixing and mastering...',
+    '✅ Track "Freedom Rising" generated — 3:42'
+  ],
+  art: [
+    '🎨 Loading DALL-E 3 engine...',
+    '✏ Processing art prompt...',
+    '🖼 Generating base composition...',
+    '🎨 Applying style transfer...',
+    '📐 Upscaling to 4K resolution...',
+    '🛒 Preparing Etsy listing metadata...',
+    '✅ Artwork generated — "Eagle at Dawn" 4096x4096'
+  ],
+  video: [
+    '🎬 Initializing video generation...',
+    '📝 Generating script with GPT-4...',
+    '🖼 Creating keyframe sequence...',
+    '🎵 Adding background music...',
+    '📝 Generating auto-captions...',
+    '📤 Encoding for platform delivery...',
+    '✅ Video ready — "Patriot Reel #47" 0:30'
+  ],
+  marketing: [
+    '📣 Analyzing top-performing post patterns...',
+    '✍ Generating captions with GPT-4...',
+    '🏷 Building hashtag strategy...',
+    '📅 Optimizing post timing...',
+    '📡 Preparing multi-platform broadcast...',
+    '🚀 Deploying to connected platforms...',
+    '✅ Marketing campaign launched — 6 platforms'
+  ]
+};
+
+function runAgent(agentId, e) {
+  if (e) e.stopPropagation();
+  if (STATE.agentStatus[agentId] === 'running') {
+    showToast('warning', `${agentId} agent already running`);
+    return;
+  }
+
+  STATE.agentStatus[agentId] = 'running';
+  updateAgentStatus(agentId, 'running');
+  
+  const logs = AGENT_LOGS[agentId];
+  let step = 0;
+  const progressBar = document.getElementById(`progress-${agentId}`);
+  
+  termLog(`🤖 ${agentId.toUpperCase()} AGENT STARTED`, 'agent');
+  addActivity(`${agentId} agent started`, 'agent', '🤖');
+
+  STATE.agentIntervals[agentId] = setInterval(() => {
+    if (step < logs.length) {
+      termLog(logs[step], step === logs.length - 1 ? 'success' : 'output');
+      progressBar.style.width = `${((step + 1) / logs.length) * 100}%`;
+      step++;
+    } else {
+      clearInterval(STATE.agentIntervals[agentId]);
+      STATE.agentStatus[agentId] = 'idle';
+      updateAgentStatus(agentId, 'done');
+      progressBar.style.width = '100%';
+      addActivity(`${agentId} agent completed`, 'success', '✅');
+      showToast('success', `${agentId.toUpperCase()} Agent completed!`);
+      
+      setTimeout(() => {
+        updateAgentStatus(agentId, 'idle');
+        progressBar.style.width = '0%';
+      }, 3000);
+    }
+  }, 800);
+}
+
+function stopAgent(agentId, e) {
+  if (e) e.stopPropagation();
+  if (STATE.agentIntervals[agentId]) {
+    clearInterval(STATE.agentIntervals[agentId]);
+    STATE.agentStatus[agentId] = 'idle';
+    updateAgentStatus(agentId, 'idle');
+    document.getElementById(`progress-${agentId}`).style.width = '0%';
+    termLog(`⏹ ${agentId.toUpperCase()} agent stopped`, 'warning');
+    showToast('warning', `${agentId} agent stopped`);
+  }
+}
+
+function scheduleAgent(agentId, e) {
+  if (e) e.stopPropagation();
+  termLog(`⏰ ${agentId.toUpperCase()} agent scheduled for next run cycle`, 'system');
+  showToast('info', `${agentId} agent scheduled`);
+  addActivity(`${agentId} agent scheduled`, 'info', '⏰');
+}
+
+function runAllAgents() {
+  termLog('🚀 LAUNCHING ALL AGENTS...', 'admin');
+  const agents = ['research', 'music', 'art', 'video', 'marketing'];
+  agents.forEach((agent, i) => {
+    setTimeout(() => runAgent(agent), i * 2000);
+  });
+}
+
+function updateAgentStatus(agentId, status) {
+  const el = document.getElementById(`status-${agentId}`);
+  if (!el) return;
+  el.className = `agent-status status-${status}`;
+  el.textContent = status.toUpperCase();
+}
+
+function selectAgent(agentId) {
+  document.querySelectorAll('.agent-card').forEach(c => c.classList.remove('active'));
+  document.getElementById(`agent-${agentId}`).classList.add('active');
+  termLog(`📌 Selected agent: ${agentId.toUpperCase()}`, 'system');
+}
+
+// ============================================
+// CONTENT DEPLOYMENT
+// ============================================
+function deployContent(type, mode) {
+  const modeText = mode === 'now' ? 'DEPLOYING NOW' : mode === 'agent' ? 'SENDING TO AGENT' : 'SCHEDULING';
+  termLog(`⚡ ${modeText}: ${type.toUpperCase()} content`, 'agent');
+  
+  const isAdmin = mode === 'now' && document.getElementById('post-as')?.value === 'admin';
+  const postType = isAdmin ? 'ADMIN' : 'AGENT';
+  
+  setTimeout(() => {
+    termLog(`✅ ${type.toUpperCase()} content ${mode === 'schedule' ? 'scheduled' : 'deployed'} successfully`, 'success');
+    addActivity(`${type} content ${mode === 'schedule' ? 'scheduled' : 'deployed'} [${postType}]`, 
+                mode === 'schedule' ? 'info' : 'success', 
+                type === 'music' ? '🎵' : type === 'art' ? '🎨' : type === 'video' ? '🎬' : '📣');
+    showToast('success', `${type} ${mode === 'schedule' ? 'scheduled' : 'posted'}!`);
+    addPostToManager(type, postType, mode);
+  }, 1500);
+}
+
+function addPostToManager(type, postType, mode) {
+  const tbody = document.getElementById('posts-tbody');
+  const tr = document.createElement('tr');
+  const now = new Date().toLocaleTimeString();
+  const icons = { music:'🎵', art:'🎨', video:'🎬', post:'📣', etsy:'🛒' };
+  
+  tr.innerHTML = `
+    <td><span class="post-type-badge badge-${postType.toLowerCase()}">${postType}</span></td>
+    <td>${icons[type] || '📄'} AI-Generated ${type} content</td>
+    <td>${STATE.connectedPlatforms.slice(0,2).join(' + ') || 'Pending'}</td>
+    <td>Today ${now}</td>
+    <td><span class="${mode === 'schedule' ? 'status-scheduled' : 'status-live'}">${mode === 'schedule' ? '◉ PENDING' : '● LIVE'}</span></td>
+    <td style="color:${postType === 'ADMIN' ? 'var(--gold)' : 'var(--secondary)'};">${postType === 'ADMIN' ? '♾ PERMANENT' : '24h → REMOVE'}</td>
+    <td><button class="btn-sm ${postType === 'AGENT' ? 'danger' : ''}" onclick="${postType === 'AGENT' ? 'removePost(this)' : 'void(0)'}">${postType === 'AGENT' ? '🗑 REMOVE' : 'View'}</button></td>
+  `;
+  tbody.appendChild(tr);
+}
+
+// ============================================
+// POST MANAGER
+// ============================================
+function removePost(btn) {
+  const row = btn.closest('tr');
+  row.querySelectorAll('td').forEach(td => td.style.opacity = '0.4');
+  row.querySelector('.status-live, .status-scheduled').className = 'status-removed';
+  row.querySelector('.status-removed').textContent = '✕ REMOVED';
+  btn.disabled = true;
+  btn.textContent = 'REMOVED';
+  termLog('🗑 Agent post removed from platform', 'warning');
+  addActivity('Agent post removed', 'warning', '🗑');
+  showToast('info', 'Post removed from platform');
+}
+
+function cancelPost(btn) {
+  const row = btn.closest('tr');
+  row.style.opacity = '0.4';
+  btn.disabled = true;
+  btn.textContent = 'CANCELLED';
+  termLog('✕ Scheduled post cancelled', 'warning');
+}
+
+function cleanupAgentPosts() {
+  termLog('🗑 RUNNING AGENT CLEANUP...', 'agent');
+  const rows = document.querySelectorAll('#posts-tbody tr');
+  let count = 0;
+  rows.forEach(row => {
+    const badge = row.querySelector('.badge-agent');
+    if (badge) {
+      setTimeout(() => {
+        row.querySelectorAll('td').forEach(td => td.style.opacity = '0.3');
+        count++;
+        if (count === 1) {
+          termLog(`✅ Cleaned up ${document.querySelectorAll('.badge-agent').length} agent posts`, 'success');
+          showToast('success', 'Agent posts cleaned up!');
+          addActivity('Agent cleanup completed', 'warning', '🗑');
+        }
+      }, count * 300);
+      count++;
+    }
+  });
+  if (count === 0) termLog('ℹ No agent posts to clean up', 'system');
+}
+
+function refreshPostManager() {
+  termLog('↺ Post manager refreshed', 'system');
+  showToast('info', 'Post manager refreshed');
+}
+
+// ============================================
+// DISTROKID
+// ============================================
+function toggleDistro(el) {
+  el.classList.toggle('deployed');
+  const name = el.textContent.trim().split('\n').pop().trim();
+  const deployed = el.classList.contains('deployed');
+  termLog(`${deployed ? '✅ Deployed to' : '🗑 Removed from'} ${name}`, deployed ? 'success' : 'warning');
+}
+
+function deployAllDistro() {
+  document.querySelectorAll('.distro-platform').forEach((el, i) => {
+    setTimeout(() => {
+      el.classList.add('deployed');
+      el.classList.remove('removed');
+    }, i * 200);
+  });
+  termLog('📦 Deployed to ALL distribution platforms', 'success');
+  addActivity('Deployed to all DistroKid platforms', 'success', '📦');
+  showToast('success', 'Deployed to all platforms!');
+  closeModal('distro-modal');
+}
+
+function removeAllDistro() {
+  document.querySelectorAll('.distro-platform').forEach((el, i) => {
+    setTimeout(() => {
+      el.classList.remove('deployed');
+      el.classList.add('removed');
+    }, i * 200);
+  });
+  termLog('🗑 Removed agent content from ALL distribution platforms', 'warning');
+  addActivity('Removed from all DistroKid platforms', 'warning', '🗑');
+  showToast('warning', 'Removed from all platforms');
+  closeModal('distro-modal');
+}
+
+// ============================================
+// TABS
+// ============================================
+function switchTab(tabId, tabEl) {
+  document.querySelectorAll('.creator-tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.creator-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  tabEl.classList.add('active');
+}
+
+// ============================================
+// PLATFORM TARGET TOGGLE
+// ============================================
+document.querySelectorAll('.platform-target').forEach(el => {
+  el.addEventListener('click', () => el.classList.toggle('selected'));
+});
+
+// ============================================
+// AI CAPTION GENERATOR
+// ============================================
+function generateCaption() {
+  const captions = [
+    '🇺🇸 New patriotic anthem just dropped! The kind of music that gives you chills. Listen now — link in bio! #PatriotMusic #USA #NewMusic #AmericanPride',
+    '🦅 Freedom has a sound. Our latest track captures everything that makes America great. Stream now! #MusicIsLife #PatrioticVibes #AmericanMusic',
+    '🎵 When words fail, music speaks. New release out NOW across all platforms!
