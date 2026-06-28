@@ -1,1006 +1,813 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>🎵 Patriot Music Empire</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-:root{
-  --bg0:#050505;--bg1:#0d0d0d;--bg2:#111;--bg3:#161616;--bg4:#1a1a1a;
-  --green:#00ff41;--gdim:#00cc33;--gdk:#003311;
-  --amber:#ffb000;--adk:#1a0f00;
-  --red:#ff3333;--blue:#00aaff;--purple:#8b5cf6;
-  --white:#d0d0d0;--dim:#444;--bdr:#1e1e1e;
-  --mono:'Courier New',monospace;
-}
-html,body{height:100%;overflow:hidden;background:var(--bg0);color:var(--green);font-family:var(--mono);}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Patriot Music Empire 🎵</title>
+  <style>
 
-/* SCANLINES */
-body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
-  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,255,65,.015) 2px,rgba(0,255,65,.015) 4px);}
+    /* ===== RESET & BASE ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-/* ── LOGIN ── */
-#LS{position:fixed;inset:0;z-index:500;background:var(--bg0);display:flex;align-items:center;justify-content:center;}
-#LS.hide{display:none;}
-.lbox{width:400px;background:var(--bg2);border:1px solid #003311;border-radius:8px;overflow:hidden;box-shadow:0 0 80px rgba(0,255,65,.08);}
-.lhdr{background:var(--bg1);border-bottom:1px solid #003311;padding:28px;text-align:center;}
-.logo{font-size:1.3rem;font-weight:900;letter-spacing:4px;color:var(--green);}
-.logo b{color:var(--amber);}
-.lsub{font-size:.55rem;color:var(--dim);letter-spacing:3px;margin-top:4px;}
-.lbody{padding:24px;display:flex;flex-direction:column;gap:13px;}
-.llbl{font-size:.55rem;letter-spacing:2px;color:var(--dim);margin-bottom:3px;}
-.linp{width:100%;background:var(--bg4);border:1px solid var(--bdr);border-radius:4px;
-  color:var(--white);font-family:var(--mono);font-size:.72rem;padding:10px 12px;outline:none;}
-.linp:focus{border-color:var(--green);}
-.lbtn{width:100%;padding:13px;background:var(--gdk);border:1px solid var(--green);border-radius:4px;
-  color:var(--green);font-family:var(--mono);font-size:.75rem;font-weight:bold;letter-spacing:3px;cursor:pointer;transition:all .2s;}
-.lbtn:hover{background:var(--green);color:#000;}
-.ldiv{display:flex;align-items:center;gap:8px;font-size:.55rem;color:var(--dim);}
-.ldiv::before,.ldiv::after{content:'';flex:1;height:1px;background:var(--bdr);}
-.lgbtn{width:100%;padding:10px;background:var(--bg4);border:1px solid var(--bdr);border-radius:4px;
-  color:var(--white);font-family:var(--mono);font-size:.65rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;}
-.lgbtn:hover{border-color:#4285f4;color:#4285f4;}
-.gico{width:16px;height:16px;display:inline-block;
-  background:conic-gradient(#4285f4 0 25%,#ea4335 25% 50%,#fbbc05 50% 75%,#34a853 75%);
-  border-radius:50%;}
-.lftr{padding:10px 24px;background:var(--bg1);border-top:1px solid var(--bdr);font-size:.5rem;color:var(--dim);text-align:center;}
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #0a0a0a;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
 
-/* ── APP SHELL ── */
-#APP{display:none;flex-direction:column;height:100vh;}
-#APP.show{display:flex;}
+    /* ===== ANIMATED BACKGROUND ===== */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: 
+        radial-gradient(ellipse at top left, #1a0000 0%, transparent 50%),
+        radial-gradient(ellipse at bottom right, #00001a 0%, transparent 50%),
+        radial-gradient(ellipse at center, #0d0d0d 0%, #000000 100%);
+      z-index: -2;
+    }
 
-/* TOP BAR */
-#TB{display:flex;align-items:center;justify-content:space-between;
-  background:var(--bg1);border-bottom:1px solid #1a2a1a;padding:0 14px;height:46px;flex-shrink:0;}
-.brand{font-size:.95rem;font-weight:900;letter-spacing:3px;display:flex;align-items:center;gap:6px;}
-.brand b{color:var(--amber);}
-#TB-user{font-size:.58rem;color:var(--dim);margin-left:10px;}
-.pills{display:flex;gap:5px;align-items:center;}
-.pill{display:flex;align-items:center;gap:4px;padding:3px 9px;border-radius:3px;
-  font-size:.55rem;border:1px solid;cursor:pointer;transition:all .2s;white-space:nowrap;}
-.p-idle{border-color:var(--amber);color:var(--amber);background:var(--adk);}
-.p-on{border-color:var(--green);color:var(--green);background:var(--gdk);}
-.p-admin{border-color:var(--amber);color:#000;background:var(--amber);font-weight:bold;}
-.p-user{border-color:#4285f4;color:#4285f4;background:#001122;cursor:default;}
-.dot{width:6px;height:6px;border-radius:50%;background:currentColor;animation:blink 1.4s infinite;}
-@keyframes blink{0%,100%{opacity:1;}50%{opacity:.2;}}
-.logbtn{background:transparent;border:1px solid #333;color:#444;font-family:var(--mono);
-  font-size:.52rem;padding:2px 8px;border-radius:3px;cursor:pointer;transition:all .2s;}
-.logbtn:hover{border-color:var(--red);color:var(--red);}
+    /* ===== STARS ANIMATION ===== */
+    .stars {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
 
-/* TICKER */
-#TK{background:#000;border-bottom:1px solid #1a2a1a;height:24px;overflow:hidden;
-  display:flex;align-items:center;flex-shrink:0;}
-#TK-lbl{background:var(--green);color:#000;font-size:.58rem;font-weight:bold;
-  padding:0 8px;height:100%;display:flex;align-items:center;white-space:nowrap;flex-shrink:0;}
-#TK-wrap{overflow:hidden;flex:1;}
-#TK-inner{display:inline-flex;animation:tkr 55s linear infinite;white-space:nowrap;}
-#TK-inner span{font-size:.6rem;color:var(--green);padding:0 18px;}
-#TK-inner .sep{color:var(--amber);}
-@keyframes tkr{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+    .star {
+      position: absolute;
+      background: #ffffff;
+      border-radius: 50%;
+      animation: twinkle 3s infinite alternate;
+    }
 
-/* MAIN GRID */
-#MG{display:grid;grid-template-columns:265px 1fr 248px;flex:1;overflow:hidden;}
+    @keyframes twinkle {
+      0% { opacity: 0.2; transform: scale(1); }
+      100% { opacity: 1; transform: scale(1.3); }
+    }
 
-/* PANELS */
-.pnl{background:var(--bg2);border-right:1px solid var(--bdr);display:flex;flex-direction:column;overflow:hidden;}
-.pnl:last-child{border-right:none;}
-.ph{display:flex;align-items:center;justify-content:space-between;
-  padding:7px 10px;background:var(--bg1);border-bottom:1px solid var(--bdr);
-  font-size:.58rem;letter-spacing:1px;color:var(--white);flex-shrink:0;}
-.ph .ic{color:var(--amber);margin-right:4px;}
-.pb{flex:1;overflow-y:auto;padding:8px;scrollbar-width:thin;scrollbar-color:var(--gdk) transparent;}
-.pb::-webkit-scrollbar{width:3px;}
-.pb::-webkit-scrollbar-thumb{background:var(--gdk);}
+    /* ===== HEADER / HERO ===== */
+    header {
+      text-align: center;
+      padding: 80px 20px 40px;
+      position: relative;
+    }
 
-/* LEFT PANEL */
-.sec{font-size:.5rem;letter-spacing:2px;color:#3a3a3a;text-transform:uppercase;margin:10px 0 5px;padding-bottom:3px;border-bottom:1px solid #1a1a1a;}
-.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:2px;}
-.pbtn{display:flex;align-items:center;gap:5px;padding:6px 7px;background:var(--bg4);
-  border:1px solid var(--bdr);border-radius:3px;color:var(--white);font-size:.6rem;
-  font-family:var(--mono);cursor:pointer;transition:all .2s;position:relative;}
-.pbtn:hover{border-color:var(--green);color:var(--green);background:var(--gdk);}
-.pbtn.on{border-color:var(--green);color:var(--green);}
-.pbtn.on::after{content:'●';position:absolute;right:5px;top:50%;transform:translateY(-50%);font-size:.4rem;color:var(--green);}
-/* platform icon colors via data */
-.pbtn[data-p="YouTube"] .ico2{color:#ff0000;}
-.pbtn[data-p="Instagram"] .ico2{color:#e1306c;}
-.pbtn[data-p="TikTok"] .ico2{color:#69c9d0;}
-.pbtn[data-p="Facebook"] .ico2{color:#1877f2;}
-.pbtn[data-p="Twitter/X"] .ico2{color:#1da1f2;}
-.pbtn[data-p="Spotify"] .ico2{color:#1db954;}
-.pbtn[data-p="SoundCloud"] .ico2{color:#ff5500;}
-.pbtn[data-p="Pinterest"] .ico2{color:#e60023;}
-.pbtn[data-p="Etsy"] .ico2{color:#f56400;}
-.pbtn[data-p="DistroKid"] .ico2{color:#8b5cf6;}
+    .logo-title {
+      font-size: 3.5rem;
+      font-weight: 900;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #ff0000, #ffffff, #0000ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 3s infinite;
+      background-size: 200% auto;
+    }
 
-/* KEY GROUPS */
-.kg{background:var(--bg4);border:1px solid var(--bdr);border-radius:4px;padding:8px;margin-bottom:6px;}
-.kt{font-size:.55rem;letter-spacing:1px;margin-bottom:6px;}
-.krow{display:flex;gap:4px;margin-bottom:4px;}
-.ki{flex:1;background:var(--bg0);border:1px solid var(--bdr);border-radius:3px;
-  color:var(--green);font-family:var(--mono);font-size:.62rem;padding:5px 7px;outline:none;}
-.ki:focus{border-color:var(--green);}
-.ksb{background:var(--gdk);border:1px solid var(--green);color:var(--green);
-  font-family:var(--mono);font-size:.55rem;padding:5px 8px;border-radius:3px;cursor:pointer;white-space:nowrap;transition:all .2s;}
-.ksb:hover{background:var(--green);color:#000;}
-.ksb.am{background:var(--adk);border-color:var(--amber);color:var(--amber);}
-.ksb.am:hover{background:var(--amber);color:#000;}
-.kst{font-size:.52rem;color:#3a3a3a;display:flex;align-items:center;gap:4px;}
-.kst.ok{color:var(--green);}
-.msel{width:100%;background:var(--bg0);border:1px solid var(--bdr);border-radius:3px;
-  color:var(--white);font-family:var(--mono);font-size:.6rem;padding:5px 7px;outline:none;margin-bottom:5px;}
-.msel:focus{border-color:var(--green);}
+    @keyframes shimmer {
+      0% { background-position: 0% center; }
+      50% { background-position: 100% center; }
+      100% { background-position: 0% center; }
+    }
 
-/* QUICK STATS */
-.srow{display:flex;align-items:center;justify-content:space-between;
-  padding:4px 0;border-bottom:1px solid var(--bdr);font-size:.6rem;}
-.srow:last-child{border-bottom:none;}
-.sl{color:var(--white);}
-.sv{color:var(--green);font-weight:bold;}
+    .tagline {
+      font-size: 1.2rem;
+      color: #aaaaaa;
+      margin-top: 10px;
+      letter-spacing: 2px;
+    }
 
-/* ── TERMINAL ── */
-#TO{flex:1;overflow-y:auto;padding:10px;font-size:.63rem;line-height:1.8;scrollbar-width:thin;scrollbar-color:var(--gdk) transparent;}
-#TO::-webkit-scrollbar{width:3px;}
-#TO::-webkit-scrollbar-thumb{background:var(--gdk);}
-.tl{display:flex;gap:6px;margin-bottom:1px;}
-.ts{color:#2a2a2a;flex-shrink:0;font-size:.58rem;}
-.tg{flex-shrink:0;min-width:75px;font-size:.6rem;}
-.tm{color:var(--white);}
-.g{color:var(--green);}.b{color:var(--blue);}.am{color:var(--amber);}.rd{color:var(--red);}.pu{color:var(--purple);}
+    .flag-bar {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+      margin: 20px auto;
+    }
 
-#CB{padding:6px 8px;background:var(--bg1);border-top:1px solid var(--bdr);display:flex;gap:4px;flex-wrap:wrap;flex-shrink:0;}
-.cb{padding:3px 9px;background:var(--bg4);border:1px solid var(--bdr);border-radius:3px;
-  color:var(--white);font-family:var(--mono);font-size:.56rem;cursor:pointer;transition:all .15s;}
-.cb:hover{background:var(--gdk);border-color:var(--green);color:var(--green);}
+    .flag-stripe {
+      height: 8px;
+      border-radius: 4px;
+    }
 
-#CI{display:flex;gap:5px;padding:5px 9px;background:#000;border-top:1px solid var(--gdk);flex-shrink:0;}
-#CI span{color:var(--green);font-size:.63rem;line-height:26px;white-space:nowrap;}
-#CINP{flex:1;background:transparent;border:none;color:var(--green);font-family:var(--mono);font-size:.63rem;outline:none;caret-color:var(--green);}
+    .red { background: #ff0000; width: 80px; }
+    .white { background: #ffffff; width: 80px; }
+    .blue { background: #0000cc; width: 80px; }
 
-/* ── FACTORIES ── */
-#FB{background:var(--bg1);border-top:1px solid var(--bdr);padding:8px 10px;flex-shrink:0;}
-.ftitle{font-size:.52rem;letter-spacing:2px;color:var(--amber);margin-bottom:7px;}
-.fgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;}
-.fc{background:var(--bg4);border:1px solid var(--bdr);border-radius:4px;padding:7px 5px;
-  cursor:pointer;transition:all .2s;text-align:center;}
-.fc:hover{border-color:var(--green);background:var(--gdk);}
-.fc.run{border-color:var(--green);background:var(--gdk);animation:pb 1s infinite;}
-@keyframes pb{0%,100%{border-color:var(--green);}50%{border-color:var(--gdim);}}
-.fci{font-size:1.1rem;margin-bottom:3px;}
-.fcn{font-size:.52rem;color:var(--white);letter-spacing:1px;}
-.fcs{font-size:.48rem;color:var(--dim);margin-top:2px;}
-.fcs.run{color:var(--green);}
-.fcp{height:2px;background:var(--bdr);border-radius:1px;margin-top:4px;overflow:hidden;}
-.fcb{height:100%;background:var(--green);width:0%;transition:width .4s;border-radius:1px;}
+    /* ===== AUDIO PLAYER WIDGET ===== */
+    .audio-widget {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.85);
+      border: 1px solid #ff0000;
+      border-radius: 16px;
+      padding: 16px 20px;
+      z-index: 1000;
+      min-width: 280px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+    }
 
-/* ── RIGHT METRICS ── */
-.mc{background:var(--bg4);border:1px solid var(--bdr);border-radius:4px;padding:9px;margin-bottom:7px;}
-.mt2{font-size:.5rem;letter-spacing:2px;color:#3a3a3a;text-transform:uppercase;margin-bottom:5px;}
-.mv{font-size:1.4rem;font-weight:900;font-family:'Courier New',monospace;}
-.mv.g{color:var(--green);}
-.mv.am{color:var(--amber);}
-.mv.bl{color:var(--blue);}
-.msub{font-size:.52rem;margin-top:2px;}
-.msub.up{color:var(--green);}
-.msub.dn{color:var(--red);}
+    .audio-widget h4 {
+      color: #ff4444;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
 
-/* Revenue bars */
-.rbr{margin-bottom:6px;}
-.rbl{display:flex;justify-content:space-between;font-size:.56rem;color:var(--white);margin-bottom:3px;}
-.rbt{height:4px;background:var(--bdr);border-radius:2px;overflow:hidden;}
-.rbf{height:100%;border-radius:2px;transition:width 1.5s;}
+    .track-name {
+      color: #ffffff;
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
 
-/* Agent rows */
-.ar{display:flex;align-items:center;gap:6px;padding:4px 0;border-bottom:1px solid var(--bdr);font-size:.57rem;}
-.ar:last-child{border-bottom:none;}
-.adot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
-.adot.run{background:var(--green);box-shadow:0 0 6px var(--green);}
-.adot.idl{background:var(--amber);}
-.adot.err{background:var(--red);}
-.an{flex:1;color:var(--white);}
-.as2{font-size:.5rem;color:#444;}
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
 
-/* Canvas chart */
-.mini{height:52px;margin-top:6px;}
+    .ctrl-btn {
+      background: none;
+      border: 1px solid #ff0000;
+      color: #ff0000;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-/* Small buttons */
-.sbtn{background:transparent;border:1px solid #333;color:#444;font-family:var(--mono);
-  font-size:.55rem;padding:2px 7px;border-radius:3px;cursor:pointer;transition:all .2s;}
-.sbtn:hover{border-color:var(--red);color:var(--red);}
-.sbtn.pu{border-color:var(--purple);color:var(--purple);background:#0d0020;}
-.sbtn.pu:hover{background:var(--purple);color:#fff;}
-</style>
+    .ctrl-btn:hover {
+      background: #ff0000;
+      color: #ffffff;
+    }
+
+    .ctrl-btn.play-btn {
+      width: 44px;
+      height: 44px;
+      font-size: 1.2rem;
+      background: #ff0000;
+      color: white;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 4px;
+      background: #333;
+      border-radius: 2px;
+      cursor: pointer;
+      margin-bottom: 8px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ff0000, #ffffff);
+      border-radius: 2px;
+      width: 0%;
+      transition: width 0.5s;
+      animation: progressAnim 30s linear infinite;
+    }
+
+    @keyframes progressAnim {
+      0% { width: 0%; }
+      100% { width: 100%; }
+    }
+
+    .volume-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.75rem;
+      color: #aaa;
+    }
+
+    .volume-row input[type="range"] {
+      flex: 1;
+      accent-color: #ff0000;
+    }
+
+    .equalizer {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 20px;
+      margin-left: auto;
+    }
+
+    .eq-bar {
+      width: 4px;
+      background: #ff0000;
+      border-radius: 2px;
+      animation: eq 0.8s ease-in-out infinite alternate;
+    }
+
+    .eq-bar:nth-child(1) { animation-delay: 0s; height: 8px; }
+    .eq-bar:nth-child(2) { animation-delay: 0.15s; height: 14px; }
+    .eq-bar:nth-child(3) { animation-delay: 0.3s; height: 6px; }
+    .eq-bar:nth-child(4) { animation-delay: 0.45s; height: 18px; }
+    .eq-bar:nth-child(5) { animation-delay: 0.6s; height: 10px; }
+
+    @keyframes eq {
+      0% { transform: scaleY(0.3); }
+      100% { transform: scaleY(1); }
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      padding: 20px;
+      border-bottom: 1px solid #222;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: #cccccc;
+      text-decoration: none;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    nav a:hover { color: #ff0000; }
+
+    /* ===== SECTIONS ===== */
+    section {
+      max-width: 1100px;
+      margin: 60px auto;
+      padding: 0 20px;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 30px;
+      color: #ff4444;
+      border-left: 4px solid #ff0000;
+      padding-left: 16px;
+    }
+
+    /* ===== TRACKS GRID ===== */
+    .tracks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .track-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid #222;
+      border-radius: 16px;
+      padding: 24px;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .track-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 3px;
+      background: linear-gradient(90deg, #ff0000, #0000cc);
+    }
+
+    .track-card:hover {
+      border-color: #ff0000;
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(255, 0, 0, 0.2);
+    }
+
+    .track-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+      color: #ffffff;
+    }
+
+    .track-card p {
+      font-size: 0.85rem;
+      color: #888;
+      margin-bottom: 16px;
+    }
+
+    .play-track-btn {
+      background: linear-gradient(135deg, #ff0000, #cc0000);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      transition: all 0.3s;
+      width: 100%;
+    }
+
+    .play-track-btn:hover {
+      background: linear-gradient(135deg, #ff3333, #ff0000);
+      box-shadow: 0 4px 20px rgba(255, 0, 0, 0.4);
+    }
+
+    .bandlab-link {
+      display: block;
+      text-align: center;
+      margin-top: 10px;
+      color: #4488ff;
+      font-size: 0.8rem;
+      text-decoration: none;
+    }
+
+    .bandlab-link:hover { color: #88aaff; }
+
+    /* ===== HERO SECTION ===== */
+    .hero-section {
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .hero-section h2 {
+      font-size: 2.5rem;
+      font-weight: 900;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #ff0000, #ffffff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-section p {
+      font-size: 1.1rem;
+      color: #aaa;
+      max-width: 600px;
+      margin: 0 auto 30px;
+      line-height: 1.7;
+    }
+
+    .cta-btn {
+      background: linear-gradient(135deg, #ff0000, #cc0000);
+      color: white;
+      padding: 16px 40px;
+      border: none;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .cta-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 30px rgba(255, 0, 0, 0.5);
+    }
+
+    /* ===== STATS ===== */
+    .stats-row {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      margin: 40px 0;
+    }
+
+    .stat-box {
+      text-align: center;
+    }
+
+    .stat-box .number {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: #ff0000;
+    }
+
+    .stat-box .label {
+      font-size: 0.8rem;
+      color: #888;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      border-top: 1px solid #222;
+      color: #555;
+      font-size: 0.85rem;
+    }
+
+    footer span { color: #ff0000; }
+
+    /* ===== AUTOPLAY NOTICE ===== */
+    .autoplay-notice {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 0, 0, 0.9);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      z-index: 2000;
+      display: none;
+      animation: fadeInDown 0.5s ease;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+      to { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 600px) {
+      .logo-title { font-size: 2rem; }
+      .audio-widget { min-width: 240px; right: 10px; bottom: 10px; }
+      .hero-section h2 { font-size: 1.8rem; }
+    }
+
+  </style>
 </head>
 <body>
 
-<!-- ═══════════ LOGIN ═══════════ -->
-<div id="LS">
-  <div class="lbox">
-    <div class="lhdr">
-      <div class="logo">&#127925; PATRIOT <b>MUSIC</b> EMPIRE</div>
-      <div class="lsub">&#9889; AI COMMAND STATION v2.0</div>
-    </div>
-    <div class="lbody">
-      <div>
-        <div class="llbl">Display Name</div>
-        <input class="linp" id="LN" type="text" placeholder="Eagle Commander" autocomplete="off"/>
-      </div>
-      <div>
-        <div class="llbl">Email Address</div>
-        <input class="linp" id="LE" type="email" placeholder="you@example.com" autocomplete="off"/>
-      </div>
-      <button class="lbtn" onclick="doLogin()">&#9889; ENTER THE EMPIRE</button>
-      <div class="ldiv">or continue with</div>
-      <button class="lgbtn" onclick="doGLogin()">
-        <span class="gico"></span> Sign in with Google Account
-      </button>
-    </div>
-    <div class="lftr">&#128274; Keys stored locally. No server. No tracking. 100% private.</div>
-  </div>
-</div>
+  <!-- ===== STARS BACKGROUND ===== -->
+  <div class="stars" id="stars"></div>
 
-<!-- ═══════════ APP ═══════════ -->
-<div id="APP">
-
-<!-- TOP BAR -->
-<div id="TB">
-  <div style="display:flex;align-items:center;">
-    <div class="brand">&#127925; PATRIOT <b>MUSIC</b> EMPIRE</div>
-    <div id="TB-user"></div>
-  </div>
-  <div class="pills">
-    <div class="pill p-idle" id="P-agent"><div class="dot"></div>&nbsp;AGENT IDLE</div>
-    <div class="pill" id="P-etsy" style="border-color:#f56400;color:#f56400;background:#1a0800;">&#128722; ETSY</div>
-    <div class="pill p-admin">&#9889; ADMIN</div>
-    <div class="pill p-on"><div class="dot"></div>&nbsp;ONLINE</div>
-    <div class="pill p-user"><span id="P-uname">User</span></div>
-    <button class="logbtn" onclick="doLogout()">LOGOUT</button>
-  </div>
-</div>
-
-<!-- TICKER -->
-<div id="TK">
-  <div id="TK-lbl">&#128225; LIVE</div>
-  <div id="TK-wrap">
-    <div id="TK-inner">
-      <span>&#127925; "Patriot Anthem Vol.3" — 1,247 streams today</span><span class="sep">///</span>
-      <span>&#128176; Etsy Revenue: +$847 this week</span><span class="sep">///</span>
-      <span>&#128202; DistroKid: 3 new territories unlocked</span><span class="sep">///</span>
-      <span>&#127912; AI Art Agent: 12 listings generated</span><span class="sep">///</span>
-      <span>&#128293; TikTok: "Freedom Sound" trending #4 Country</span><span class="sep">///</span>
-      <span>&#128230; 14 Etsy orders fulfilled today</span><span class="sep">///</span>
-      <span>&#127925; Spotify Monthly Listeners: 8,432 (+12%)</span><span class="sep">///</span>
-      <span>&#129302; Agent scheduled: YouTube upload in 2h 14m</span><span class="sep">///</span>
-      <span>&#127925; "Patriot Anthem Vol.3" — 1,247 streams today</span><span class="sep">///</span>
-      <span>&#128176; Etsy Revenue: +$847 this week</span><span class="sep">///</span>
-      <span>&#128202; DistroKid: 3 new territories unlocked</span><span class="sep">///</span>
-      <span>&#127912; AI Art Agent: 12 listings generated</span><span class="sep">///</span>
-      <span>&#128293; TikTok: "Freedom Sound" trending #4 Country</span><span class="sep">///</span>
-    </div>
-  </div>
-</div>
-
-<!-- MAIN GRID -->
-<div id="MG">
-
-<!-- ════ LEFT PANEL ════ -->
-<div class="pnl">
-  <div class="ph"><span><span class="ic">&#128268;</span>CONNECTIONS</span><span style="color:#444;font-size:.5rem" id="CC">0/10</span></div>
-  <div class="pb">
-
-    <div class="sec">&#128241; Social Platforms</div>
-    <div class="pgrid">
-      <button class="pbtn" data-p="YouTube"    onclick="tConn(this)"><span class="ico2">&#9654;</span> YouTube</button>
-      <button class="pbtn" data-p="Instagram"  onclick="tConn(this)"><span class="ico2">&#128247;</span> Instagram</button>
-      <button class="pbtn" data-p="TikTok"     onclick="tConn(this)"><span class="ico2">&#127926;</span> TikTok</button>
-      <button class="pbtn" data-p="Facebook"   onclick="tConn(this)"><span class="ico2">&#128218;</span> Facebook</button>
-      <button class="pbtn" data-p="Twitter/X"  onclick="tConn(this)"><span class="ico2">&#128038;</span> Twitter/X</button>
-      <button class="pbtn" data-p="Spotify"    onclick="tConn(this)"><span class="ico2">&#127925;</span> Spotify</button>
-      <button class="pbtn" data-p="SoundCloud" onclick="tConn(this)"><span class="ico2">&#9729;</span> SoundCloud</button>
-      <button class="pbtn" data-p="Pinterest"  onclick="tConn(this)"><span class="ico2">&#128204;</span> Pinterest</button>
-    </div>
-
-    <div class="sec">&#128722; Marketplaces</div>
-    <div class="pgrid">
-      <button class="pbtn" data-p="Etsy"      onclick="tConn(this)"><span class="ico2">&#127811;</span> Etsy</button>
-      <button class="pbtn" data-p="DistroKid" onclick="tConn(this)"><span class="ico2">&#128191;</span> DistroKid</button>
-    </div>
-
-    <div class="sec">&#129302; AI Engine Keys</div>
-
-    <div class="kg">
-      <div class="kt" style="color:var(--green)">&#129504; OpenAI</div>
-      <select class="msel" id="OAM">
-        <option value="gpt-4o">GPT-4o (Recommended)</option>
-        <option value="gpt-4-turbo">GPT-4 Turbo</option>
-        <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
-        <option value="gpt-4o-mini">GPT-4o Mini (Budget)</option>
-      </select>
-      <div class="krow">
-        <input type="password" class="ki" id="K-openai" placeholder="sk-••••••••••••••"/>
-        <button class="ksb" onclick="saveKey('openai')">SAVE</button>
-      </div>
-      <div class="kst" id="KS-openai">&#11044; Not loaded</div>
-    </div>
-
-    <div class="kg">
-      <div class="kt" style="color:var(--purple)">&#127925; Suno AI (Music Gen)</div>
-      <div class="krow">
-        <input type="password" class="ki" id="K-suno" placeholder="suno-••••••••••"/>
-        <button class="ksb am" onclick="saveKey('suno')">SAVE</button>
-      </div>
-      <div class="kst" id="KS-suno">&#11044; Not loaded</div>
-    </div>
-
-    <div class="kg">
-      <div class="kt" style="color:#e1306c">&#127912; StabilityAI (Art Gen)</div>
-      <div class="krow">
-        <input type="password" class="ki" id="K-stability" placeholder="sk-••••••••••"/>
-        <button class="ksb am" onclick="saveKey('stability')">SAVE</button>
-      </div>
-      <div class="kst" id="KS-stability">&#11044; Not loaded</div>
-    </div>
-
-    <div class="kg">
-      <div class="kt" style="color:var(--blue)">&#127911; ElevenLabs (Voice)</div>
-      <div class="krow">
-        <input type="password" class="ki" id="K-eleven" placeholder="el-••••••••••"/>
-        <button class="ksb am" onclick="saveKey('eleven')">SAVE</button>
-      </div>
-      <div class="kst" id="KS-eleven">&#11044; Not loaded</div>
-    </div>
-
-    <div class="sec">&#128202; Quick Stats</div>
-    <div class="srow"><span class="sl">&#127925; Spotify Listeners</span><span class="sv" id="QS-sp">8,432</span></div>
-    <div class="srow"><span class="sl">&#9654; YouTube Subs</span><span class="sv" id="QS-yt">2,841</span></div>
-    <div class="srow"><span class="sl">&#127926; TikTok Followers</span><span class="sv" id="QS-tt">14,203</span></div>
-    <div class="srow"><span class="sl">&#127811; Etsy Orders MTD</span><span class="sv" id="QS-etsy">147</span></div>
-    <div class="srow"><span class="sl">&#128191; Territories</span><span class="sv" id="QS-dk">43</span></div>
-    <div class="srow"><span class="sl">&#128176; Revenue MTD</span><span class="sv" id="QS-rev">$4,287</span></div>
-
-  </div>
-</div>
-
-<!-- ════ CENTER TERMINAL ════ -->
-<div class="pnl" style="display:flex;flex-direction:column;">
-  <div class="ph">
-    <span><span class="ic">&#128187;</span>COMMAND TERMINAL</span>
-    <div style="display:flex;gap:5px;">
-      <button class="sbtn" onclick="clearTerm()">CLEAR</button>
-      <button class="sbtn pu" onclick="runCmd('distro')">&#9641; DISTRO</button>
-    </div>
-  </div>
-  <div id="TO"></div>
-  <div id="CB">
-    <button class="cb" onclick="runCmd('status')">status</button>
-    <button class="cb" onclick="runCmd('scan')">scan</button>
-    <button class="cb" onclick="runCmd('genmusic')">gen music</button>
-    <button class="cb" onclick="runCmd('genart')">gen art</button>
-    <button class="cb" onclick="runCmd('genvideo')">gen video</button>
-    <button class="cb" onclick="runCmd('postall')">post all</button>
-    <button class="cb" onclick="runCmd('cleanup')">cleanup</button>
-    <button class="cb" onclick="runCmd('etsylist')">etsy list</button>
-    <button class="cb" onclick="runCmd('revenue')">revenue</button>
-    <button class="cb" onclick="runCmd('schedule')">schedule</button>
-    <button class="cb" onclick="runCmd('agents')">agents</button>
-    <button class="cb" onclick="runCmd('help')">help</button>
-  </div>
-  <div id="CI">
-    <span>PME &gt;</span>
-    <input type="text" id="CINP" placeholder="type command or ask AI..." onkeydown="handleInput(event)"/>
+  <!-- ===== AUTOPLAY NOTICE ===== -->
+  <div class="autoplay-notice" id="autoplayNotice">
+    🎵 Click anywhere to enable music
   </div>
 
-  <!-- FACTORY BAR -->
-  <div id="FB">
-    <div class="ftitle">&#9881; RENDERING FACTORIES — Click to Activate</div>
-    <div class="fgrid">
-      <div class="fc" id="FC-music" onclick="runFactory('music')">
-        <div class="fci">&#127925;</div>
-        <div class="fcn">MUSIC</div>
-        <div class="fcs" id="FCS-music">READY</div>
-        <div class="fcp"><div class="fcb" id="FCB-music"></div></div>
+  <!-- ===== AUDIO ELEMENTS ===== -->
+  <!-- 
+    NOTE: BandLab does not allow direct audio file embedding.
+    These iframes load the BandLab player. For true background audio,
+    you need to host your MP3 files directly.
+  -->
+
+  <!-- BandLab Embed Track 1 (hidden) -->
+  <iframe 
+    id="bandlab1"
+    src="https://www.bandlab.com/embed/?id=c0053f43-e3ae-4b7a-a4b8-d6c87149308a"
+    style="display:none; width:1px; height:1px; border:none;"
+    allow="autoplay">
+  </iframe>
+
+  <!-- BandLab Embed Track 2 (hidden) -->
+  <iframe 
+    id="bandlab2"
+    src="https://www.bandlab.com/embed/?id=94c6d0c1-a779-4e51-862f-5006957aed63"
+    style="display:none; width:1px; height:1px; border:none;"
+    allow="autoplay">
+  </iframe>
+
+  <!-- Fallback HTML5 Audio (if you host MP3s directly) -->
+  <audio id="bgAudio1" loop preload="auto">
+    <source src="track1.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="bgAudio2" preload="auto">
+    <source src="track2.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="flag-bar">
+      <div class="flag-stripe red"></div>
+      <div class="flag-stripe white"></div>
+      <div class="flag-stripe blue"></div>
+      <div class="flag-stripe red"></div>
+      <div class="flag-stripe white"></div>
+    </div>
+    <h1 class="logo-title">🦅 Patriot Music Empire</h1>
+    <p class="tagline">— Sound of Freedom · Built on Fire —</p>
+    <div class="flag-bar">
+      <div class="flag-stripe blue"></div>
+      <div class="flag-stripe white"></div>
+      <div class="flag-stripe red"></div>
+      <div class="flag-stripe white"></div>
+      <div class="flag-stripe blue"></div>
+    </div>
+  </header>
+
+  <!-- ===== NAV ===== -->
+  <nav>
+    <a href="#tracks">🎵 Tracks</a>
+    <a href="#about">🦅 About</a>
+    <a href="#stats">📊 Stats</a>
+    <a href="https://emergentparkz.github.io/patriot-music-empire-dashboard-/" target="_blank">🚀 Dashboard</a>
+    <a href="https://www.bandlab.com" target="_blank">🎙️ BandLab</a>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero-section">
+    <h2>🎵 The Sound of a Nation</h2>
+    <p>
+      Welcome to Patriot Music Empire — where every beat tells a story of 
+      freedom, strength, and American pride. Stream our latest tracks 
+      and feel the power of patriotic music.
+    </p>
+    <a href="#tracks" class="cta-btn">🎧 Listen Now</a>
+  </section>
+
+  <!-- ===== STATS ===== -->
+  <section id="stats">
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="number">2+</div>
+        <div class="label">Live Tracks</div>
       </div>
-      <div class="fc" id="FC-art" onclick="runFactory('art')">
-        <div class="fci">&#127912;</div>
-        <div class="fcn">ART</div>
-        <div class="fcs" id="FCS-art">READY</div>
-        <div class="fcp"><div class="fcb" id="FCB-art"></div></div>
+      <div class="stat-box">
+        <div class="number">🔥</div>
+        <div class="label">On Fire</div>
       </div>
-      <div class="fc" id="FC-video" onclick="runFactory('video')">
-        <div class="fci">&#127916;</div>
-        <div class="fcn">VIDEO</div>
-        <div class="fcs" id="FCS-video">READY</div>
-        <div class="fcp"><div class="fcb" id="FCB-video"></div></div>
+      <div class="stat-box">
+        <div class="number">100%</div>
+        <div class="label">American Made</div>
       </div>
-      <div class="fc" id="FC-store" onclick="runFactory('store')">
-        <div class="fci">&#128230;</div>
-        <div class="fcn">STORE</div>
-        <div class="fcs" id="FCS-store">READY</div>
-        <div class="fcp"><div class="fcb" id="FCB-store"></div></div>
+      <div class="stat-box">
+        <div class="number">∞</div>
+        <div class="label">On Repeat</div>
       </div>
+    </div>
+  </section>
+
+  <!-- ===== TRACKS ===== -->
+  <section id="tracks">
+    <h2 class="section-title">🎵 Featured Tracks</h2>
+    <div class="tracks-grid">
+
+      <!-- Track 1 -->
+      <div class="track-card">
+        <h3>🎵 Track 01 — Patriot Anthem</h3>
+        <p>Latest release from Patriot Music Empire. Pure fire, pure freedom.</p>
+        <button class="play-track-btn" onclick="playTrack(1)">
+          ▶ Play This Track
+        </button>
+        <a 
+          class="bandlab-link" 
+          href="https://www.bandlab.com/track/c0053f43-e3ae-4b7a-a4b8-d6c87149308a?revId=4c2b204c-1e8b-4dd1-9408-a576f58e8424" 
+          target="_blank">
+          🔗 Open on BandLab
+        </a>
+        <!-- BandLab Embedded Player -->
+        <div style="margin-top:14px;">
+          <iframe 
+            src="https://www.bandlab.com/embed/?id=c0053f43-e3ae-4b7a-a4b8-d6c87149308a"
+            width="100%" 
+            height="100" 
+            frameborder="0" 
+            allow="autoplay"
+            style="border-radius:8px;">
+          </iframe>
+        </div>
+      </div>
+
+      <!-- Track 2 -->
+      <div class="track-card">
+        <h3>🎵 Track 02 — Freedom Wave</h3>
+        <p>A powerful wave of sound built for the bold and the brave.</p>
+        <button class="play-track-btn" onclick="playTrack(2)">
+          ▶ Play This Track
+        </button>
+        <a 
+          class="bandlab-link" 
+          href="https://www.bandlab.com/track/94c6d0c1-a779-4e51-862f-5006957aed63?revId=a6d6eb7d-8305-4bc0-9fe7-73f3b3638931" 
+          target="_blank">
+          🔗 Open on BandLab
+        </a>
+        <!-- BandLab Embedded Player -->
+        <div style="margin-top:14px;">
+          <iframe 
+            src="https://www.bandlab.com/embed/?id=94c6d0c1-a779-4e51-862f-5006957aed63"
+            width="100%" 
+            height="100" 
+            frameborder="0" 
+            allow="autoplay"
+            style="border-radius:8px;">
+          </iframe>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section id="about">
+    <h2 class="section-title">🦅 About Patriot Music Empire</h2>
+    <div style="background:rgba(255,255,255,0.03); border:1px solid #222; border-radius:16px; padding:30px;">
+      <p style="color:#ccc; line-height:1.8; font-size:1rem;">
+        Patriot Music Empire is an independent music brand built on the values of 
+        freedom, creativity, and American spirit. Every track is crafted with passion 
+        and purpose — music that moves, inspires, and unites. 
+        <br><br>
+        Follow us on BandLab and stay connected with the empire as we continue 
+        to build something legendary.
+      </p>
+      <br>
+      <a 
+        href="https://emergentparkz.github.io/patriot-music-empire-dashboard-/" 
+        target="_blank" 
+        class="cta-btn" 
+        style="font-size:0.85rem; padding:12px 28px;">
+        🚀 Visit Full Dashboard
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <p>🦅 <span>Patriot Music Empire</span> · Built by EmergentPARKZ · All Rights Reserved</p>
+    <p style="margin-top:8px;">
+      <a href="https://www.bandlab.com" target="_blank" style="color:#4488ff; text-decoration:none;">BandLab</a> · 
+      <a href="https://emergentparkz.github.io/patriot-music-empire-dashboard-/" target="_blank" style="color:#4488ff; text-decoration:none;">Dashboard</a>
+    </p>
+  </footer>
+
+  <!-- ===== AUDIO PLAYER WIDGET ===== -->
+  <div class="audio-widget">
+    <h4>🎵 Now Playing</h4>
+    <div class="track-name" id="trackName">Track 01 — Patriot Anthem</div>
+    <div class="audio-controls">
+      <button class="ctrl-btn" onclick="prevTrack()" title="Previous">⏮</button>
+      <button class="ctrl-btn play-btn" id="playBtn" onclick="togglePlay()">▶</button>
+      <button class="ctrl-btn" onclick="nextTrack()" title="Next">⏭</button>
+      <div class="equalizer">
+        <div class="eq-bar"></div>
+        <div class="eq-bar"></div>
+        <div class="eq-bar"></div>
+        <div class="eq-bar"></div>
+        <div class="eq-bar"></div>
+      </div>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <div class="volume-row">
+      🔊
+      <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.7" 
+             onchange="setVolume(this.value)">
     </div>
   </div>
-</div>
 
-<!-- ════ RIGHT METRICS ════ -->
-<div class="pnl">
-  <div class="ph"><span><span class="ic">&#128200;</span>LIVE METRICS</span><span style="color:#444;font-size:.5rem" id="MT">--:--:--</span></div>
-  <div class="pb">
+  <!-- ===== JAVASCRIPT ===== -->
+  <script>
 
-    <div class="mc">
-      <div class="mt2">&#128176; Revenue MTD</div>
-      <div class="mv am" id="M-rev">$4,287</div>
-      <div class="msub up" id="M-revsub">&#9650; +12.4% vs last month</div>
-      <canvas class="mini" id="RC"></canvas>
-    </div>
+    // ===== STARS GENERATOR =====
+    const starsContainer = document.getElementById('stars');
+    for (let i = 0; i < 80; i++) {
+      const star = document.createElement('div');
+      star.classList.add('star');
+      const size = Math.random() * 3 + 1;
+      star.style.cssText = `
+        width: ${size}px;
+        height: ${size}px;
+        top: ${Math.random() * 100}%;
+        left: ${Math.random() * 100}%;
+        animation-delay: ${Math.random() * 3}s;
+        animation-duration: ${2 + Math.random() * 3}s;
+      `;
+      starsContainer.appendChild(star);
+    }
 
-    <div class="mc">
-      <div class="mt2">&#128202; Revenue Breakdown</div>
-      <div class="rbr">
-        <div class="rbl"><span>&#127811; Etsy</span><span id="RB-etsy">$2,847</span></div>
-        <div class="rbt"><div class="rbf" id="RBF-etsy" style="width:0%;background:#f56400;"></div></div>
-      </div>
-      <div class="rbr">
-        <div class="rbl"><span>&#127925; Streaming</span><span id="RB-stream">$892</span></div>
-        <div class="rbt"><div class="rbf" id="RBF-stream" style="width:0%;background:var(--green);"></div></div>
-      </div>
-      <div class="rbr">
-        <div class="rbl"><span>&#128191; DistroKid</span><span id="RB-distro">$548</span></div>
-        <div class="rbt"><div class="rbf" id="RBF-distro" style="width:0%;background:var(--purple);"></div></div>
-      </div>
-    </div>
-
-    <div class="mc">
-      <div class="mt2">&#127925; Total Streams</div>
-      <div class="mv g" id="M-streams">284,103</div>
-      <div class="msub up">&#9650; +8.7% this week</div>
-    </div>
-
-    <div class="mc">
-      <div class="mt2">&#128230; Etsy Orders</div>
-      <div class="mv bl" id="M-orders">147</div>
-      <div class="msub up">&#9650; 14 fulfilled today</div>
-    </div>
-
-    <div class="mc">
-      <div class="mt2">&#129302; Agent Status</div>
-      <div class="ar"><div class="adot run"></div><div class="an">Marketing Bot</div><div class="as2">SCANNING</div></div>
-      <div class="ar"><div class="adot idl"></div><div class="an">Content Gen</div><div class="as2">IDLE</div></div>
-      <div class="ar"><div class="adot run"></div><div class="an">Distro Agent</div><div class="as2">POSTING</div></div>
-      <div class="ar"><div class="adot idl"></div><div class="an">Etsy Lister</div><div class="as2">IDLE</div></div>
-      <div class="ar" id="VA-row">
-        <div class="adot err" id="VA-dot"></div>
-        <div class="an">Video Agent</div>
-        <div class="as2" id="VA-st" style="color:var(--red)">NO KEY</div>
-      </div>
-      <div class="ar" id="MA-row">
-        <div class="adot err" id="MA-dot"></div>
-        <div class="an">Music Agent</div>
-        <div class="as2" id="MA-st" style="color:var(--red)">NO KEY</div>
-      </div>
-    </div>
-
-    <div class="mc">
-      <div class="mt2">&#127758; Top Markets</div>
-      <div class="srow"><span class="sl">&#127482;&#127480; United States</span><span class="sv">62%</span></div>
-      <div class="srow"><span class="sl">&#127468;&#127463; United Kingdom</span><span class="sv">11%</span></div>
-      <div class="srow"><span class="sl">&#127464;&#127462; Canada</span><span class="sv">9%</span></div>
-      <div class="srow"><span class="sl">&#127462;&#127482; Australia</span><span class="sv">7%</span></div>
-      <div class="srow"><span class="sl">&#127758; Other</span><span class="sv">11%</span></div>
-    </div>
-
-    <div class="mc">
-      <div class="mt2">&#128200; Performance</div>
-      <canvas class="mini" id="PC"></canvas>
-    </div>
-
-  </div>
-</div>
-
-</div><!-- /MG -->
-</div><!-- /APP -->
-
-<script>
-// ═══════════════════════════════════════
-// STATE
-// ═══════════════════════════════════════
-var S = {
-  user: null,
-  conn: {},
-  keys: { openai:null, suno:null, stability:null, eleven:null },
-  rev: 4287, streams: 284103, orders: 147,
-  revH: [2100,2450,2800,3100,3600,3900,4287],
-  perfH: [65,72,68,80,75,88,92],
-  frun: { music:false, art:false, video:false, store:false },
-  revChart: null, perfChart: null
-};
-
-// ═══════════════════════════════════════
-// TIME
-// ═══════════════════════════════════════
-function ts(){
-  var d=new Date();
-  return [d.getHours(),d.getMinutes(),d.getSeconds()].map(function(n){return n<10?'0'+n:n;}).join(':');
-}
-function fullts(){
-  var d=new Date();
-  return d.toLocaleDateString()+' '+ts();
-}
-
-// ═══════════════════════════════════════
-// AUTH
-// ═══════════════════════════════════════
-function doLogin(){
-  var n=document.getElementById('LN').value.trim();
-  var e=document.getElementById('LE').value.trim();
-  if(!n||!e){alert('Please enter your name and email.');return;}
-  if(e.indexOf('@')<0){alert('Please enter a valid email.');return;}
-  loginUser({name:n,email:e});
-}
-function doGLogin(){
-  var n=document.getElementById('LN').value.trim();
-  var e=document.getElementById('LE').value.trim();
-  if(!n||!e){alert('Enter name and Google email above first.');return;}
-  loginUser({name:n,email:e,google:true});
-}
-function loginUser(u){
-  S.user=u;
-  try{localStorage.setItem('pme_user',JSON.stringify(u));}catch(x){}
-  ['openai','suno','stability','eleven'].forEach(function(k){
-    var sv; try{sv=localStorage.getItem('pme_key_'+k);}catch(x){}
-    if(sv){S.keys[k]=sv;document.getElementById('K-'+k).value=sv;setKSt(k,true);}
-  });
-  document.getElementById('LS').classList.add('hide');
-  document.getElementById('APP').classList.add('show');
-  document.getElementById('TB-user').textContent='// '+u.name;
-  document.getElementById('P-uname').textContent=u.name.split(' ')[0];
-  boot(u);
-  setTimeout(initCharts,200);
-  animStats();
-  setInterval(liveUpd,2000);
-  setInterval(function(){document.getElementById('MT').textContent=ts();},1000);
-  document.getElementById('CINP').focus();
-  setTimeout(function(){
-    document.getElementById('RBF-etsy').style.width='66%';
-    document.getElementById('RBF-stream').style.width='21%';
-    document.getElementById('RBF-distro').style.width='13%';
-  },800);
-}
-function doLogout(){
-  try{localStorage.removeItem('pme_user');}catch(x){}
-  S.user=null;
-  document.getElementById('APP').classList.remove('show');
-  document.getElementById('LS').classList.remove('hide');
-  document.getElementById('TO').innerHTML='';
-  document.getElementById('LN').value='';
-  document.getElementById('LE').value='';
-}
-window.addEventListener('load',function(){
-  var sv; try{sv=localStorage.getItem('pme_user');}catch(x){}
-  if(sv){try{loginUser(JSON.parse(sv));}catch(x){}}
-});
-
-// ═══════════════════════════════════════
-// KEYS
-// ═══════════════════════════════════════
-function saveKey(t){
-  var v=document.getElementById('K-'+t).value.trim();
-  if(!v){tl('WARN','am','No '+t+' key entered.');return;}
-  S.keys[t]=v;
-  try{localStorage.setItem('pme_key_'+t,v);}catch(x){}
-  setKSt(t,true);
-  tl('KEY','g','✓ '+t.toUpperCase()+' key saved — engine ready.');
-  if(t==='openai'){
-    var d=document.getElementById('VA-dot');d.className='adot idl';
-    var s=document.getElementById('VA-st');s.style.color='';s.textContent='READY';
-  }
-  if(t==='suno'){
-    var d2=document.getElementById('MA-dot');d2.className='adot idl';
-    var s2=document.getElementById('MA-st');s2.style.color='';s2.textContent='READY';
-  }
-}
-function setKSt(t,ok){
-  var el=document.getElementById('KS-'+t);
-  if(ok){
-    el.className='kst ok';
-    var labels={openai:'AI Engine Active ('+document.getElementById('OAM').value+')',suno:'Music Gen Ready',stability:'Art Gen Ready',eleven:'Voice Gen Ready'};
-    el.textContent='● '+labels[t];
-  }
-}
-
-// ═══════════════════════════════════════
-// TERMINAL
-// ═══════════════════════════════════════
-function tl(tag,cls,msg){
-  var o=document.getElementById('TO');
-  var d=document.createElement('div');
-  d.className='tl';
-  d.innerHTML='<span class="ts">['+ts()+']</span><span class="tg '+cls+'">['+tag+']</span><span class="tm">'+msg+'</span>';
-  o.appendChild(d);
-  o.scrollTop=o.scrollHeight;
-}
-function clearTerm(){
-  document.getElementById('TO').innerHTML='';
-  tl('SYS','g','Terminal cleared — '+fullts());
-}
-function boot(u){
-  var lines=[
-    ['SYS','g','═══════════════════════════════════════════'],
-    ['SYS','g','  PATRIOT MUSIC EMPIRE v2.0 — BOOT SEQUENCE'],
-    ['SYS','g','═══════════════════════════════════════════'],
-    ['AUTH','g','Welcome back, '+u.name+' <'+u.email+'>'],
-    ['INIT','g','Loading platform modules.............. OK'],
-    ['INIT','g','Initializing AI engine slots........... OK'],
-    ['INIT','g','Connecting rendering factories......... OK'],
-    ['DISTRO','pu','DistroKid: 43 territories active'],
-    ['ETSY','am','Etsy Store: 147 orders MTD | $2,847 revenue'],
-    ['STREAM','g','Total Streams: 284,103 | +8.7% this week'],
-    ['REVENUE','am','MTD Revenue: $4,287 | Projected: $5,058'],
-    ['AGENT','b','Marketing Bot: SCANNING'],
-    ['AGENT','b','Distro Agent: POSTING to 43 territories'],
-    ['SYS','g','All systems nominal. Type "help" for commands.'],
-    ['TIP','am','Add your OpenAI key in the left panel to unlock AI chat.'],
-  ];
-  lines.forEach(function(l,i){setTimeout(function(){tl(l[0],l[1],l[2]);},i*220);});
-}
-
-// ═══════════════════════════════════════
-// COMMANDS
-// ═══════════════════════════════════════
-var CMDS={
-  status:function(){
-    tl('SYS','g','═══ SYSTEM STATUS ═══');
-    tl('AUTH','g','User: '+S.user.name+' <'+S.user.email+'>');
-    var cc=Object.keys(S.conn).filter(function(k){return S.conn[k];}).length;
-    tl('CONN','g','Connected platforms: '+cc+'/10');
-    tl('KEY','g','OpenAI: '+(S.keys.openai?'✓ LOADED ('+document.getElementById('OAM').value+')':'✗ NOT SET'));
-    tl('KEY','g','Suno: '+(S.keys.suno?'✓ LOADED':'✗ NOT SET'));
-    tl('KEY','g','StabilityAI: '+(S.keys.stability?'✓ LOADED':'✗ NOT SET'));
-    tl('KEY','g','ElevenLabs: '+(S.keys.eleven?'✓ LOADED':'✗ NOT SET'));
-    tl('REV','am','Revenue MTD: $'+S.rev.toLocaleString());
-    tl('STREAM','g','Total Streams: '+S.streams.toLocaleString());
-    tl('ETSY','am','Etsy Orders: '+S.orders);
-  },
-  scan:function(){
-    tl('AGENT','b','Scanning trends across all platforms...');
-    var t=[
-      '"Patriot Rock 2025" — +340% YouTube search volume',
-      '"Freedom Country" — TikTok trending #4',
-      '"American Folk" — Spotify editorial push active',
-      '"Military Tribute Music" — YouTube trending page',
-      '"Eagle Rising" — Pinterest saves +180%',
-      '"Stars & Stripes EDM" — SoundCloud rising chart',
+    // ===== AUDIO SETUP =====
+    // NOTE: BandLab tracks cannot be directly embedded as background audio
+    // due to cross-origin restrictions. 
+    // To fully enable background audio, export your tracks from BandLab
+    // as MP3 files and host them on GitHub Pages alongside your HTML file.
+    
+    const tracks = [
+      { 
+        name: "Track 01 — Patriot Anthem", 
+        src: "track1.mp3", // Replace with your hosted MP3 URL
+        bandlab: "https://www.bandlab.com/track/c0053f43-e3ae-4b7a-a4b8-d6c87149308a"
+      },
+      { 
+        name: "Track 02 — Freedom Wave", 
+        src: "track2.mp3", // Replace with your hosted MP3 URL
+        bandlab: "https://www.bandlab.com/track/94c6d0c1-a779-4e51-862f-5006957aed63"
+      }
     ];
-    t.forEach(function(x,i){setTimeout(function(){tl('TREND','g','🔥 '+x);},( i+1)*400);});
-    setTimeout(function(){tl('AGENT','b','Scan complete. 6 opportunities identified.');},2800);
-  },
-  genmusic:function(){
-    if(!S.keys.suno&&!S.keys.openai){tl('WARN','am','⚠ Add Suno or OpenAI key to generate music.');return;}
-    runFactory('music');
-  },
-  genart:function(){
-    if(!S.keys.stability&&!S.keys.openai){tl('WARN','am','⚠ Add StabilityAI or OpenAI key to generate art.');return;}
-    runFactory('art');
-  },
-  genvideo:function(){
-    if(!S.keys.openai){tl('WARN','am','⚠ OpenAI key required for video generation.');return;}
-    runFactory('video');
-  },
-  postall:function(){
-    var cc=Object.keys(S.conn).filter(function(k){return S.conn[k];});
-    if(cc.length===0){tl('WARN','am','⚠ No platforms connected. Click platform buttons in left panel.');return;}
-    tl('AGENT','b','Distributing content to '+cc.length+' platforms...');
-    if(S.keys.openai)tl('AI','g','Using '+document.getElementById('OAM').value+' for content optimization');
-    cc.forEach(function(p,i){setTimeout(function(){tl('POST','g','✓ Posted to '+p);},( i+1)*500);});
-    setTimeout(function(){
-      tl('AGENT','g','✓ All posts distributed successfully.');
-      setPill('P-agent','p-on','AGENT ACTIVE');
-    },(cc.length+1)*500);
-  },
-  cleanup:function(){
-    tl('SYS','g','Running cleanup routine...');
-    ['Removing temp render files............. OK',
-     'Clearing agent task queue.............. OK',
-     'Archiving completed posts.............. OK',
-     'Compressing asset cache................ OK',
-     '✓ Cleanup complete. 847MB freed.'].forEach(function(s,i){
-      setTimeout(function(){tl('SYS','g',s);},( i+1)*350);
-    });
-  },
-  etsylist:function(){
-    tl('ETSY','am','Generating Etsy listings...');
-    var ls=[
-      '"Patriot Anthem Vol.3" — Digital WAV — $4.99',
-      '"Freedom Sound Pack" — Bundle — $12.99',
-      '"American Folk Loops" — Sample Kit — $8.99',
-      '"Eagle Rising" — Sheet Music PDF — $3.99',
-      '"Liberty Bell Ringtone" — MP3 — $1.99',
-    ];
-    ls.forEach(function(l,i){setTimeout(function(){tl('ETSY','am','📦 Listed: '+l);},( i+1)*500);});
-    setTimeout(function(){
-      S.orders+=5;
-      document.getElementById('M-orders').textContent=S.orders;
-      document.getElementById('QS-etsy').textContent=S.orders;
-      tl('ETSY','g','✓ 5 new listings live on Etsy store.');
-    },ls.length*500+300);
-  },
-  revenue:function(){
-    tl('REV','am','═══ REVENUE REPORT ═══');
-    tl('REV','am','Etsy Sales:            $2,847  (66%)');
-    tl('REV','am','Streaming Royalties:   $892    (21%)');
-    tl('REV','am','DistroKid:             $548    (13%)');
-    tl('REV','am','─────────────────────────────────────');
-    tl('REV','am','TOTAL MTD:             $'+S.rev.toLocaleString());
-    tl('REV','am','Projected Month End:   $'+Math.round(S.rev*1.18).toLocaleString());
-    tl('REV','am','YTD Estimate:          $'+Math.round(S.rev*1.18*12).toLocaleString());
-  },
-  distro:function(){
-    tl('DISTRO','pu','═══ DISTROKID REPORT ═══');
-    [['Spotify','8,432','$312'],['Apple Music','3,201','$148'],
-     ['Amazon Music','1,847','$62'],['YouTube Music','2,103','$26'],
-     ['Tidal','441','$18'],['Deezer','387','$14'],['Pandora','203','$8']].forEach(function(r,i){
-      setTimeout(function(){tl('DISTRO','pu',r[0].padEnd(16)+r[1].padEnd(14)+r[2]);},( i+1)*280);
-    });
-    setTimeout(function(){tl('DISTRO','pu','TOTAL: 16,614 streams | $588 royalties');},2200);
-  },
-  schedule:function(){
-    tl('SCHED','b','═══ SCHEDULED TASKS ═══');
-    [['02:14','YouTube upload — "Freedom Anthem v4"'],
-     ['04:00','Instagram post — Album art drop'],
-     ['06:30','TikTok reel — 30s preview clip'],
-     ['08:00','Etsy listing refresh + SEO update'],
-     ['10:00','Spotify playlist pitch submission'],
-     ['12:00','DistroKid distribution push'],
-     ['15:00','Pinterest board update'],
-     ['18:00','Twitter/X promo thread'],
-     ['20:00','SoundCloud upload + share'],
-     ['22:00','Analytics report generation']].forEach(function(r,i){
-      setTimeout(function(){tl('SCHED','b','⏰ T+'+r[0]+' — '+r[1]);},( i+1)*200);
-    });
-  },
-  agents:function(){
-    tl('AGENT','b','═══ AI AGENT ROSTER ═══');
-    tl('AGENT','b','🟢 Marketing Bot    — SCANNING trends');
-    tl('AGENT','b','🟡 Content Gen      — IDLE (awaiting task)');
-    tl('AGENT','b','🟢 Distro Agent     — POSTING to 43 territories');
-    tl('AGENT','b','🟡 Etsy Lister      — IDLE');
-    tl('AGENT','b',(S.keys.openai?'🟡':'🔴')+' Video Agent     — '+(S.keys.openai?'READY — awaiting task':'Needs OpenAI key'));
-    tl('AGENT','b',(S.keys.suno?'🟡':'🔴')+' Music Agent     — '+(S.keys.suno?'READY — awaiting task':'Needs Suno key'));
-    tl('AGENT','b',(S.keys.eleven?'🟡':'🔴')+' Voice Agent     — '+(S.keys.eleven?'READY — awaiting task':'Needs ElevenLabs key'));
-  },
-  help:function(){
-    tl('HELP','g','═══ AVAILABLE COMMANDS ═══');
-    [['status','Full system status & key check'],
-     ['scan','Scan trending music topics'],
-     ['gen music','Run music rendering factory'],
-     ['gen art','Run art rendering factory'],
-     ['gen video','Run video factory (OpenAI req)'],
-     ['post all','Post to all connected platforms'],
-     ['cleanup','Clean temp files & task queue'],
-     ['etsy list','Generate & publish Etsy listings'],
-     ['revenue','Full revenue breakdown report'],
-     ['distro','DistroKid streaming report'],
-     ['schedule','View all scheduled agent tasks'],
-     ['agents','AI agent roster & status'],
-     ['clear','Clear terminal output']].forEach(function(r){
-      tl(r[0].padEnd(14),'g','— '+r[1]);
-    });
-  }
-};
-function runCmd(k){if(CMDS[k]){tl('CMD','g','> '+k);CMDS[k]();}}
-function handleInput(e){
-  if(e.key!=='Enter')return;
-  var v=e.target.value.trim().toLowerCase();
-  e.target.value='';
-  if(!v)return;
-  if(v==='clear'){clearTerm();return;}
-  var map={'status':'status','scan':'scan','scan trends':'scan',
-    'gen music':'genmusic','genmusic':'genmusic',
-    'gen art':'genart','genart':'genart',
-    'gen video':'genvideo','genvideo':'genvideo',
-    'post all':'postall','postall':'postall',
-    'cleanup':'cleanup','etsy list':'etsylist','etsylist':'etsylist',
-    'revenue':'revenue','distro':'distro','schedule':'schedule',
-    'agents':'agents','help':'help','?':'help'};
-  var cmd=map[v];
-  if(cmd){runCmd(cmd);}
-  else if(S.keys.openai){
-    tl('AI','b','Processing: "'+v+'"...');
-    var model=document.getElementById('OAM').value;
-    setTimeout(function(){
-      tl('AI','g','['+model+'] Analyzing "'+v+'" — generating response...');
-      setTimeout(function(){
-        var responses=[
-          'Based on current trends, "'+v+'" aligns with patriotic country/folk genre. Recommend Spotify + TikTok push.',
-          'Analyzing "'+v+'" — suggest creating 3 variants: acoustic, orchestral, and EDM remix for max reach.',
-          'For "'+v+'" — top markets: US 62%, UK 11%, CA 9%. Optimal post time: 6-8pm EST.',
-          'Revenue optimization for "'+v+'": bundle with art pack on Etsy, push to DistroKid sync licensing.',
-        ];
-        tl('AI','g',responses[Math.floor(Math.random()*responses.length)]);
-      },1200);
-    },600);
-  }
-  else{tl('ERR','rd','Unknown: "'+v+'" — type "help" or add OpenAI key for AI chat.');}
-}
 
-// ═══════════════════════════════════════
-// PLATFORM CONNECT
-// ═══════════════════════════════════════
-function tConn(btn){
-  var p=btn.dataset.p;
-  if(S.conn[p]){
-    S.conn[p]=false;btn.classList.remove('on');
-    tl('CONN','am','Disconnected: '+p);
-  }else{
-    S.conn[p]=true;btn.classList.add('on');
-    tl('CONN','g','✓ Connected: '+p);
-  }
-  var cc=Object.keys(S.conn).filter(function(k){return S.conn[k];}).length;
-  document.getElementById('CC').textContent=cc+'/10';
-  if(cc>0)setPill('P-agent','p-on','AGENT ACTIVE');
-  else setPill('P-agent','p-idle','AGENT IDLE');
-}
-function setPill(id,cls,lbl){
-  var el=document.getElementById(id);
-  el.className='pill '+cls;
-  el.innerHTML='<div class="dot"></div>&nbsp;'+lbl;
-}
+    let currentTrack = 0;
+    let isPlaying = false;
+    const audio = new Audio();
+    audio.volume = 0.7;
+    audio.loop = false;
 
-// ═══════════════════════════════════════
-// RENDERING FACTORIES
-// ═══════════════════════════════════════
-function runFactory(type){
-  if(S.frun[type])return;
-  S.frun[type]=true;
-  var card=document.getElementById('FC-'+type);
-  var stat=document.getElementById('FCS-'+type);
-  var bar=document.getElementById('FCB-'+type);
-  card.classList.add('run');
-  var seqs={
-    music:[
-      [0,'INIT','🎵 Music factory starting...'],
-      [500,'ANALYZE','Analyzing trending genres — BPM: 128, Key: A Minor'],
-      [1200,'COMPOSE','Generating chord progression: Am - F - C - G'],
-      [2000,'ARRANGE','Building arrangement: intro/verse/chorus/bridge/outro'],
-      [3000,'RENDER','Rendering audio stems at 44.1kHz 24-bit...'],
-      [4000,'MASTER','Mastering — EQ, compression, limiting...'],
-      [4800,'EXPORT','✓ Exported: freedom_anthem_v4.wav + MP3 + FLAC'],
-      [5200,'DONE','✓ Music factory complete. Ready to distribute.'],
-    ],
-    art:[
-      [0,'INIT','🎨 Art factory starting...'],
-      [500,'PROMPT','Building prompt: patriotic eagle, American flag, cinematic lighting...'],
-      [1200,'DIFFUSE','Running diffusion model — 1024x1024 — 50 steps...'],
-      [2500,'UPSCALE','Upscaling to 4K with Real-ESRGAN...'],
-      [3500,'RESIZE','Resizing for Spotify (3000x3000), YouTube, Etsy, TikTok...'],
-      [4200,'EXPORT','✓ Exported 5 variants — all platforms ready'],
-      [4600,'DONE','✓ Art factory complete.'],
-    ],
-    video:[
-      [0,'INIT','🎬 Video factory starting...'],
-      [600,'SCRIPT','Generating promo script with AI...'],
-      [1400,'VISUAL','Compositing audio + visuals + captions...'],
-      [2500,'EFFECT','Applying color grade + motion effects...'],
-      [3500,'ENCODE','Encoding MP4 1080p60 — H.264...'],
-      [4200,'EXPORT','✓ Exported: promo_v4_1080p.mp4'],
-      [4600,'DONE','✓ Video factory complete. Ready to upload.'],
-    ],
-    store:[
-      [0,'INIT','📦 Store factory starting...'],
-      [500,'SCAN','Scanning existing Etsy inventory...'],
-      [1200,'GENERATE','Generating 5 new product listings...'],
-      [2200,'PRICE','AI pricing optimization — competitor analysis...'],
-      [3000,'SEO','Optimizing tags, titles, descriptions for Etsy SEO...'],
-      [3800,'PUBLISH','Publishing to Etsy store...'],
-      [4300,'DONE','✓ Store factory complete. 5 listings live.'],
-    ]
-  };
-  var steps=seqs[type];
-  var total=steps[steps.length-1][0]+300;
-  steps.forEach(function(s){
-    setTimeout(function(){
-      tl(s[1],'b',s[2]);
-      var pct=Math.round((s[0]/total)*100);
-      bar.style.width=pct+'%';
-      stat.textContent=s[1];
-      stat.className='fcs run';
-    },s[0]);
-  });
-  setTimeout(function(){
-    bar.style.width='100%';
-    setTimeout(function(){
-      card.classList.remove('run');
-      bar.style.width='0%';
-      stat.textContent='READY';
-      stat.className='fcs';
-      S.frun[type]=false;
-    },600);
-  },total);
-}
+    function loadTrack(index) {
+      audio.src = tracks[index].src;
+      document.getElementById('trackName').textContent = tracks[index].name;
+      document.getElementById('progressFill').style.animation = 'none';
+      void document.getElementById('progressFill').offsetWidth;
+      document.getElementById('progressFill').style.animation = '';
+    }
 
-// ═══════════════════════════════════════
-// CHARTS (pure canvas, no library)
-// ═══════════════════════════════════════
-function drawLineChart(canvasId,data,color){
-  var c=document.getElementById(canvasId);
-  if(!c)return;
-  var ctx=c.getContext('2d');
-  var w=c.offsetWidth||200;var h=c.offsetHeight||52;
-  c.width=w;c.height=h;
-  var min=Math.min.apply(null,data)*0.9;
-  var max=Math.max.apply(null,data)*1.05;
-  var pad=4;
-  ctx.clearRect(0,0,w,h);
-  // gradient fill
-  var grad=ctx.createLinearGradient(0,0,0,h);
-  grad.addColorStop(0,color.replace(')',',0.25)').replace('rgb','rgba'));
-  grad.addColorStop(1,color.replace(')',',0)').replace('rgb','rgba'));
-  ctx.beginPath();
-  data.forEach(function(v,i){
-    var x=pad+(i/(data.length-1))*(w-pad*2);
-    var y=h-pad-((v-min)/(max-min))*(h-pad*2);
-    if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
-  });
-  ctx.lineTo(pad+(data.length-1)/(data.length-1)*(w-pad*2),h);
-  ctx.lineTo(pad,h);
-  ctx.closePath();
-  ctx.fillStyle=grad;
-  ctx.fill();
-  // line
-  ctx.beginPath();
-  ctx.strokeStyle=color;
-  ctx.lineWidth=1.5;
-  data.forEach(function(v,i){
-    var x=pad+(i/(data.length-1))*(w-pad*2);
-    var y=h-pad-((v-min)/(max-min))*(h-pad*2);
-    if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
-  });
-  ctx.stroke();
-  // dots
-  ctx.fillStyle=color;
-  data.forEach(function(v,i){
-    var x=pad+(i/(data.length-1))*(w-pad*2);
-    var y=h-pad-((v-min)/(max-min))*(h-pad*2);
-    ctx.beginPath();ctx.arc(x,y,2,0,Math.PI*2);ctx.fill();
-  });
-}
-function initCharts(){
-  drawLineChart('RC',S.revH,'rgb(255,176,0)');
-  drawLineChart('PC',S.perfH,'rgb(0,255,65)');
-}
+    function togglePlay() {
+      if (isPlaying) {
+        audio.pause();
+        document.getElementById('playBtn').textContent = '▶';
+        isPlaying = false;
+      } else {
+        audio.play().catch(() => {
+          document.getElementById('autoplayNotice').style.display = 'block';
+          setTimeout(() => {
+            document.getElementById('autoplayNotice').style.display = 'none';
+          }, 3000);
+        });
+        document.getElementById('playBtn').textContent = '⏸';
+        isPlaying = true;
+      }
+    }
 
-// ═══════════════════════════════════════
-// LIVE UPDATES
-// ═══════════════════════════════════════
-function liveUpd(){
-  S.streams+=Math.floor(Math.random()*8);
-  document.getElementById('M-streams').textContent=S.streams.toLocaleString();
-  if(Math.random()>0.6){
-    S.rev+=Math.floor(Math.random()*12);
-    document.getElementById('M-rev').textContent='$'+S.rev.toLocaleString();
-    document.getElementById('QS-rev').textContent='$'+S.rev.toLocaleString();
-  }
-  if(Math.random()>0.85){
-    S.revH.push(S.rev);
-    if(S.revH.length>10)S.revH.shift();
-    S.perfH.push(Math.min(99,S.perfH[S.perfH.length-1]+Math.floor(Math.random()*5-1)));
-    if(S.perfH.length>10)S.perfH.shift();
-    drawLineChart('RC',S.revH,'rgb(255,176,0)');
-    drawLineChart('PC',S.perfH,'rgb(0,255,65)');
-  }
-}
-function animStats(){
-  setInterval(function(){
-    ['QS-sp','QS-yt','QS-tt'].forEach(function(id){
-      var el=document.getElementById(id);
-      if(!el)return;
-      var v=parseInt(el.textContent.replace(/,/g,''));
-      el.textContent=(v+Math.floor(Math.random()*3)).toLocaleString();
+    function playTrack(num) {
+      currentTrack = num - 1;
+      loadTrack(currentTrack);
+      audio.play().then(() => {
+        document.getElementById('playBtn').textContent = '⏸';
+        isPlaying = true;
+      }).catch(err => console.log('Autoplay blocked:', err));
+    }
+
+    function nextTrack() {
+      currentTrack = (currentTrack + 1) % tracks.length;
+      loadTrack(currentTrack);
+      if (isPlaying) audio.play();
+    }
+
+    function prevTrack() {
+      currentTrack = (currentTrack - 1 + tracks.length) % tracks.length;
+      loadTrack(currentTrack);
+      if (isPlaying) audio.play();
+    }
+
+    function setVolume(val) {
+      audio.volume = parseFloat(val);
+    }
+
+    // Auto advance to next track
+    audio.addEventListener('ended', () => {
+      nextTrack();
     });
-  },6000);
-}
-</script>
+
+    // Progress bar update
+    audio.addEventListener('timeupdate', () => {
+      if (audio.duration) {
+        const pct = (audio.currentTime / audio.duration) * 100;
+        document.getElementById('progressFill').style.animation = 'none';
+        document.getElementById('progressFill').style.width = pct + '%';
+      }
+    });
+
+    // Click anywhere to start (bypass autoplay restrictions)
+    document.addEventListener('click', function startAudio() {
+      if (!isPlaying) {
+        loadTrack(currentTrack);
+        audio.play().then(() => {
+          document.getElementById('playBtn').textContent = '⏸';
+          isPlaying = true;
+        }).catch(() => {});
+      }
+      document.removeEventListener('click', startAudio);
+    }, { once: true });
+
+    // Show autoplay notice on load
+    window.addEventListener('load', () => {
+      const notice = document.getElementById('autoplayNotice');
+      notice.style.display = 'block';
+      setTimeout(() => { notice.style.display = 'none'; }, 4000);
+    });
+
+    // Init first track
+    loadTrack(0);
+
+  </script>
+
 </body>
 </html>
